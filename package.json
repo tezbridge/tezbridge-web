@@ -1,0 +1,33 @@
+{
+  "name": "tezbridge-web",
+  "version": "1.0.0",
+  "description": "The TezBridge web front-end",
+  "main": "dist/index.html",
+  "scripts": {
+    "flow": "flow",
+    "dev": "parcel watch src/index.html",
+    "test": "flow && parcel build test/index.js --target node -o test.js && node dist/test.js",
+    "build": "rm -rf dist && rm -rf .cache && flow && parcel build src/index.html",
+    "publish": "npm run build && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tezbridge/tezbridge-web.git"
+  },
+  "author": "catsigma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tezbridge/tezbridge-web/issues"
+  },
+  "homepage": "https://github.com/tezbridge/tezbridge-web#readme",
+  "dependencies": {
+    "flow-bin": "^0.89.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-transform-flow-strip-types": "^7.2.3",
+    "tezbridge-crypto": "^1.0.1",
+    "tezbridge-network": "^1.0.2"
+  }
+}
