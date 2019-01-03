@@ -13,7 +13,7 @@ const package_tests = async () => {
   {
     const r : Object = await network_client.mixed.makeOriginationBytes({
       source: 'tz1XErrAm8vFBzu69UU74JUSbvsmvXiQBy6e',
-      public_key: 'edpkunm1aRnRtHwVsBGSFgKmw5EhBn4gR6NC5JqVoAi57viSgAN3t5'
+      public_key: 'edpkv2FiD8nFLXC4XfAr33pqt7KfKxx9oH2tJdwqza2fjhGVYC8f31'
     }, {
       spendable: false,
       delegatable: false,
@@ -23,9 +23,10 @@ const package_tests = async () => {
       }
     })
 
+    console.log(r.operation_hex)
     const secret_key = 'edskS68LAmi2nQHCEzvMs9CAJaCpWWtkFTavc2DBnxLaNvFerXBgjggKNu9QFPTyT5BuE1ttNbkHj7c3Q4AuPtjaFzfyj4t9un'
     r.signature = TezBridgeCrypto.crypto.signOperation(r.operation_hex, secret_key)
-
+    console.log(r.signature)
     const preapplyed_result = await network_client.submit.preapply_operation(r.branch, r.contents, r.protocol, r.signature)
     console.log(preapplyed_result)
   }
