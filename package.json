@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/tezbridge/tezbridge-web#readme",
   "dependencies": {
-    "tezbridge-crypto": "^1.0.3",
-    "tezbridge-network": "^1.0.3"
+    "tezbridge-crypto": "^1.0.4",
+    "tezbridge-network": "^1.0.4"
   },
   "devDependencies": {
     "flow-bin": "^0.89.0",
