@@ -11,15 +11,28 @@ const network_client = new TezBridgeNetwork({
 
 const package_tests = async () => {
   {
-    const r : Object = await network_client.mixed.makeTransactionBytes({
-      source: 'tz2L2HuhaaSnf6ShEDdhTEAr5jGPWPNwpvcB',
-      public_key: 'sppk7aLxNrEXqt52YTEXmVwKQSu2phVrjnSQmF7V31xSAFXEq9PSETE'
-    }, {
-      amount: '100',
-      destination: 'tz3Vrs3r11Tu9fZvu4mHFcuNt9FK9QuCw83X'
-    })
-
-    const secret_key = 'spsk25jYUuHr7PF4yd1w4bc7XKcp8dDmR8y7mwc8b4c3F7UXYn7vxJ'
+    const r : Object = await network_client.mixed.makeOperationBytes({
+      source: 'tz3Vrs3r11Tu9fZvu4mHFcuNt9FK9QuCw83X',
+      public_key: 'p2pk67SFY4XDMaACBrbJfvhmfLVx3wNfNt4inWHRsCdZc13b7CASxbm'
+    }, 
+    [
+      {
+        kind: 'transaction',
+        param: {
+          amount: '10',
+          destination: 'tz2L2HuhaaSnf6ShEDdhTEAr5jGPWPNwpvcB'
+        }
+      },
+      {
+        kind: 'transaction',
+        param: {
+          amount: '5',
+          destination: 'tz1hgWvYdzLECdrq5zndGHwCGnUCJq1KFe3r'
+        }
+      }
+    ])
+    
+    const secret_key = 'p2sk33568Eg2DXkg4aLQxQG2nQkL8yr4F3tR5xfqttMgkDQZzgb6RW'
     r.signature = TezBridgeCrypto.crypto.signOperation(r.operation_hex, secret_key)
     const preapplyed_result = await network_client.submit.preapply_operation(r.branch, r.contents, r.protocol, r.signature)
 
