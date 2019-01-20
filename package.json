@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/tezbridge/tezbridge-web#readme",
   "dependencies": {
-    "secp256k1": "^3.6.1",
     "tezbridge-crypto": "^1.0.5",
     "tezbridge-network": "^1.0.6"
   },

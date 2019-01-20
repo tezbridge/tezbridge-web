@@ -1,2 +1,4 @@
 /.cache
 /node_modules
+/dist/test.js
+/dist/test.map
