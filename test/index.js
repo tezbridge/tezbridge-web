@@ -24,7 +24,7 @@ const package_tests = async () => {
   0000 f1cb2a6739025bf5008c4e8f610ba0f0f496f3fc
   00
   `
-BMPDXR7hZcsz9LTtBoeVermGuVEsykuQHRAHEeQKNnfivgkxVXU
+
   const x = _x.replace(/\s+/g, '')
   const result = TezBridgeCrypto.codec.fromHex(x)
   const source = TezBridgeCrypto.codec.bs58checkDecode('tz1hgWvYdzLECdrq5zndGHwCGnUCJq1KFe3r')
