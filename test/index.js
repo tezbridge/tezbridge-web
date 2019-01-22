@@ -10,6 +10,28 @@ const network_client = new TezBridgeNetwork({
 })
 
 const package_tests = async () => {
+  const _x = `
+  dc19e7e9f579f8e9e503884cd15d29643130add0c43f2f3be14397aa106a8431
+  08
+  0002 688d34fccfa4a854b18dbbbd1b369f1b7f0e56d9
+  80b518ff6780b518e0d4030a
+  0001 806d2628efefae710659f622a5d667b12d379024
+  00
+
+  08
+  0002 688d34fccfa4a854b18dbbbd1b369f1b7f0e56d9
+  80b518806880b518e0d40305
+  0000 f1cb2a6739025bf5008c4e8f610ba0f0f496f3fc
+  00
+  `
+BMPDXR7hZcsz9LTtBoeVermGuVEsykuQHRAHEeQKNnfivgkxVXU
+  const x = _x.replace(/\s+/g, '')
+  const result = TezBridgeCrypto.codec.fromHex(x)
+  const source = TezBridgeCrypto.codec.bs58checkDecode('tz1hgWvYdzLECdrq5zndGHwCGnUCJq1KFe3r')
+  console.log(source)
+  console.log(x)
+
+  // console.log(JSON.stringify([].slice.call(result)))
   {
     const r : Object = await network_client.mixed.makeOperationBytes({
       source: 'tz3Vrs3r11Tu9fZvu4mHFcuNt9FK9QuCw83X',
@@ -31,17 +53,21 @@ const package_tests = async () => {
         }
       }
     ])
-    
-    const secret_key = 'p2sk33568Eg2DXkg4aLQxQG2nQkL8yr4F3tR5xfqttMgkDQZzgb6RW'
-    r.signature = TezBridgeCrypto.crypto.signOperation(r.operation_hex, secret_key)
-    const preapplyed_result = await network_client.submit.preapply_operation(r.branch, r.contents, r.protocol, r.signature)
 
-    console.log(JSON.stringify(preapplyed_result))
-    
-    const op_with_sig = r.operation_hex + TezBridgeCrypto.codec.toHex(TezBridgeCrypto.codec.bs58checkDecode(r.signature))
-    const result = await network_client.submit.inject_operation(op_with_sig)
-    console.log(result)
+    console.log(r)
+    console.log(r.operation_hex)
   }
+  //   
+  //   const secret_key = 'p2sk33568Eg2DXkg4aLQxQG2nQkL8yr4F3tR5xfqttMgkDQZzgb6RW'
+  //   console.log(r.operation_hex)
+//     r.signature = TezBridgeCrypto.crypto.signOperation(r.operation_hex, secret_key)
+//     const preapplyed_result = await network_client.submit.preapply_operation(r.branch, r.contents, r.protocol, r.signature)
+// 
+//     console.log(JSON.stringify(preapplyed_result))
+//     
+//     const op_with_sig = r.operation_hex + TezBridgeCrypto.codec.toHex(TezBridgeCrypto.codec.bs58checkDecode(r.signature))
+//     const result = await network_client.submit.inject_operation(op_with_sig)
+//     console.log(result)
 
 //   {
 //     const r : Object = await network_client.mixed.makeOriginationBytes({
