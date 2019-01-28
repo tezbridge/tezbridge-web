@@ -11,7 +11,7 @@ const network_client = new TezBridgeNetwork({
 
 const package_tests = async () => {
   {
-    const key = TezBridgeCrypto.crypto.getKeyFromSecretKey('edskRsuDXnxhj3xzUi76u1JiYmAmvPY8tq8f2F1NT6XFyxDF1hT3d4WJDTULtWmagsSH39cBJhSdfSk7fFEjkc48gWykKaTmjq')
+    const key = TezBridgeCrypto.crypto.getKeyFromSecretKey('edskS68LAmi2nQHCEzvMs9CAJaCpWWtkFTavc2DBnxLaNvFerXBgjggKNu9QFPTyT5BuE1ttNbkHj7c3Q4AuPtjaFzfyj4t9un')
     
     const r : Object = await network_client.mixed.makeOperationBytes({
       source: key.address,
@@ -23,6 +23,13 @@ const package_tests = async () => {
         param: {
           amount: '10',
           destination: 'tz2L2HuhaaSnf6ShEDdhTEAr5jGPWPNwpvcB'
+        }
+      },
+      {
+        kind: 'transaction',
+        param: {
+          amount: '100',
+          destination: 'KT1AthoYG1RnR9wDrsk4euuXh22SteYmvoUC'
         }
       },
       {
@@ -49,4 +56,4 @@ const main = async () => {
   await package_tests()
 }
 
-main()
+main();

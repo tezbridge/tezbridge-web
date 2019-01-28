@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/tezbridge/tezbridge-web#readme",
   "dependencies": {
-    "tezbridge-crypto": "^1.0.10",
+    "tezbridge-crypto": "^1.0.11",
     "tezbridge-network": "^1.0.7"
   },
   "devDependencies": {
