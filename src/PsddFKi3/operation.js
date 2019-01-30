@@ -5,14 +5,16 @@ import { network_client } from './network'
 
 export async function genMinFeeOperation(secret_key : string, op_params: Array<{
     kind: 'origination' | 'transaction',
-    param: Object
+    fee?: string,
+    gas_limit?: string,
+    storage_limit?: string
   }>) {
   const key = TBC.crypto.getKeyFromSecretKey(secret_key)
 
   op_params.forEach(op => {
-  	delete op.param.fee
-  	delete op.param.gas_limit
-  	delete op.param.storage_limit
+  	delete op.fee
+  	delete op.gas_limit
+  	delete op.storage_limit
   })
   const op_bytes_result = await network_client.mixed.makeOperationBytes({
   	source: key.address,
@@ -67,7 +69,7 @@ export async function genMinFeeOperation(secret_key : string, op_params: Array<{
   const final_op_result = await network_client.mixed.makeOperationBytes({
     source: key.address,
     public_key: key.getPublicKey()
-  }, ops.map(x => ({kind: x.kind, param: x})))
+  }, ops)
 
   const final_local_hex = TBC.localop.forgeOperation(final_op_result.contents, final_op_result.branch)
   if (final_local_hex !== final_op_result.operation_hex)

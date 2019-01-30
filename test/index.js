@@ -14,42 +14,36 @@ const package_tests = async () => {
     const result = await Operation.genMinFeeOperation(sk, [
       {
         kind: 'transaction',
-        param: {
-          amount: '10',
-          destination: 'tz2L2HuhaaSnf6ShEDdhTEAr5jGPWPNwpvcB'
-        }
+        amount: '10',
+        destination: 'tz2L2HuhaaSnf6ShEDdhTEAr5jGPWPNwpvcB'
       },
       {
         kind: 'transaction',
-        param: {
-          amount: '0',
-          destination: 'KT1AthoYG1RnR9wDrsk4euuXh22SteYmvoUC',
-          parameters: {
-            prim: 'Right', 
-            args: [{
-              prim: 'Left', 
-              args: [
+        amount: '0',
+        destination: 'KT1AthoYG1RnR9wDrsk4euuXh22SteYmvoUC',
+        parameters: {
+          prim: 'Right', 
+          args: [{
+            prim: 'Left', 
+            args: [
+              {prim: 'Pair', args: [
+                {string: 'tz1bfQHTZv1oM78fA1MXreBHua7wvKvS5uCe'},
                 {prim: 'Pair', args: [
-                  {string: 'tz1bfQHTZv1oM78fA1MXreBHua7wvKvS5uCe'},
-                  {prim: 'Pair', args: [
-                    {int: '1'},
-                    {prim: 'None'}
-                  ]}
+                  {int: '1'},
+                  {prim: 'None'}
                 ]}
-              ]
-          }]}
-        }
+              ]}
+            ]
+        }]}
       },
       {
         kind: 'origination',
-        param: {
-          balance: '5',
-          spendable: true,
-          delegatable: false,
-          script: {
-            code: [{"prim":"parameter","args":[{"prim":"contract","args":[{"prim":"unit"}],"annots":[":X"]}]},{"prim":"storage","args":[{"prim":"unit"}]},{"prim":"code","args":[[{"prim":"CDR","annots":["@storage_slash_1"]},{"prim":"NIL","args":[{"prim":"operation"}]},{"prim":"PAIR"}]]}],
-            storage: {"prim":"Unit"}
-          }
+        balance: '5',
+        spendable: true,
+        delegatable: false,
+        script: {
+          code: [{"prim":"parameter","args":[{"prim":"contract","args":[{"prim":"unit"}],"annots":[":X"]}]},{"prim":"storage","args":[{"prim":"unit"}]},{"prim":"code","args":[[{"prim":"CDR","annots":["@storage_slash_1"]},{"prim":"NIL","args":[{"prim":"operation"}]},{"prim":"PAIR"}]]}],
+          storage: {"prim":"Unit"}
         }
       }
     ])
