@@ -80,6 +80,7 @@ export async function genMinFeeOperation(secret_key : string, op_params: Array<{
   
   return {
     fee,
+    branch: final_op_result.branch,
     operation_contents: final_op_result.contents,
     operation_with_sig: final_op_with_sig
   }
