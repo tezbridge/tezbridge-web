@@ -20,17 +20,21 @@
   },
   "homepage": "https://github.com/tezbridge/tezbridge-web#readme",
   "dependencies": {
-    "react": "^16.8.2",
-    "react-dom": "^16.8.2",
-    "semantic-ui-react": "^0.85.0",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.0-rc.13",
     "tezbridge-crypto": "^1.0.15",
-    "tezbridge-network": "^1.0.8"
+    "tezbridge-network": "^1.0.8",
+    "vue": "^2.6.6",
+    "vue-hot-reload-api": "^2.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.3.3",
     "@babel/plugin-proposal-class-properties": "^7.3.3",
     "@babel/plugin-transform-flow-strip-types": "^7.2.3",
+    "@vue/component-compiler-utils": "^2.5.2",
     "cssnano": "^4.1.10",
-    "flow-bin": "^0.89.0"
+    "flow-bin": "^0.89.0",
+    "sass": "^1.17.1",
+    "vue-template-compiler": "^2.6.6"
   }
 }
