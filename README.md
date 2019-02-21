@@ -1,6 +1,7 @@
 # tezbridge-web
 
 ## Components todo
+* multi lang
 
 * Entrance
   * Add new manager
@@ -22,7 +23,6 @@
 * Dapp fast access list
   * Dapp name
   * Dapp description
-
 
 * Managers
   * manager nick name
