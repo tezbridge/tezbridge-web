@@ -1,7 +1,7 @@
 <template>
   <div>
     {{ lang.please_input_password }} ꜩ
-    <b-button class="bg-primary text-secondary" @click="switchLang('zh_cn')">{{ x }}</b-button>
+    <b-button class="bg-primary text-secondary" @click="switchLang('de_DE')">{{ x }}</b-button>
   </div>
 </template>
 
@@ -24,3 +24,7 @@ export default {
   }  
 }
 </script>
+
+<style scoped>
+div {font-size: 21px;}
+</style>

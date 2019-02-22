@@ -1,14 +1,20 @@
 // @flow
 
-import en_us from './en-us'
-import zh_cn from './zh-cn'
+import de_DE from './de-DE'
+import en_US from './en-US'
+import ja_JP from './ja-JP'
+import ko_KR from './ko-KR'
+import zh_CN from './zh-CN'
 
 const langs = {
-  en_us,
-  zh_cn
+  de_DE,
+  en_US,
+  ja_JP,
+  ko_KR,
+  zh_CN
 }
 
-const current_lang = langs.en_us
+const current_lang = langs.en_US
 
 export function switchLang(name : string) {
   if (!langs[name])

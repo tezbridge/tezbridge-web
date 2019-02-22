@@ -5,4 +5,11 @@
   font-style: normal;
 }
 
-* { font-family: Lato }
+@font-face {
+  font-family: 'TZ';
+  src: url('../fonts/tz.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+* { font-family: Lato, TZ }
