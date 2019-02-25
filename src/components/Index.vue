@@ -1,7 +1,8 @@
 <template>
   <div>
+    <icon icon="coffee"></icon>
     {{ lang.please_input_password }} ꜩ
-    <b-button class="bg-primary text-secondary" @click="switchLang('de_DE')">{{ x }}</b-button>
+    <b-button size="sm" class="bg-primary" @click="switchLang('de_DE')">{{ x }}</b-button>
   </div>
 </template>
 
