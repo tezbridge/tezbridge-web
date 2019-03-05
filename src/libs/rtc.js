@@ -8,33 +8,42 @@ declare var RTCIceCandidate
 export class Connection {
   conn : RTCPeerConnection
   channel : any
-  self_ice_candidates : Set<Object>
+  my_ice_candidates : Set<Object>
   offer : Object
   answer : Object
   
-  ice_ready : Promise<void>
-  channel_ready : Promise<void>
+  prepared : Promise<void>
+  connected : Promise<void>
 
   constructor(conn_info? : string) {
-    this.self_ice_candidates = new Set()
+    this.prepared = Promise.resolve()
 
-    this.conn = new RTCPeerConnection()
-    
     if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
-      alert('For remote signer connection\nmicrophone premission needs to be allowed\nit will only be active for 0.5 second.')
-      if (navigator.mediaDevices)
-        navigator.mediaDevices.getUserMedia({audio: true}).then(x => x.getAudioTracks()[0].stop())
+      alert('For remote signer connection\nmicrophone premission needs to be allowed\nit will only be active for 1 second.')
+      this.prepared = this.prepared.then(() => 
+        navigator.mediaDevices 
+          ? navigator.mediaDevices.getUserMedia({audio: true}).then(x => x.getAudioTracks()[0].stop())
+          : Promise.resolve())
     }
 
-    this.ice_ready = new Promise<void>((resolve, rejcet) => {
-      this.conn.onicecandidate = e => {
-        if (e.candidate) {
-          this.self_ice_candidates.add(e.candidate)
-          setTimeout(() => {resolve()}, 500)
-        }
-      }
+    this.connected = new Promise<void>(connected_resolve => {
+      this.prepared = this.prepared.then(() => new Promise<void>(prepared_resolve => {
+        this._constructor(conn_info, prepared_resolve, connected_resolve)
+      }))
     })
+  }
 
+  _constructor(conn_info? : string, prepared_resolve : void => void, connected_resolve : void => void) {
+    this.my_ice_candidates = new Set()
+
+    this.conn = new RTCPeerConnection()
+
+    this.conn.onicecandidate = e => {
+      if (e.candidate) {
+        this.my_ice_candidates.add(e.candidate)
+        prepared_resolve()
+      }
+    }
     if (conn_info) {
 
       this.setRemoteConnInfo(conn_info)
@@ -44,33 +53,30 @@ export class Connection {
         return this.conn.setLocalDescription(answer)
       })
 
-      this.channel_ready = new Promise<void>((resolve, reject) => {
-        this.conn.ondatachannel = e => {
-          this.channel = e.channel
+      this.conn.ondatachannel = e => {
+        this.channel = e.channel
 
-          e.channel.onmessage = event => {
-            console.log(2, event)
-          } 
-          e.channel.onopen = event => {
-            resolve()
-          } 
-          e.channel.onclose = () => {} 
-        }
-      })
+        e.channel.onmessage = event => {
+          console.log(2, event)
+        } 
+        e.channel.onopen = event => {
+          connected_resolve()
+        } 
+        e.channel.onclose = () => {} 
+      }
 
     } else {
 
       this.channel = this.conn.createDataChannel('TezBridge-WebRTC-Connection')
 
-      this.channel_ready = new Promise<void>((resolve, reject) => {
-        this.channel.onmessage = event => {
-          console.log(1, event)
-        } 
-        this.channel.onopen = event => {
-          resolve()
-        } 
-        this.channel.onclose = () => {} 
-      })  
+      this.channel.onmessage = event => {
+        console.log(1, event)
+      } 
+      this.channel.onopen = event => {
+        connected_resolve()
+      } 
+
+      this.channel.onclose = () => {} 
       this.conn.createOffer()
       .then(offer => {
         this.offer = offer
@@ -81,7 +87,7 @@ export class Connection {
   }
 
   genMyInfo() {
-    return JSON.stringify([this.offer || this.answer].concat([...this.self_ice_candidates]))
+    return JSON.stringify([this.offer || this.answer].concat([...this.my_ice_candidates]))
   }
 
   setRemoteConnInfo(other_info : string) {

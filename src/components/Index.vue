@@ -43,8 +43,7 @@ export default {
       other_conn_data: '',
       received_data: '',
       msg: '',
-      conn: null,
-      table: 'abcdefghijklmnopqrstuvwxyz'
+      conn: null
     }
   },
   methods: {
@@ -52,35 +51,37 @@ export default {
       this.conn.channel.send(this.msg)
     },
     create_conn() {
-      const conn = new Connection() 
-      this.conn = conn
-      conn.ice_ready.then(() => {
+      const conn = new Connection()
+      conn.prepared.then(() => {
         this.my_conn_data = conn.genMyInfo()
-
-        conn.channel_ready.then(() => {
-          this.received_data = 'CHANNEL OPENED'
-          conn.channel.onmessage = e => {
-            this.received_data = e.data
-          }
-        })
       })
+      conn.connected.then(() => {
+        this.received_data = 'CHANNEL OPENED'
+        conn.channel.onmessage = e => {
+          this.received_data = e.data
+        }
+      })
+
+      this.conn = conn
     },
     set_remote() {
       this.conn.setRemoteConnInfo(this.other_conn_data)
     },
     use_conn() {
       const conn = new Connection(this.other_conn_data)
-      this.conn = conn
-      conn.ice_ready.then(() => {
+
+      conn.prepared.then(() => {
         this.my_conn_data = conn.genMyInfo()
       })
 
-      conn.channel_ready.then(() => {
+      conn.connected.then(() => {
         this.received_data = 'CHANNEL OPENED'
         conn.channel.onmessage = e => {
           this.received_data = e.data
         }
       })
+
+      this.conn = conn
     }
   }
 }
