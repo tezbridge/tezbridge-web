@@ -1,14 +1,14 @@
 <template>
   <b-form>
     <b-form-group 
-      :label="lang.form_import.label" 
-      :description="lang.form_import.desc"
-      :invalid-feedback="lang.form_import.user_key_invalid + key_type"
-      :valid-feedback="lang.form_import.user_key_valid + key_type">
+      :label="lang.import_key.label" 
+      :description="lang.import_key.desc"
+      :invalid-feedback="lang.import_key.user_key_invalid + key_type"
+      :valid-feedback="lang.import_key.user_key_valid + key_type">
       <b-form-input id="user-key" v-model="user_key" :state="user_key_validation"/>
     </b-form-group>
 
-    <b-form-group v-if="pwd_required" :label="lang.form_import.pwd_label" :description="lang.form_import.pwd_desc">
+    <b-form-group v-if="pwd_required" :label="lang.import_key.pwd_label" :description="lang.import_key.pwd_desc">
       <b-form-input  />
     </b-form-group>
 
@@ -29,10 +29,6 @@ export default {
       key_type: '',
       pwd_required: false
     }
-  },
-  watch: {
-    user_key(v : string) {
-    }    
   },
   computed: {
     user_key_validation() {
@@ -64,7 +60,7 @@ export default {
         }
 
         return true
-        
+
       } catch(e) {
 
         try {
@@ -82,7 +78,7 @@ export default {
 
             if (user_key.split(/\s+/g).length >= 12) {
               TBC.crypto.getKeyFromWords(user_key)
-              this.key_type = lang.key.mnenomic
+              this.key_type = lang.key.mnemonic
               this.pwd_required = true
               return true
             }

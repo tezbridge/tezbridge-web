@@ -1,24 +1,30 @@
 <template>
   <div>
-    <import-key></import-key>
-
-    <icon icon="coffee"></icon>
-    {{ lang.please_input_password }} ꜩ
-    <b-button size="sm" class="bg-primary" @click="switchLang('de_DE')">{{ x }}</b-button>
-
-    <div>
-      Received: {{ received_data }}
+    <div class="block">
+      <gen-new-key></gen-new-key>
     </div>
-    <div>
-      <textarea>{{my_conn_data}}</textarea>
-      <textarea v-model="other_conn_data"></textarea>
-      <b-button size="sm" @click="create_conn">Create Connection</b-button>
-      <b-button size="sm" @click="set_remote">Set remote info</b-button>
-      <b-button size="sm" @click="use_conn">Use Connection</b-button>
+    <div class="block">
+      <import-key></import-key>
     </div>
-    <div>
-      <textarea v-model="msg"></textarea>
-      <b-button size="sm" @click="send_msg">Send</b-button>
+
+    <div class="block">
+      {{ lang.please_input_password }} ꜩ
+      <b-button size="sm" class="bg-primary" @click="switchLang('de_DE')">{{ x }}</b-button>
+
+      <div>
+        Received: {{ received_data }}
+      </div>
+      <div>
+        <textarea>{{my_conn_data}}</textarea>
+        <textarea v-model="other_conn_data"></textarea>
+        <b-button size="sm" @click="create_conn">Create Connection</b-button>
+        <b-button size="sm" @click="set_remote">Set remote info</b-button>
+        <b-button size="sm" @click="use_conn">Use Connection</b-button>
+      </div>
+      <div>
+        <textarea v-model="msg"></textarea>
+        <b-button size="sm" @click="send_msg">Send</b-button>
+      </div>
     </div>
   </div>
 </template>
@@ -32,10 +38,12 @@ import { switchLang } from '../langs'
 import { Connection } from '../libs/rtc'
 
 import ImportKey from './forms/ImportKey'
+import GenNewKey from './forms/GenNewKey'
 
 export default {
   components: {
-    ImportKey
+    ImportKey,
+    GenNewKey
   },
   methods: {
     switchLang
@@ -95,4 +103,5 @@ export default {
 
 <style scoped>
 div {font-size: 21px;}
+div.block {margin: 16px; padding: 16px; background: #f8f8f8}
 </style>

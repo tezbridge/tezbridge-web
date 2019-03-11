@@ -3,10 +3,10 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon as Icons } from '@fortawesome/vue-fontawesome'
 
-import { faCoffee } from '@fortawesome/free-solid-svg-icons/faCoffee'
+import { faSync } from '@fortawesome/free-solid-svg-icons/faSync'
 
 library.add(
-  faCoffee
+  faSync
 )
 
 export default Icons
