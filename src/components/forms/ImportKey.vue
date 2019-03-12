@@ -8,7 +8,7 @@
       <b-form-input id="user-key" v-model="user_key" :state="user_key_validation"/>
     </b-form-group>
 
-    <b-form-group v-if="pwd_required" :label="lang.import_key.pwd_label" :description="lang.import_key.pwd_desc">
+    <b-form-group v-if="pwd_required" :label="lang.password" :description="lang.import_key.pwd_desc">
       <b-form-input  />
     </b-form-group>
 

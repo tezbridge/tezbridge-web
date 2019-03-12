@@ -2,6 +2,14 @@
   <div>
     <table v-if="!keyData.error">
       <tbody>
+        <tr v-if="keyData.encrypted">
+          <th class="left">{{lang.key.encrypted}}</th>
+          <td>
+            <span class="d-inline-block text-truncate">
+              {{keyData.encrypted}}
+            </span>
+          </td>
+        </tr>
         <tr>
           <th class="left">{{lang.key.pkh}}</th>
           <td>
@@ -60,5 +68,5 @@ export default {
 <style scoped>
   * {font-size: 1rem;}
   .left {min-width: 125px; padding-right: 16px; text-align: right; }
-  .text-truncate {  font-family: Consolas, Menlo, monospace; vertical-align: middle; max-width: 520px; }
+  .text-truncate {  font-family: Consolas, Menlo, monospace; vertical-align: middle; max-width: 800px; }
 </style>
