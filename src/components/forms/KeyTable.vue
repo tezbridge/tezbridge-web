@@ -1,0 +1,64 @@
+<template>
+  <div>
+    <table v-if="!keyData.error">
+      <tbody>
+        <tr>
+          <th class="left">{{lang.key.pkh}}</th>
+          <td>
+            <span class="d-inline-block text-truncate">
+              {{keyData.pkh}}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th class="left">{{lang.key.pk}}</th>
+          <td>
+            <span class="d-inline-block text-truncate">
+              {{keyData.pk}}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th class="left">{{lang.key.seed}}</th>
+          <td>
+            <span class="d-inline-block text-truncate">
+              {{keyData.seed}}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th class="left">{{lang.key.sk}}</th>
+          <td>
+            <span class="d-inline-block text-truncate">
+              {{keyData.sk}}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="keyData.error">
+      {{keyData.error}}
+    </div>
+  </div>
+</template>
+
+<script>
+// @flow
+
+import lang from '../../langs'
+
+export default {
+  props: ['keyData'],
+  data() {
+    return {
+      lang
+    }
+  }
+}
+</script>
+
+<style scoped>
+  * {font-size: 1rem;}
+  .left {min-width: 125px; padding-right: 16px; text-align: right; }
+  .text-truncate {  font-family: Consolas, Menlo, monospace; vertical-align: middle; max-width: 520px; }
+</style>

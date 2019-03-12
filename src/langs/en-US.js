@@ -7,11 +7,16 @@ export default {
   refresh: 'Refresh',
   must_remember: 'You must remember this',
   optional: 'optional',
-  
+
   key: {
     no_scheme: 'no scheme',
     mnemonic: 'mnemonic words',
-    faucet: 'faucet'
+    faucet: 'faucet',
+    pkh: 'Public key hash',
+    pk: 'Public key',
+    sk: 'Secret key',
+    seed: 'Seed',
+    encrypted: 'Encrypted key'
   },
   gen_key: {
     bits: 'Bits of entropy: ',
@@ -19,7 +24,11 @@ export default {
     mnemonic: 'Mnemonic',
     ed25519: 'Ed25519',
     secp256k1: 'Secp256k1',
-    p256: 'P256'
+    p256: 'P256',
+    key_tbl_head: {
+      key: 'Type',
+      value: 'Value'
+    }
   },
   import_key: {
     user_key_invalid: 'Invalid key detected: ',
