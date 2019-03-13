@@ -26,7 +26,7 @@
             </span>
           </td>
         </tr>
-        <tr>
+        <tr v-if="keyData.seed">
           <th class="left">{{lang.key.seed}}</th>
           <td>
             <span class="d-inline-block text-truncate">
