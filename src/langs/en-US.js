@@ -32,6 +32,8 @@ export default {
     }
   },
   import_key: {
+    password_correct: 'Password is correct',
+    password_incorrect: 'Password is incorrect',
     user_key_invalid: 'Invalid key detected',
     user_key_valid: 'Valid key detected',
     pwd_desc: 'Input the password to decrypt your key',
