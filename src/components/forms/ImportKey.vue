@@ -1,25 +1,48 @@
 <template>
   <b-form>
-    <b-form-group 
-      :label="lang.import_key.label + ':'" 
-      :description="lang.import_key.desc"
-      :invalid-feedback="`${lang.import_key.user_key_invalid}: ${key_type}`"
-      :valid-feedback="`${lang.import_key.user_key_valid}: ${key_type}`">
-      <b-form-input type="password" v-model.trim="user_key" :state="user_key_validation"/>
-    </b-form-group>
+    <div v-if="!confirmed">
+      <b-form-group 
+        :label="lang.import_key.your_key + ':'" 
+        :description="lang.import_key.desc"
+        :invalid-feedback="`${lang.import_key.user_key_invalid}: ${key_type}`"
+        :valid-feedback="`${lang.import_key.user_key_valid}: ${key_type}`">
+        <b-form-input type="password" v-model.trim="user_key" :state="user_key_validation"/>
+      </b-form-group>
 
-    <b-form-group 
-      v-if="pwd_required" 
-      :label="lang.password + ':'" 
-      :description="lang.import_key.pwd_desc"
-      :invalid-feedback="lang.import_key.password_incorrect"
-      :valid-feedback="lang.import_key.password_correct">
-      <b-form-input type="password" v-model="password" :state="password_validation" />
-    </b-form-group>
+      <b-form-group 
+        v-if="pwd_required" 
+        :label="lang.password + ':'" 
+        :description="lang.import_key.pwd_desc"
+        :invalid-feedback="lang.import_key.password_incorrect"
+        :valid-feedback="lang.import_key.password_correct">
+        <b-form-input type="password" v-model="password" :state="password_validation" />
+      </b-form-group>
 
-    <b-form-group v-if="result_key" :label="lang.key.pkh + ':'">
-      {{ result_key.address }}
-    </b-form-group>
+      <b-form-group v-if="result_key" :label="lang.key.pkh + ':'">
+        {{ result_key.address }}
+      </b-form-group>
+
+      <b-button size="sm" variant="primary" :disabled="!result_key" @click="confirmed = true">{{lang.confirm}}</b-button>
+    </div>
+
+    <div v-else>
+      <b-form-group 
+        :label="lang.import_key.manager_name + ':'" 
+        :invalid-feedback="lang.import_key.manager_name_invalid"
+        :valid-feedback="lang.import_key.manager_name_valid">
+        <b-form-input v-model.trim="manager_name" :state="manager_name_validation"/>
+      </b-form-group>
+
+      <b-form-group
+        :label="lang.import_key.lock_pwd + ':'"
+        :description="lang.import_key.lock_pwd_desc"
+        :invalid-feedback="lang.import_key.lock_pwd_invalid"
+        :valid-feedback="lang.import_key.lock_pwd_valid">
+        <b-form-input type="password" v-model="lock_pwd" :state="lock_pwd_validation" />
+      </b-form-group>
+        
+      <b-button size="sm" variant="primary" :disabled="!(manager_name_validation && lock_pwd_validation)" @click="confirm_manager">{{lang.confirm}}</b-button>
+    </div>
 
   </b-form>
 </template>
@@ -29,7 +52,7 @@
 
 import lang from '../../langs'
 import TBC from 'tezbridge-crypto'
-
+import storage from '../../libs/storage'
 
 const scheme_require_pwd = new Set([
   'ed25519_encrypted_seed', 'secp256k1_encrypted_secret_key',
@@ -49,7 +72,10 @@ export default {
       password: '',
       result_key: null,
       pwd_required: false,
-      password_validation: null
+      password_validation: null,
+      confirmed: false,
+      manager_name: '',
+      lock_pwd: ''
     }
   },
   watch: {
@@ -74,9 +100,32 @@ export default {
     init() {
       this.result_key = null
       this.password_validation = null
+    },
+    confirm_manager() {
+      const box = new TBC.crypto.EncryptedBox(this.result_key.getSecretKey(), this.lock_pwd)
+      box.show().then(enc => {
+        storage.addManager({
+          name: this.manager_name,
+          enc
+        })
+      })
     }
   },
   computed: {
+    lock_pwd_validation() {
+      if (!this.lock_pwd)
+        return false
+
+      // TODO: do more pwd check
+      return true
+    },
+    manager_name_validation() {
+      if (!this.manager_name)
+        return false
+
+      const index = storage.indexOfManager(this.manager_name)
+      return index === -1
+    },
     user_key_validation() {
       this.init()
 
@@ -125,7 +174,7 @@ export default {
               this.key_type = lang.key.mnemonic
               this.pwd_required = true
               this.password = ''
-              
+
               return true
             }
 

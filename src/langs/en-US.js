@@ -8,6 +8,7 @@ export default {
   refresh: 'Refresh',
   must_remember: 'You must remember',
   optional: 'optional',
+  confirm: 'Confirm',
 
   key: {
     no_scheme: 'no scheme',
@@ -37,7 +38,14 @@ export default {
     user_key_invalid: 'Invalid key detected',
     user_key_valid: 'Valid key detected',
     pwd_desc: 'Input the password to decrypt your key',
-    label: 'Your key',
+    your_key: 'Your key',
+    manager_name: 'Manager name',
+    manager_name_valid: 'You can use this manager name',
+    manager_name_invalid: 'This manager name is empty or used',
+    lock_pwd: 'Lock password',
+    lock_pwd_valid: 'The lock password is valid',
+    lock_pwd_invalid: 'The lock password is invalid',
+    lock_pwd_desc: 'This password is used to lock your secret key in TezBridge',
     desc: 'Accept mnemonic words / Any key with prefix of `edsk`, `spsk`, `p2sk`, `edesk`, `spesk` or `p2esk` / Faucet JSON string for testnet'
   }
 }
