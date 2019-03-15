@@ -15,7 +15,7 @@
       <b-input type="password" v-model.trim="password" :state="encrypted_key === null ? null : !!encrypted_key"></b-input>
     </b-form-group>
 
-    <b-button size="sm" variant="primary" :disabled="!encrypted_key">{{lang.confirm}}</b-button>
+    <b-button size="sm" variant="primary" :disabled="!encrypted_key" @click="confirm">{{lang.confirm}}</b-button>
 
   </b-form>
 </template>
@@ -52,13 +52,18 @@ export default {
 
       const box = new TBC.crypto.EncryptedBox(this.selected_enc)
       box.reveal(p)
-      .then(() => {
-        this.encrypted_key = box
+      .then(raw_key => {
+        this.encrypted_key = new TBC.crypto.EncryptedBox(raw_key)
       })
       .catch(() => {
         this.encrypted_key = false
       })
     })
+  },
+  methods: {
+    confirm() {
+      this.$emit('selected', this.encrypted_key)
+    }
   }
 }
 

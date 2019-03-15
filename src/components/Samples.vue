@@ -7,7 +7,10 @@
       <import-key></import-key>
     </div>
     <div class="block">
-      <select-manager></select-manager>
+      <select-manager @selected="key => {encrypted_key = key}"></select-manager>
+    </div>
+    <div class="block">
+      <manager :encrypted_key="encrypted_key"></manager>
     </div>
 
     <div class="block">
@@ -43,12 +46,14 @@ import { Connection } from '../libs/rtc'
 import ImportKey from './forms/ImportKey'
 import GenNewKey from './forms/GenNewKey'
 import SelectManager from './forms/SelectManager'
+import Manager from './Manager'
 
 export default {
   components: {
     ImportKey,
     GenNewKey,
-    SelectManager
+    SelectManager,
+    Manager
   },
   methods: {
     switchLang
@@ -56,6 +61,7 @@ export default {
   data() {
     return {
       lang,
+      encrypted_key: null,
       x: 'test',
       my_conn_data: '',
       other_conn_data: '',
