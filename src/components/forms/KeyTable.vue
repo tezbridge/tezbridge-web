@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style scoped>
-  * {font-size: 1rem;}
+  * {font-size: 1rem; line-height: 1.5rem;}
   .left {min-width: 125px; padding-right: 16px; text-align: right; }
-  .text-truncate {  font-family: Consolas, Menlo, monospace; vertical-align: middle; max-width: 800px; }
+  .text-truncate {  font-family: Consolas, Menlo, monospace; max-width: 800px; }
 </style>

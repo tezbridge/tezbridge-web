@@ -23,7 +23,7 @@
         </b-form-group>
         <b-form-group
           :label="lang.generated + ':'">
-          <b-alert show variant="danger">
+          <b-alert show variant="warning">
             {{lang.must_remember}}: 
             <b>{{lang.gen_key.words}}</b>
             <b v-if="keys.mnemonic.password">, {{lang.password }}</b>
@@ -51,7 +51,7 @@
         </b-form-group>
         <b-form-group
           :label="lang.generated + ':'">
-          <b-alert show variant="danger">
+          <b-alert show variant="warning">
             {{lang.must_remember}}: 
             <b v-if="!keys.ed25519.password">{{lang.key.seed}} {{lang.or}} {{lang.key.sk}}</b>
             <b v-else>{{ lang.key.encrypted }} , {{ lang.password }}</b>
@@ -79,7 +79,7 @@
         </b-form-group>
         <b-form-group
           :label="lang.generated + ':'">
-          <b-alert show variant="danger">
+          <b-alert show variant="warning">
             {{lang.must_remember}}: 
             <b v-if="!keys.secp256k1.password">{{lang.key.sk}}</b>
             <b v-else>{{ lang.key.encrypted }} , {{ lang.password }}</b>
@@ -107,7 +107,7 @@
         </b-form-group>
         <b-form-group
           :label="lang.generated + ':'">
-          <b-alert show variant="danger">
+          <b-alert show variant="warning">
             {{lang.must_remember}}: 
             <b v-if="!keys.p256.password">{{lang.key.sk}}</b>
             <b v-else>{{ lang.key.encrypted }} , {{ lang.password }}</b>

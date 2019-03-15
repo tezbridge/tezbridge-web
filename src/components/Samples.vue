@@ -6,6 +6,9 @@
     <div class="block">
       <import-key></import-key>
     </div>
+    <div class="block">
+      <select-manager></select-manager>
+    </div>
 
     <div class="block">
       {{ lang.please_input_password }} ꜩ
@@ -39,11 +42,13 @@ import { Connection } from '../libs/rtc'
 
 import ImportKey from './forms/ImportKey'
 import GenNewKey from './forms/GenNewKey'
+import SelectManager from './forms/SelectManager'
 
 export default {
   components: {
     ImportKey,
-    GenNewKey
+    GenNewKey,
+    SelectManager
   },
   methods: {
     switchLang

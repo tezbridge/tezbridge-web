@@ -13,8 +13,8 @@
         v-if="pwd_required" 
         :label="lang.password + ':'" 
         :description="lang.import_key.pwd_desc"
-        :invalid-feedback="lang.import_key.password_incorrect"
-        :valid-feedback="lang.import_key.password_correct">
+        :invalid-feedback="lang.password_incorrect"
+        :valid-feedback="lang.password_correct">
         <b-form-input type="password" v-model="password" :state="password_validation" />
       </b-form-group>
 
@@ -52,6 +52,7 @@
 
 import lang from '../../langs'
 import TBC from 'tezbridge-crypto'
+import { debounce } from '../../libs/util'
 import storage from '../../libs/storage'
 
 const scheme_require_pwd = new Set([
@@ -79,8 +80,8 @@ export default {
     }
   },
   watch: {
-    password(p : string) {
-      this.init()
+    password: debounce(function(p : string) {
+      this.result_key = null
 
       if (scheme_require_pwd.has(this.key_type)) {
         TBC.crypto.decryptKey(this.user_key, p)
@@ -94,13 +95,9 @@ export default {
       } else {
         this.result_key = TBC.crypto.getKeyFromWords(this.user_key, this.password)
       }
-    }
+    })
   },
   methods: {
-    init() {
-      this.result_key = null
-      this.password_validation = null
-    },
     confirm_manager() {
       const box = new TBC.crypto.EncryptedBox(this.result_key.getSecretKey(), this.lock_pwd)
       box.show().then(enc => {
@@ -127,8 +124,9 @@ export default {
       return index === -1
     },
     user_key_validation() {
-      this.init()
-
+      this.result_key = null
+      this.password_validation = null
+      
       if (!this.user_key)
         return null
 
