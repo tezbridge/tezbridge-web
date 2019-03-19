@@ -63,6 +63,7 @@ export default {
   methods: {
     confirm() {
       this.$emit('selected', this.encrypted_key)
+      this.encrypted_key = null
     }
   }
 }
