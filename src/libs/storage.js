@@ -10,18 +10,25 @@ type Manager = {
   enc: string
 }
 
+
+const defaults = {
+  version: '1',
+  managers: '[]',
+  settings: '{}',
+  active_manager: '{"enc": "", "address": ""}'
+}
+
 class Storage {
   version : number
   managers : Array<Manager>
   active_manager: {enc: string, address: string}
   settings : {[string]: Object}
 
-
   constructor() {
-    const version = get('version') || '1'
-    const managers = get('managers') || '[]'
-    const settings = get('settings') || '{}'
-    const active_manager = get('active_manager') || '{"enc": "", "address": ""}'
+    const version = get('version') || defaults.version
+    const managers = get('managers') || defaults.managers
+    const settings = get('settings') || defaults.settings
+    const active_manager = get('active_manager') || defaults.active_manager
 
     this.version = parseInt(version)
     this.managers = JSON.parse(managers)
@@ -36,10 +43,9 @@ class Storage {
     .then(key => {
       box.show()
       .then(enc => {
-        this.active_manager = {
-          address: key.address.slice(0, 4) + '********' + key.address.slice(-4),
-          enc
-        }
+        this.active_manager.enc = enc
+        this.active_manager.address = key.address.slice(0, 4) + '********' + key.address.slice(-4)
+
         set('active_manager', JSON.stringify(this.active_manager))
         box.reveal(password, '')
         return Promise.resolve(true)
@@ -48,7 +54,14 @@ class Storage {
   }
 
   useActiveManager() {
-
+    const active_manager = JSON.parse(get('active_manager') || defaults.active_manager)
+    if (!active_manager.enc) {
+      const box = new TBC.crypto.EncryptedBox(active_manager.enc)
+      set('active_manager', defaults.active_manager)
+      return box
+    } else {
+      throw 'No active manager'
+    }
   }
 
   addManager(manager : Manager) {
@@ -93,7 +106,6 @@ class Storage {
   }
 
 }
-
 
 const storage = new Storage()
 export default storage

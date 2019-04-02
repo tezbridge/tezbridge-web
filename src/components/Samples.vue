@@ -12,7 +12,9 @@
     <div class="block">
       <manager :encrypted_key="encrypted_key"></manager>
     </div>
-
+    <div class="block">
+      <active-manager></active-manager>
+    </div>
     <div class="block">
       {{ lang.please_input_password }} ꜩ
       <b-button size="sm" class="bg-primary" @click="switchLang('de_DE')">{{ x }}</b-button>
@@ -47,13 +49,15 @@ import ImportKey from './forms/ImportKey'
 import GenNewKey from './forms/GenNewKey'
 import SelectManager from './forms/SelectManager'
 import Manager from './Manager'
+import ActiveManager from './ActiveManager'
 
 export default {
   components: {
     ImportKey,
     GenNewKey,
     SelectManager,
-    Manager
+    Manager,
+    ActiveManager
   },
   methods: {
     switchLang

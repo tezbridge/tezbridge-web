@@ -50,6 +50,7 @@ export default {
     desc: 'Accept mnemonic words / Any key with prefix of `edsk`, `spsk`, `p2sk`, `edesk`, `spesk` or `p2esk` / Faucet JSON string for testnet'
   },
   manager: {
-    select_manager: 'Select your manager'
+    select_manager: 'Select your manager',
+    activate: 'Activate'
   }
 }
