@@ -14,6 +14,7 @@
     </div>
     <div class="block">
       <active-manager></active-manager>
+      <b-button @click="open_local_signer">Local Signer</b-button>{{x}}
     </div>
     <div class="block">
       {{ lang.please_input_password }} ꜩ
@@ -71,10 +72,25 @@ export default {
       other_conn_data: '',
       received_data: '',
       msg: '',
-      conn: null
+      conn: null,
+      signer: null
     }
   },
   methods: {
+    open_local_signer() {
+      if (this.signer) {
+        this.signer.focus()
+      } else {
+        const local_signer = window.open('/local-signer.html', null)
+        this.signer = local_signer
+        local_signer.onload = () => {
+          local_signer.postMessage('test', '*')
+        }
+        window.addEventListener('message', e => {
+          this.x = e.data
+        })
+      }
+    },
     send_msg() {
       this.conn.channel.send(this.msg)
     },
