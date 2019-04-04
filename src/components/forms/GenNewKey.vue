@@ -1,123 +1,128 @@
 <template>
-  <b-tabs pills vertical>
+  <div>
+    
+    <b-tabs pills>
 
-    <b-tab :title="lang.gen_key.mnemonic" active>
-      <b-form>
-        <b-form-group
-          :label="lang.gen_key.bits + ':'" >
-          <b-input type="number" v-model.number="keys.mnemonic.bits"></b-input>
-        </b-form-group>
-        <b-form-group
-          :label="lang.gen_key.words + ':'">
-          <icon icon="sync" spin @click="refresh_words" class="refresh-btn"></icon>
-          {{ keys.mnemonic.words }}
-        </b-form-group>
-        <b-form-group
-          :label="lang.password + `(${lang.optional}):`">
-          <b-input type="password" v-model.trim="keys.mnemonic.password"></b-input>
-        </b-form-group>
-        <b-form-group
-          v-if="keys.mnemonic.password"
-          :label="lang.password_confirm + ':'">
-          <b-input type="password" v-model.trim="keys.mnemonic.password_confirm"></b-input>
-        </b-form-group>
-        <b-form-group
-          :label="lang.generated + ':'">
-          <b-alert show variant="warning">
-            {{lang.must_remember}}: 
-            <b>{{lang.gen_key.words}}</b>
-            <b v-if="keys.mnemonic.password">, {{lang.password }}</b>
-          </b-alert>
-          <key-table :keyData="mnemonic_key"></key-table>
-        </b-form-group>
-      </b-form>
-    </b-tab>
+      <b-tab :title="lang.gen_key.mnemonic" active>
+        <b-form>
+          <b-form-group
+            :label="lang.gen_key.bits + ':'" >
+            <b-input type="number" v-model.number="keys.mnemonic.bits"></b-input>
+          </b-form-group>
+          <b-form-group
+            :label="lang.gen_key.words + ':'">
+            <icon icon="sync" spin @click="refresh_words" class="refresh-btn"></icon>
+            {{ keys.mnemonic.words }}
+          </b-form-group>
+          <b-form-group
+            :label="lang.password + `(${lang.optional}):`">
+            <b-input type="password" v-model.trim="keys.mnemonic.password"></b-input>
+          </b-form-group>
+          <b-form-group
+            v-if="keys.mnemonic.password"
+            :label="lang.password_confirm + ':'">
+            <b-input type="password" v-model.trim="keys.mnemonic.password_confirm"></b-input>
+          </b-form-group>
+          <b-form-group
+            :label="lang.generated + ':'">
+            <b-alert show variant="warning">
+              {{lang.must_remember}}: 
+              <b>{{lang.gen_key.words}}</b>
+              <b v-if="keys.mnemonic.password">, {{lang.password }}</b>
+            </b-alert>
+            <key-table :keyData="mnemonic_key"></key-table>
+          </b-form-group>
+        </b-form>
+      </b-tab>
 
-    <b-tab :title="lang.gen_key.ed25519">
-      <b-form>
-        <b-form-group
-          :label="lang.key.seed + ':'">
-          <icon icon="sync" spin @click="refresh_ed25519" class="refresh-btn"></icon>
-          {{keys.ed25519.seed}}
-        </b-form-group>
-        <b-form-group
-          :label="lang.password + `(${lang.optional}):`">
-          <b-input type="password" v-model.trim="keys.ed25519.password"></b-input>
-        </b-form-group>
-        <b-form-group
-          v-if="keys.ed25519.password"
-          :label="lang.password_confirm + ':'">
-          <b-input type="password" v-model.trim="keys.ed25519.password_confirm"></b-input>
-        </b-form-group>
-        <b-form-group
-          :label="lang.generated + ':'">
-          <b-alert show variant="warning">
-            {{lang.must_remember}}: 
-            <b v-if="!keys.ed25519.password">{{lang.key.seed}} {{lang.or}} {{lang.key.sk}}</b>
-            <b v-else>{{ lang.key.encrypted }} , {{ lang.password }}</b>
-          </b-alert>
-          <key-table :keyData="Object.keys(ed25519_key).length ? ed25519_key : keys.ed25519.key"></key-table>
-        </b-form-group>
-      </b-form>
-    </b-tab>
+      <b-tab :title="lang.gen_key.ed25519">
+        <b-form>
+          <b-form-group
+            :label="lang.key.seed + ':'">
+            <icon icon="sync" spin @click="refresh_ed25519" class="refresh-btn"></icon>
+            {{keys.ed25519.seed}}
+          </b-form-group>
+          <b-form-group
+            :label="lang.password + `(${lang.optional}):`">
+            <b-input type="password" v-model.trim="keys.ed25519.password"></b-input>
+          </b-form-group>
+          <b-form-group
+            v-if="keys.ed25519.password"
+            :label="lang.password_confirm + ':'">
+            <b-input type="password" v-model.trim="keys.ed25519.password_confirm"></b-input>
+          </b-form-group>
+          <b-form-group
+            :label="lang.generated + ':'">
+            <b-alert show variant="warning">
+              {{lang.must_remember}}: 
+              <b v-if="!keys.ed25519.password">{{lang.key.seed}} {{lang.or}} {{lang.key.sk}}</b>
+              <b v-else>{{ lang.key.encrypted }} , {{ lang.password }}</b>
+            </b-alert>
+            <key-table :keyData="Object.keys(ed25519_key).length ? ed25519_key : keys.ed25519.key"></key-table>
+          </b-form-group>
+        </b-form>
+      </b-tab>
 
-    <b-tab :title="lang.gen_key.secp256k1">
-      <b-form>
-        <b-form-group
-          :label="lang.key.sk + ':'">
-          <icon icon="sync" spin @click="refresh_secp256k1" class="refresh-btn"></icon>
-          {{keys.secp256k1.sk}}
-        </b-form-group>
-        <b-form-group
-          :label="lang.password + `(${lang.optional}):`">
-          <b-input type="password" v-model.trim="keys.secp256k1.password"></b-input>
-        </b-form-group>
-        <b-form-group
-          v-if="keys.secp256k1.password"
-          :label="lang.password_confirm + ':'">
-          <b-input type="password" v-model.trim="keys.secp256k1.password_confirm"></b-input>
-        </b-form-group>
-        <b-form-group
-          :label="lang.generated + ':'">
-          <b-alert show variant="warning">
-            {{lang.must_remember}}: 
-            <b v-if="!keys.secp256k1.password">{{lang.key.sk}}</b>
-            <b v-else>{{ lang.key.encrypted }} , {{ lang.password }}</b>
-          </b-alert>
-          <key-table :keyData="Object.keys(secp256k1_key).length ? secp256k1_key : keys.secp256k1.key"></key-table>
-        </b-form-group>
-      </b-form>
-    </b-tab>
+      <b-tab :title="lang.gen_key.secp256k1">
+        <b-form>
+          <b-form-group
+            :label="lang.key.sk + ':'">
+            <icon icon="sync" spin @click="refresh_secp256k1" class="refresh-btn"></icon>
+            {{keys.secp256k1.sk}}
+          </b-form-group>
+          <b-form-group
+            :label="lang.password + `(${lang.optional}):`">
+            <b-input type="password" v-model.trim="keys.secp256k1.password"></b-input>
+          </b-form-group>
+          <b-form-group
+            v-if="keys.secp256k1.password"
+            :label="lang.password_confirm + ':'">
+            <b-input type="password" v-model.trim="keys.secp256k1.password_confirm"></b-input>
+          </b-form-group>
+          <b-form-group
+            :label="lang.generated + ':'">
+            <b-alert show variant="warning">
+              {{lang.must_remember}}: 
+              <b v-if="!keys.secp256k1.password">{{lang.key.sk}}</b>
+              <b v-else>{{ lang.key.encrypted }} , {{ lang.password }}</b>
+            </b-alert>
+            <key-table :keyData="Object.keys(secp256k1_key).length ? secp256k1_key : keys.secp256k1.key"></key-table>
+          </b-form-group>
+        </b-form>
+      </b-tab>
 
-    <b-tab :title="lang.gen_key.p256">
-      <b-form>
-        <b-form-group
-          :label="lang.key.sk + ':'">
-          <icon icon="sync" spin @click="refresh_p256" class="refresh-btn"></icon>
-          {{keys.p256.sk}}
-        </b-form-group>
-        <b-form-group
-          :label="lang.password + `(${lang.optional}):`">
-          <b-input type="password" v-model.trim="keys.p256.password"></b-input>
-        </b-form-group>
-        <b-form-group
-          v-if="keys.p256.password"
-          :label="lang.password_confirm + ':'">
-          <b-input type="password" v-model.trim="keys.p256.password_confirm"></b-input>
-        </b-form-group>
-        <b-form-group
-          :label="lang.generated + ':'">
-          <b-alert show variant="warning">
-            {{lang.must_remember}}: 
-            <b v-if="!keys.p256.password">{{lang.key.sk}}</b>
-            <b v-else>{{ lang.key.encrypted }} , {{ lang.password }}</b>
-          </b-alert>
-          <key-table :keyData="Object.keys(p256_key).length ? p256_key : keys.p256.key"></key-table>
-        </b-form-group>
-      </b-form>
-    </b-tab>
+      <b-tab :title="lang.gen_key.p256">
+        <b-form>
+          <b-form-group
+            :label="lang.key.sk + ':'">
+            <icon icon="sync" spin @click="refresh_p256" class="refresh-btn"></icon>
+            {{keys.p256.sk}}
+          </b-form-group>
+          <b-form-group
+            :label="lang.password + `(${lang.optional}):`">
+            <b-input type="password" v-model.trim="keys.p256.password"></b-input>
+          </b-form-group>
+          <b-form-group
+            v-if="keys.p256.password"
+            :label="lang.password_confirm + ':'">
+            <b-input type="password" v-model.trim="keys.p256.password_confirm"></b-input>
+          </b-form-group>
+          <b-form-group
+            :label="lang.generated + ':'">
+            <b-alert show variant="warning">
+              {{lang.must_remember}}: 
+              <b v-if="!keys.p256.password">{{lang.key.sk}}</b>
+              <b v-else>{{ lang.key.encrypted }} , {{ lang.password }}</b>
+            </b-alert>
+            <key-table :keyData="Object.keys(p256_key).length ? p256_key : keys.p256.key"></key-table>
+          </b-form-group>
+        </b-form>
+      </b-tab>
 
-  </b-tabs>
+    </b-tabs>
+
+    <b-button variant="primary">{{lang.gen_key.use_this_key}}</b-button>
+  </div>
 </template>
 
 <script>

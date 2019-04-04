@@ -15,52 +15,52 @@ const defaults = {
   version: '1',
   managers: '[]',
   settings: '{}',
-  active_manager: '{"enc": "", "address": ""}'
+  ready_manager: '{"enc": "", "name": ""}'
 }
 
 class Storage {
   version : number
   managers : Array<Manager>
-  active_manager: {enc: string, address: string}
+  ready_manager: {enc: string, name: string}
   settings : {[string]: Object}
 
   constructor() {
     const version = get('version') || defaults.version
     const managers = get('managers') || defaults.managers
     const settings = get('settings') || defaults.settings
-    const active_manager = get('active_manager') || defaults.active_manager
+    const ready_manager = get('ready_manager') || defaults.ready_manager
 
     this.version = parseInt(version)
     this.managers = JSON.parse(managers)
     this.settings = JSON.parse(settings)
-    this.active_manager = JSON.parse(active_manager)
+    this.ready_manager = JSON.parse(ready_manager)
   }
 
-  setActiveManager(box : TBC.crypto.EncryptedBox) {
+  setReadyManager(box : TBC.crypto.EncryptedBox, name : string) {
     const password = TBC.codec.toHex(TBC.crypto.genRandomBytes(8))
 
-    return box.revealKey('', password)
-    .then(key => {
+    return box.reveal('', password)
+    .then(() => {
       box.show()
       .then(enc => {
-        this.active_manager.enc = enc
-        this.active_manager.address = key.address.slice(0, 4) + '********' + key.address.slice(-4)
+        this.ready_manager.enc = enc
+        this.ready_manager.name = name
 
-        set('active_manager', JSON.stringify(this.active_manager))
+        set('ready_manager', JSON.stringify(this.ready_manager))
         box.reveal(password, '')
         return Promise.resolve(true)
       })
     })
   }
 
-  useActiveManager() {
-    const active_manager = JSON.parse(get('active_manager') || defaults.active_manager)
-    if (!active_manager.enc) {
-      const box = new TBC.crypto.EncryptedBox(active_manager.enc)
-      set('active_manager', defaults.active_manager)
+  useReadyManager() {
+    const ready_manager = JSON.parse(get('ready_manager') || defaults.ready_manager)
+    if (!ready_manager.enc) {
+      const box = new TBC.crypto.EncryptedBox(ready_manager.enc)
+      set('ready_manager', defaults.ready_manager)
       return box
     } else {
-      throw 'No active manager'
+      throw 'No ready manager'
     }
   }
 

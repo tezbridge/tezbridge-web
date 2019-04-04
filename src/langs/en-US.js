@@ -33,7 +33,8 @@ export default {
     key_tbl_head: {
       key: 'Type',
       value: 'Value'
-    }
+    },
+    use_this_key: 'Use this key'
   },
   import_key: {
     user_key_invalid: 'Invalid key detected',
@@ -50,7 +51,15 @@ export default {
     desc: 'Accept mnemonic words / Any key with prefix of `edsk`, `spsk`, `p2sk`, `edesk`, `spesk` or `p2esk` / Faucet JSON string for testnet'
   },
   manager: {
+    create_tab: 'Create',
+    import_tab: 'Import',
+    add_manager: 'Add manager',
+    ready_manager: 'Ready manager',
+    no_ready_manager: 'No ready manager',
     select_manager: 'Select your manager',
-    activate: 'Activate'
+    get_ready: 'Get ready'
+  },
+  signer: {
+    ready_manager: 'Ready manager'
   }
 }

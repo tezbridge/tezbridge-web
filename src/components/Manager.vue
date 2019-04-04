@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>{{pkh}}</div>
-    <b-button @click="activate"> {{lang.manager.activate}}</b-button>
+    <b-button @click="getReady">{{lang.manager.get_ready}}</b-button>
   </div>
 </template>
 
@@ -13,27 +13,28 @@ import TBC from 'tezbridge-crypto'
 import storage from '../libs/storage'
 
 export default {
-  props: ['encrypted_key'],
+  props: ['encrypted_key', 'name'],
   data() {
     return {
       lang,
       pkh: '',
+      name: '',
       box: null
     }
   },
   watch: {
-    encrypted_key(v : TBC.crypto.EncryptedBox) {
-      this.box = v
+    encrypted_key(box : TBC.crypto.EncryptedBox) {
+      this.box = box
 
-      v.revealKey()
+      box.revealKey()
       .then(key => {
         this.pkh = key.address
       })
     }
   },
   methods: {
-    activate() {
-      storage.setActiveManager(this.box)
+    getReady() {
+      storage.setReadyManager(this.box, this.name)
     }
   }
 }

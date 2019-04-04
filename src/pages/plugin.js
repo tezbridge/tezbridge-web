@@ -42,7 +42,12 @@
       }
     }
 
-
+    run(cmd : Object) {
+      if (signer)
+        signer.postMessage(cmd, domain || '*')
+      else
+        throw 'Signer is not opened'
+    }
   }
 
   window.tezbridge = new TezBridge()

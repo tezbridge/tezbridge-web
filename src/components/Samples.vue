@@ -7,13 +7,13 @@
       <import-key></import-key>
     </div>
     <div class="block">
-      <select-manager @selected="key => {encrypted_key = key}"></select-manager>
+      <select-manager @selected="(key, name) => {encrypted_key = key; mgr_name = name}"></select-manager>
     </div>
     <div class="block">
-      <manager :encrypted_key="encrypted_key"></manager>
+      <manager :encrypted_key="encrypted_key" :name="mgr_name"></manager>
     </div>
     <div class="block">
-      <active-manager></active-manager>
+      <ready-manager></ready-manager>
       <b-button @click="open_local_signer">Local Signer</b-button>{{x}}
     </div>
     <div class="block">
@@ -50,7 +50,7 @@ import ImportKey from './forms/ImportKey'
 import GenNewKey from './forms/GenNewKey'
 import SelectManager from './forms/SelectManager'
 import Manager from './Manager'
-import ActiveManager from './ActiveManager'
+import ReadyManager from './ReadyManager'
 
 export default {
   components: {
@@ -58,7 +58,7 @@ export default {
     GenNewKey,
     SelectManager,
     Manager,
-    ActiveManager
+    ReadyManager
   },
   methods: {
     switchLang
@@ -81,7 +81,7 @@ export default {
       if (this.signer) {
         this.signer.focus()
       } else {
-        const local_signer = window.open('/local-signer.html', null)
+        const local_signer = window.open('/signer.html', null)
         this.signer = local_signer
         local_signer.onload = () => {
           local_signer.postMessage('test', '*')
