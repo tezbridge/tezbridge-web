@@ -65,6 +65,7 @@ const scheme_not_require_pwd = new Set([
 ])
 
 export default {
+  props: ['userkey'],
   data() {
     return {
       lang,
@@ -80,6 +81,9 @@ export default {
     }
   },
   watch: {
+    userkey(v : string) {
+      this.user_key = v
+    },
     password: debounce(function(p : string) {
       this.result_key = null
 

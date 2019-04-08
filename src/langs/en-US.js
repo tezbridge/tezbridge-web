@@ -12,7 +12,8 @@ export default {
   must_remember: 'You must remember',
   optional: 'optional',
   confirm: 'Confirm',
-
+  ok: 'OK',
+  cancel: 'Cancel',
   key: {
     no_scheme: 'no scheme',
     mnemonic: 'mnemonic words',

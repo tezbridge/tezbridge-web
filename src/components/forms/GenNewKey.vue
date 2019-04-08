@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <b-tabs pills>
+    <b-tabs pills ref="tabs">
 
       <b-tab :title="lang.gen_key.mnemonic" active>
         <b-form>
@@ -121,7 +121,7 @@
 
     </b-tabs>
 
-    <b-button variant="primary">{{lang.gen_key.use_this_key}}</b-button>
+    <b-button variant="primary" @click="use_this_key">{{lang.gen_key.use_this_key}}</b-button>
   </div>
 </template>
 
@@ -140,6 +140,7 @@ export default {
     return {
       lang,
       keys: {
+        last_encrypted: '',
         mnemonic: {
           bits: 128,
           words: '',
@@ -192,6 +193,22 @@ export default {
     this.refresh_p256()
   },
   methods: {
+    use_this_key() {
+      const tab_mapping = [
+        this.keys.mnemonic.words, 
+        this.keys.ed25519.seed,
+        this.keys.secp256k1.sk,
+        this.keys.p256.sk
+      ]
+
+      const index = this.$refs.tabs.tabs.reduce((acc, x, index) => {
+        if (x.show)
+          return index
+        else
+          return acc
+      }, -1)
+      this.$emit('key_selected', this.keys.last_encrypted || tab_mapping[index])
+    },
     refresh_words() {
       this.keys.mnemonic.words = TBC.crypto.genMnemonic(this.keys.mnemonic.bits)
     },
@@ -224,6 +241,7 @@ export default {
         const raw_key = seed ? TBC.codec.bs58checkDecode(seed) : key.secret_key
         TBC.crypto.encryptKey(scheme, raw_key, scheme_key.password)
         .then(encrypted => {
+          this.keys.last_encrypted = encrypted
           scheme_key.key = Object.assign({}, basic, {encrypted})
         })
         return {}

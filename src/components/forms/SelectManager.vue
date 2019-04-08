@@ -1,12 +1,12 @@
 <template>
   <div class="block">
-    <b-modal id="modal-add" size="xl" :title="lang.manager.add_manager">
-      <b-tabs card>
+    <b-modal v-model="add_manager_modal" id="modal-add" size="xl" :title="lang.manager.add_manager" ok-variant="secondary" ok-only :ok-title="lang.cancel">
+      <b-tabs card v-model="tab_index">
         <b-tab :title="lang.manager.create_tab" active>
-          <gen-new-key></gen-new-key>
+          <gen-new-key @key_selected="gen_key_used"></gen-new-key>
         </b-tab>
         <b-tab :title="lang.manager.import_tab">
-          <import-key></import-key>
+          <import-key :userkey="generated_key"></import-key>
         </b-tab>
       </b-tabs>
     </b-modal>
@@ -54,6 +54,9 @@ export default {
   data() {
     return {
       lang,
+      add_manager_modal: false,
+      tab_index: 0,
+      generated_key : '',
       managers: [],
       selected_manager: '',
       password: '',
@@ -83,6 +86,10 @@ export default {
     })
   },
   methods: {
+    gen_key_used(key : string) {
+      this.generated_key = key
+      this.tab_index = 1
+    },
     confirm() {
       this.$emit('selected', [this.passing_box, this.selected_manager.name])
       this.passing_box = null
