@@ -1,12 +1,12 @@
 <template>
   <b-form>
-    <div v-if="!confirmed">
+    <div>
       <b-form-group 
         :label="lang.import_key.your_key + ':'" 
         :description="lang.import_key.desc"
         :invalid-feedback="`${lang.import_key.user_key_invalid}: ${key_type}`"
         :valid-feedback="`${lang.import_key.user_key_valid}: ${key_type}`">
-        <b-form-input type="password" v-model.trim="user_key" :state="user_key_validation"/>
+        <b-form-input :disabled="key_confirmed" type="password" v-model.trim="user_key" :state="user_key_validation"/>
       </b-form-group>
 
       <b-form-group 
@@ -15,17 +15,17 @@
         :description="lang.import_key.pwd_desc"
         :invalid-feedback="lang.password_incorrect"
         :valid-feedback="lang.password_correct">
-        <b-form-input type="password" v-model="password" :state="password_validation" />
+        <b-form-input :disabled="key_confirmed" type="password" v-model="password" :state="password_validation" />
       </b-form-group>
 
       <b-form-group v-if="result_key" :label="lang.key.pkh + ':'">
         {{ result_key.address }}
       </b-form-group>
 
-      <b-button size="sm" variant="primary" :disabled="!result_key" @click="confirmed = true">{{lang.confirm}}</b-button>
+      <b-button v-if="!key_confirmed" size="sm" variant="primary" :disabled="!result_key" @click="key_confirmed = true">{{lang.confirm}}</b-button>
     </div>
 
-    <div v-else>
+    <div v-if="key_confirmed">
       <b-form-group 
         :label="lang.import_key.manager_name + ':'" 
         :invalid-feedback="lang.import_key.manager_name_invalid"
@@ -75,7 +75,7 @@ export default {
       result_key: null,
       pwd_required: false,
       password_validation: null,
-      confirmed: false,
+      key_confirmed: false,
       manager_name: '',
       lock_pwd: ''
     }
@@ -109,20 +109,21 @@ export default {
           name: this.manager_name,
           enc
         })
+        this.$emit('manager_added')
       })
     }
   },
   computed: {
     lock_pwd_validation() {
       if (!this.lock_pwd)
-        return false
+        return null
 
       // TODO: do more pwd check
       return true
     },
     manager_name_validation() {
       if (!this.manager_name)
-        return false
+        return null
 
       const index = storage.indexOfManager(this.manager_name)
       return index === -1

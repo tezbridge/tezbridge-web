@@ -44,7 +44,7 @@ export default {
     your_key: 'Your key',
     manager_name: 'Manager name',
     manager_name_valid: 'You can use this manager name',
-    manager_name_invalid: 'This manager name is empty or used',
+    manager_name_invalid: 'This manager name is used',
     lock_pwd: 'Lock password',
     lock_pwd_valid: 'The lock password is valid',
     lock_pwd_invalid: 'The lock password is invalid',
