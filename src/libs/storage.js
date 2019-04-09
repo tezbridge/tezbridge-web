@@ -39,7 +39,7 @@ class Storage {
   setReadyManager(box : TBC.crypto.EncryptedBox, name : string) {
     const password = TBC.codec.toHex(TBC.crypto.genRandomBytes(8))
 
-    return box.reveal('', password)
+    box.reveal('', password)
     .then(() => {
       box.show()
       .then(enc => {
@@ -51,6 +51,8 @@ class Storage {
         return Promise.resolve(true)
       })
     })
+
+    return password
   }
 
   useReadyManager() {

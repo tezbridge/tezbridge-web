@@ -56,6 +56,7 @@ export default {
     import_tab: 'Import',
     add_manager: 'Add manager',
     ready_manager: 'Ready manager',
+    current_manager: 'Current manager',
     no_ready_manager: 'No ready manager',
     select_manager: 'Select your manager',
     get_ready: 'Get ready'
