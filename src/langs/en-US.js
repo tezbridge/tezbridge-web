@@ -62,6 +62,10 @@ export default {
     get_ready: 'Get ready'
   },
   signer: {
-    ready_manager: 'Ready manager'
+    ready_manager: 'Ready manager',
+    listening_operations: 'Listening operations',
+  },
+  operation: {
+    kind: 'Kind',
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <ready-manager></ready-manager>
     <select-manager @selected="([box, name]) => selected_manager = {box, name}"></select-manager>
     <manager :box="selected_manager.box" :name="selected_manager.name"></manager>
@@ -29,3 +29,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+div.wrapper { max-width: 960px; margin: 0 auto }
+</style>
