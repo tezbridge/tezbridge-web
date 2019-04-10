@@ -41,7 +41,7 @@
         <b-form-input type="password" v-model="lock_pwd" :state="lock_pwd_validation" />
       </b-form-group>
         
-      <b-button size="sm" variant="primary" :disabled="!(manager_name_validation && lock_pwd_validation)" @click="confirm_manager">{{lang.confirm}}</b-button>
+      <b-button size="sm" variant="primary" :disabled="!(manager_name_validation && lock_pwd_validation)" @click="confirmManager">{{lang.confirm}}</b-button>
     </div>
 
   </b-form>
@@ -102,7 +102,7 @@ export default {
     })
   },
   methods: {
-    confirm_manager() {
+    confirmManager() {
       const box = new TBC.crypto.EncryptedBox(this.result_key.getSecretKey(), this.lock_pwd)
       box.show().then(enc => {
         storage.addManager({

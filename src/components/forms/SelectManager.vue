@@ -3,7 +3,7 @@
     <b-modal v-model="adding_manager_modal" id="modal-add" size="xl" :title="lang.manager.add_manager" ok-variant="secondary" ok-only :ok-title="lang.cancel">
       <b-tabs card v-model="tab_index">
         <b-tab :title="lang.manager.create_tab" active>
-          <gen-new-key @key_selected="gen_key_used"></gen-new-key>
+          <gen-new-key @key_selected="genKeyUsed"></gen-new-key>
         </b-tab>
         <b-tab :title="lang.manager.import_tab">
           <import-key :userkey="generated_key" @manager_added="adding_manager_modal = false"></import-key>
@@ -86,7 +86,7 @@ export default {
     })
   },
   methods: {
-    gen_key_used(key : string) {
+    genKeyUsed(key : string) {
       this.generated_key = key
       this.tab_index = 1
     },

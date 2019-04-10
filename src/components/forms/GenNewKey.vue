@@ -11,7 +11,7 @@
           </b-form-group>
           <b-form-group
             :label="lang.gen_key.words + ':'">
-            <icon icon="sync" spin @click="refresh_words" class="refresh-btn"></icon>
+            <icon icon="sync" spin @click="refreshWords" class="refresh-btn"></icon>
             {{ keys.mnemonic.words }}
           </b-form-group>
           <b-form-group
@@ -39,7 +39,7 @@
         <b-form>
           <b-form-group
             :label="lang.key.seed + ':'">
-            <icon icon="sync" spin @click="refresh_ed25519" class="refresh-btn"></icon>
+            <icon icon="sync" spin @click="refreshEd25519" class="refresh-btn"></icon>
             {{keys.ed25519.seed}}
           </b-form-group>
           <b-form-group
@@ -67,7 +67,7 @@
         <b-form>
           <b-form-group
             :label="lang.key.sk + ':'">
-            <icon icon="sync" spin @click="refresh_secp256k1" class="refresh-btn"></icon>
+            <icon icon="sync" spin @click="refreshSecp256k1" class="refresh-btn"></icon>
             {{keys.secp256k1.sk}}
           </b-form-group>
           <b-form-group
@@ -95,7 +95,7 @@
         <b-form>
           <b-form-group
             :label="lang.key.sk + ':'">
-            <icon icon="sync" spin @click="refresh_p256" class="refresh-btn"></icon>
+            <icon icon="sync" spin @click="refreshP256" class="refresh-btn"></icon>
             {{keys.p256.sk}}
           </b-form-group>
           <b-form-group
@@ -121,7 +121,7 @@
 
     </b-tabs>
 
-    <b-button variant="primary" @click="use_this_key">{{lang.gen_key.use_this_key}}</b-button>
+    <b-button variant="primary" @click="useThisKey">{{lang.gen_key.use_this_key}}</b-button>
   </div>
 </template>
 
@@ -187,13 +187,13 @@ export default {
     }
   },
   mounted() {
-    this.refresh_words()
-    this.refresh_ed25519()
-    this.refresh_secp256k1()
-    this.refresh_p256()
+    this.refreshWords()
+    this.refreshEd25519()
+    this.refreshSecp256k1()
+    this.refreshP256()
   },
   methods: {
-    use_this_key() {
+    useThisKey() {
       const tab_mapping = [
         this.keys.mnemonic.words, 
         this.keys.ed25519.seed,
@@ -209,22 +209,22 @@ export default {
       }, -1)
       this.$emit('key_selected', this.keys.last_encrypted || tab_mapping[index])
     },
-    refresh_words() {
+    refreshWords() {
       this.keys.mnemonic.words = TBC.crypto.genMnemonic(this.keys.mnemonic.bits)
     },
-    refresh_ed25519() {
+    refreshEd25519() {
       const seed = TBC.crypto.genRandomBytes(32)
       this.keys.ed25519.seed = TBC.codec.bs58checkEncode(seed, TBC.codec.prefix.ed25519_seed)
     },
-    refresh_secp256k1() {
+    refreshSecp256k1() {
       const sk = TBC.crypto.genRandomBytes(32)
       this.keys.secp256k1.sk = TBC.codec.bs58checkEncode(sk, TBC.codec.prefix.secp256k1_secret_key)
     },
-    refresh_p256() {
+    refreshP256() {
       const sk = TBC.crypto.genRandomBytes(32)
       this.keys.p256.sk = TBC.codec.bs58checkEncode(sk, TBC.codec.prefix.p256_secret_key)
     },
-    gen_key(scheme : 'ed25519' | 'secp256k1' | 'p256', key : Object, seed? : string) {
+    genKey(scheme : 'ed25519' | 'secp256k1' | 'p256', key : Object, seed? : string) {
       const scheme_key = this.keys[scheme]
 
       if (scheme_key.password !== scheme_key.password_confirm)
@@ -272,21 +272,21 @@ export default {
         return {error: ' '}
 
       const key = TBC.crypto.getKeyFromSeed(TBC.codec.bs58checkDecode(seed))
-      return this.gen_key('ed25519', key, seed)
+      return this.genKey('ed25519', key, seed)
     },
     secp256k1_key() {
       if (!this.keys.secp256k1.sk)
         return {error: ' '}
 
       const key = TBC.crypto.getKeyFromSecretKey(this.keys.secp256k1.sk)
-      return this.gen_key('secp256k1', key)
+      return this.genKey('secp256k1', key)
     },
     p256_key() {
       if (!this.keys.p256.sk)
         return {error: ' '}
 
       const key = TBC.crypto.getKeyFromSecretKey(this.keys.p256.sk)
-      return this.gen_key('p256', key)
+      return this.genKey('p256', key)
     }
   }
 }

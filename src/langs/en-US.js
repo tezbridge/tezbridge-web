@@ -63,6 +63,7 @@ export default {
   },
   signer: {
     ready_manager: 'Ready manager',
+    access_code: 'Access code',
     listening_operations: 'Listening operations',
   },
   operation: {

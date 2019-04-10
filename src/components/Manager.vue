@@ -7,9 +7,9 @@
           <td class="left">{{name}}:</td>
           <td>{{pkh}}</td>
         </tr>
-        <tr v-if="password">
-          <td class="left">{{lang.password}}:</td>
-          <td>{{password}}</td>
+        <tr v-if="access_code">
+          <td class="left">{{lang.signer.access_code}}:</td>
+          <td>{{access_code}}</td>
         </tr>
       </tbody>
     </table>
@@ -30,7 +30,7 @@ export default {
     return {
       lang,
       pkh: '',
-      password: ''
+      access_code: ''
     }
   },
   watch: {
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     getReady() {
-      this.password = storage.setReadyManager(this.box, this.name)
+      this.access_code = storage.setReadyManager(this.box, this.name)
     }
   }
 }

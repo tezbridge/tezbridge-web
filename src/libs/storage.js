@@ -37,7 +37,7 @@ class Storage {
   }
 
   setReadyManager(box : TBC.crypto.EncryptedBox, name : string) {
-    const password = TBC.codec.toHex(TBC.crypto.genRandomBytes(8))
+    const password = TBC.codec.bs58checkEncode(TBC.crypto.genRandomBytes(8), new Uint8Array([71, 55]))
 
     box.reveal('', password)
     .then(() => {
