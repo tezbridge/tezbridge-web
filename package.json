@@ -27,7 +27,7 @@
     "bootstrap-vue": "^2.0.0-rc.13",
     "forms": "^1.3.0",
     "tezbridge-crypto": "^1.0.29",
-    "tezbridge-network": "^1.0.10",
+    "tezbridge-network": "^1.0.11",
     "vue": "^2.6.8",
     "vue-hot-reload-api": "^2.3.3"
   },
