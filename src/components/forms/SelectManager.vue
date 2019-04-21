@@ -14,7 +14,7 @@
       <b-button size="sm" v-b-modal.modal-add>+</b-button>
     </div>
     <div class="block-title">{{lang.manager.select_manager + ':'}}</div>
-    <b-form>
+    <b-form v-if="managers.length">
       <b-form-group>
         <b-form-radio-group v-model="selected_manager" name="manager">
           <b-form-radio :value="manager" v-for="manager in managers">
