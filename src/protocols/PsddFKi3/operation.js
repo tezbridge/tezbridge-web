@@ -1,7 +1,7 @@
 // @flow
 
 import TBC from 'tezbridge-crypto'
-import { network_client } from './network'
+import { network_client } from '../../libs/network'
 
 export async function genMinFeeOperation(secret_key : string, op_params: Array<{
     kind: 'origination' | 'transaction',

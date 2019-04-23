@@ -1,19 +1,25 @@
 <template>
-  <div class="block">
-    <div class="block-title">{{lang.manager.current_manager}}:</div>
-    <table>
-      <tbody>
-        <tr v-if="name">
-          <td class="left">{{name}}:</td>
-          <td>{{pkh}}</td>
-        </tr>
-        <tr v-if="access_code">
-          <td class="left">{{lang.signer.access_code}}:</td>
-          <td>{{access_code}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <b-button v-if="box" size="sm" @click="getReady">{{lang.manager.get_ready}}</b-button>
+  <div>
+    <div class="block">
+      <div class="block-title">{{lang.manager.current_manager}}:</div>
+      <table>
+        <tbody>
+          <tr v-if="name">
+            <td class="left">{{name}}:</td>
+            <td>{{pkh}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="block">
+      <b-form-radio-group v-model="selected_contract" name="contract">
+        <b-form-radio :value="contract" v-for="contract in contracts">
+          <span>{{contract}}</span>
+        </b-form-radio>
+      </b-form-radio-group>
+      <div v-if="access_code">{{lang.signer.access_code}}: {{access_code}}</div>
+      <b-button v-if="box" size="sm" :disabled="!selected_contract" @click="getReady">{{lang.manager.get_ready}}</b-button>
+    </div>
   </div>
 </template>
 
@@ -22,6 +28,7 @@
 
 import lang from '../langs'
 import TBC from 'tezbridge-crypto'
+import { network_client } from '../libs/network'
 import storage from '../libs/storage'
 
 export default {
@@ -30,20 +37,22 @@ export default {
     return {
       lang,
       pkh: '',
-      access_code: ''
+      access_code: '',
+      selected_contract: '',
+      contracts: []
     }
   },
   watch: {
-    box(box : TBC.crypto.EncryptedBox) {
-      box.revealKey()
-      .then(key => {
-        this.pkh = key.address
-      })
+    async box(box : TBC.crypto.EncryptedBox) {
+      const key = await box.revealKey()
+      this.pkh = key.address
+      this.contracts = await network_client.external.originated_contracts(this.pkh, false)
+      this.contracts.unshift(this.pkh)
     }
   },
   methods: {
     getReady() {
-      this.access_code = storage.setReadyManager(this.box, this.name)
+      this.access_code = storage.setReadyManager(this.box, this.name, this.selected_contract)
     }
   }
 }

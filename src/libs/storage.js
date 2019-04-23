@@ -15,13 +15,13 @@ const defaults = {
   version: '1',
   managers: '[]',
   settings: '{}',
-  ready_manager: '{"enc": "", "name": ""}'
+  ready_manager: '{"enc": "", "name": "", "source": ""}'
 }
 
 class Storage {
   version : number
   managers : Array<Manager>
-  ready_manager: {enc: string, name: string}
+  ready_manager: {enc: string, name: string, source: string}
   settings : {[string]: Object}
 
   constructor() {
@@ -36,7 +36,7 @@ class Storage {
     this.ready_manager = JSON.parse(ready_manager)
   }
 
-  setReadyManager(box : TBC.crypto.EncryptedBox, name : string) {
+  setReadyManager(box : TBC.crypto.EncryptedBox, name : string, source : string) {
     const password = TBC.codec.bs58checkEncode(TBC.crypto.genRandomBytes(8), new Uint8Array([71, 55]))
 
     box.reveal('', password)
@@ -45,7 +45,8 @@ class Storage {
       .then(enc => {
         this.ready_manager.enc = enc
         this.ready_manager.name = name
-
+        this.ready_manager.source = source
+        
         set('ready_manager', JSON.stringify(this.ready_manager))
         box.reveal(password, '')
         return Promise.resolve(true)

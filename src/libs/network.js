@@ -3,9 +3,9 @@
 import TBN from 'tezbridge-network'
 
 export const network_client = new TBN({
-  host: 'https://testnet.tezbridge.com'
+  host: 'https://alphanet.tezrpc.me'
 })
 
 export default {
-	network_client
+  network_client
 }

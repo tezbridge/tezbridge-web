@@ -1,7 +1,7 @@
 // @flow
 
 import TezBridgeCrypto from 'tezbridge-crypto'
-import { network_client } from '../src/protocols/PsddFKi3/network'
+import { network_client } from '../src/libs/network'
 import Operation from '../src/protocols/PsddFKi3/operation'
 import { assert, RPCFn } from './util'
 
