@@ -12,7 +12,7 @@
       </table>
     </div>
     <div class="block">
-      <b-spinner v-if="loading"></b-spinner>
+      <b-spinner small v-if="loading"></b-spinner>
       <b-form-radio-group v-model="selected_contract" name="contract">
         <b-form-radio :value="contract" v-for="contract in contracts">
           <span>{{contract}}</span>
