@@ -9,7 +9,7 @@ export default {
 
   generated: 'Generated',
   refresh: 'Refresh',
-  must_remember: 'You must remember',
+  must_remember: 'must remember',
   optional: 'optional',
   confirm: 'Confirm',
   ok: 'OK',

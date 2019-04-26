@@ -12,7 +12,47 @@
   font-style: normal;
 }
 
-* { font-family: Lato, TZ; vertical-align: middle; line-height: 1rem; }
-.btn-sm { line-height: 1rem; }
-div.block { margin: 8px; background: #f8f8f8; padding: 16px; }
-div.block-title { font-size: 12px; color: #888;}
+* { 
+  outline: none;
+  font-family: Lato, TZ; 
+  vertical-align: middle; 
+  -webkit-appearance: none; 
+  transition: all 0.1s; 
+  box-sizing: border-box;
+}
+
+body { 
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.selectable {
+  -webkit-touch-callout: text;
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+button {
+  font-size: 1rem;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 2px;
+  background: #fff;
+  border: 1px solid #bbb;
+  box-shadow: 2px 2px 0 0 #bbb;
+}
+button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 0 #bbb;
+}
+
+// .btn-sm { line-height: 1rem; }
+// div.block { margin: 8px; background: #f8f8f8; padding: 16px; }
+// div.block-title { font-size: 12px; color: #888;}
