@@ -12,6 +12,7 @@
       </table>
     </div>
     <div class="block">
+      <b-spinner v-if="loading"></b-spinner>
       <b-form-radio-group v-model="selected_contract" name="contract">
         <b-form-radio :value="contract" v-for="contract in contracts">
           <span>{{contract}}</span>
@@ -36,6 +37,7 @@ export default {
   data() {
     return {
       lang,
+      loading: false,
       pkh: '',
       access_code: '',
       selected_contract: '',
@@ -44,10 +46,14 @@ export default {
   },
   watch: {
     async box(box : TBC.crypto.EncryptedBox) {
+      this.resetData()
+
       const key = await box.revealKey()
       this.pkh = key.address
+      this.loading = true
       this.contracts = await network_client.external.originated_contracts(this.pkh, false)
       this.contracts.unshift(this.pkh)
+      this.loading = false
     }
   },
   methods: {
