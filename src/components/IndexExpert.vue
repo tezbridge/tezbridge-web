@@ -5,7 +5,8 @@
         <create-key></create-key>
       </tree-node>
 
-      <tree-node title="Import key">
+      <tree-node title="Import key" :limited="1">
+        <import-key></import-key>
       </tree-node>
 
       <tree-node title="Select manager">
@@ -26,11 +27,13 @@
 
 import TreeNode from './TreeNode'
 import CreateKey from './CreateKey'
+import ImportKey from './ImportKey'
 
 export default {
   components: {
     TreeNode,
-    CreateKey
+    CreateKey,
+    ImportKey
   },
   data() {
     return {

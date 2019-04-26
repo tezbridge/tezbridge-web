@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="title">
       <span>{{title}}</span>
-      <span v-if="optional && !value">(optional)</span>
+      <span v-if="optional && !value">({{lang.optional}})</span>
       <span v-if="important && value" class="important">({{important}})</span>
     </div>
     <input class="selectable" :disabled="disabled" :type="kind || 'text'" @input="e => $emit('input', e.target.value)" :value="value"/>
@@ -11,6 +11,8 @@
 
 <script>
 // @flow
+
+import lang from '../langs'
 
 export default {
   props: {
@@ -23,6 +25,7 @@ export default {
   },
   data() {
     return {
+      lang
     }
   }
 }
@@ -30,7 +33,7 @@ export default {
 
 <style scoped>
 div.title { font-size: 0.8rem; background: #f4f4f4; text-align: center;}
-span.important {color: red;}
+span.important {color: #ff2933;}
 input { font-family: Consolas, Menlo, monospace; font-size: 1rem; margin:0; width: 100%; border: 1px solid #eee; border-radius: 0; padding: 4px;}
 input[disabled] {
   background: #eee; 

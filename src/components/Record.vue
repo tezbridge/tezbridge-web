@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper" v-for="(item, key) in data">
+    <div class="wrapper" v-if="item" v-for="(item, key) in data">
       <div class="title">
         <span>{{key}}</span>
         <span v-if="item instanceof Array" class="important">(must remember)</span>
@@ -27,7 +27,7 @@ export default {
 <style scoped>
 div.wrapper { margin-top: 8px }
 div.title { font-size: 0.8rem; background: #f0f0f0; text-align: center;}
-span.important {color: red;}
+span.important {color: #ff2933;}
 div.content { 
   font-family: Consolas, Menlo, monospace; 
   font-size: 1rem; 

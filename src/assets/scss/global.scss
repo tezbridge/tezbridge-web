@@ -40,6 +40,7 @@ body {
 }
 
 button {
+  cursor: pointer;
   font-size: 1rem;
   padding: 4px 8px;
   border: 0;
@@ -47,6 +48,11 @@ button {
   background: #fff;
   border: 1px solid #bbb;
   box-shadow: 2px 2px 0 0 #bbb;
+  display: inline-flex;
+  align-items: center;
+}
+button svg {
+  margin-right: 8px;
 }
 button:active {
   transform: translate(1px, 1px);

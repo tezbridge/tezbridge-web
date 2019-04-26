@@ -1,5 +1,5 @@
 <template>
-  <div :class="{wrapper: true, limited}">
+  <div :class="{wrapper: true, limited1: limited === 1, limited2: limited === 2}">
     <div class="title" @click="is_open = !is_open">
       <span class="mark">{{is_open ? '-' : '+'}}</span><span>{{title}}</span>
     </div>
@@ -15,7 +15,7 @@
 export default {
   props: {
     title: String,
-    limited: Boolean
+    limited: Number
   },
   data() {
     return {
@@ -26,7 +26,8 @@ export default {
 </script>
 
 <style scoped>
-div.limited { width: 280px; }
+div.limited1 { width: 296px; }
+div.limited2 { width: 280px; }
 span.mark {display: inline-flex; width: 16px; height: 16px; align-items: center; justify-content: center; }
 div.content {margin-left: 16px;}
 div.title {padding: 4px 0;}

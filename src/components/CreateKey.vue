@@ -1,28 +1,48 @@
 <template>
   <div>
-    <tree-node title="mnemonic" limited>
-      <sm-input class="element" title="bits of entropy" v-model="keys.mnemonic.bits"></sm-input>
-      <sm-input class="element" title="password" :optional="true" important="must remember" kind="password" v-model="keys.mnemonic.password"></sm-input>
+    <tree-node title="mnemonic" :limited="2">
+      <sm-input class="element" :title="lang.gen_key.bits" v-model="keys.mnemonic.bits"></sm-input>
+      <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.mnemonic.password"></sm-input>
       <div class="op-panel element">
-        <button @click="generateWords">
-          <icon icon="sync" spin></icon>
-          Generate
+        <button @click="refreshWords">
+          <icon icon="sync" spin size="sm"></icon>
+          {{lang.refresh}}
         </button>
       </div>
       <record :data="mnemonic_key"></record>
     </tree-node>
 
-    <tree-node title="ed25519">
-      <div class="selectable">
-        <icon icon="sync" spin @click="refreshEd25519"></icon>
-        {{keys.ed25519.seed}}
-      </div>      
+    <tree-node title="ed25519" :limited="2">
+      <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.ed25519.password"></sm-input>
+      <div class="op-panel element">
+        <button @click="refreshEd25519">
+          <icon icon="sync" spin size="sm"></icon>
+          {{lang.refresh}}
+        </button>
+      </div>
+      <record :data="Object.keys(ed25519_key).length ? ed25519_key : keys.ed25519.key"></record>
     </tree-node>
 
-    <tree-node title="secp256k1">
+    <tree-node title="secp256k1" :limited="2">
+      <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.secp256k1.password"></sm-input>
+      <div class="op-panel element">
+        <button @click="refreshSecp256k1">
+          <icon icon="sync" spin size="sm"></icon>
+          {{lang.refresh}}
+        </button>
+      </div>
+      <record :data="Object.keys(secp256k1_key).length ? secp256k1_key : keys.secp256k1.key"></record>
     </tree-node>
 
-    <tree-node title="p256">
+    <tree-node title="p256" :limited="2">
+      <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.p256.password"></sm-input>
+      <div class="op-panel element">
+        <button @click="refreshP256">
+          <icon icon="sync" spin size="sm"></icon>
+          {{lang.refresh}}
+        </button>
+      </div>
+      <record :data="Object.keys(p256_key).length ? p256_key : keys.p256.key"></record>
     </tree-node>
 
   </div>
@@ -49,7 +69,6 @@ export default {
     return {
       lang,
       keys: {
-        last_encrypted: '',
         mnemonic: {
           bits: '128',
           words: '',
@@ -74,16 +93,51 @@ export default {
     }
   },
   mounted() {
-    this.generateWords()
+    this.refreshWords()
     this.refreshEd25519()
+    this.refreshSecp256k1()
+    this.refreshP256()
   },
   methods: {
-    generateWords() {
+    refreshWords() {
       this.keys.mnemonic.words = TBC.crypto.genMnemonic(this.keys.mnemonic.bits)
     },
     refreshEd25519() {
       const seed = TBC.crypto.genRandomBytes(32)
       this.keys.ed25519.seed = TBC.codec.bs58checkEncode(seed, TBC.codec.prefix.ed25519_seed)
+    },
+    refreshSecp256k1() {
+      const sk = TBC.crypto.genRandomBytes(32)
+      this.keys.secp256k1.sk = TBC.codec.bs58checkEncode(sk, TBC.codec.prefix.secp256k1_secret_key)
+    },
+    refreshP256() {
+      const sk = TBC.crypto.genRandomBytes(32)
+      this.keys.p256.sk = TBC.codec.bs58checkEncode(sk, TBC.codec.prefix.p256_secret_key)
+    },
+    genKey(scheme : 'ed25519' | 'secp256k1' | 'p256', key : Object, seed? : string) {
+      const scheme_key = this.keys[scheme]
+
+      const basic = {
+        [this.lang.key.sk]: [key.getSecretKey()],
+        [this.lang.key.pkh]: key.address,
+        [this.lang.key.pk]: key.getPublicKey(),
+        [this.lang.key.seed]: seed
+      }
+
+      if (scheme_key.password) {
+        const raw_key = seed ? TBC.codec.bs58checkDecode(seed) : key.secret_key
+        TBC.crypto.encryptKey(scheme, raw_key, scheme_key.password)
+        .then(encrypted => {
+          scheme_key.key = Object.assign(
+            {}, 
+            {[this.lang.key.encrypted]: [encrypted]}, 
+            basic,
+            {[this.lang.key.sk]: key.getSecretKey()})
+        })
+        return {}
+      } else {
+        return basic
+      }
     }
   },
   computed: {
@@ -94,11 +148,33 @@ export default {
       const seed_tz = TBC.codec.bs58checkEncode(seed, TBC.codec.prefix.ed25519_seed)
       return {
         [this.lang.gen_key.words]: [this.keys.mnemonic.words],
-        [this.lang.key.seed]: seed_tz, 
         [this.lang.key.pkh]: key.address, 
+        [this.lang.key.seed]: seed_tz, 
         [this.lang.key.sk]: key.getSecretKey(),
         [this.lang.key.pk]: key.getPublicKey()
       }
+    },
+    ed25519_key() {
+      const seed = this.keys.ed25519.seed
+      if (!seed)
+        return {}
+
+      const key = TBC.crypto.getKeyFromSeed(TBC.codec.bs58checkDecode(seed))
+      return this.genKey('ed25519', key, seed)
+    },
+    secp256k1_key() {
+      if (!this.keys.secp256k1.sk)
+        return {}
+
+      const key = TBC.crypto.getKeyFromSecretKey(this.keys.secp256k1.sk)
+      return this.genKey('secp256k1', key)
+    },
+    p256_key() {
+      if (!this.keys.p256.sk)
+        return {}
+
+      const key = TBC.crypto.getKeyFromSecretKey(this.keys.p256.sk)
+      return this.genKey('p256', key)
     }
   }
 }
