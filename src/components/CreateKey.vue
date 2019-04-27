@@ -1,6 +1,6 @@
 <template>
   <div>
-    <tree-node title="mnemonic" :limited="2">
+    <tree-node title="mnemonic">
       <sm-input class="element" :title="lang.gen_key.bits" v-model="keys.mnemonic.bits"></sm-input>
       <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.mnemonic.password"></sm-input>
       <div class="op-panel element">
@@ -12,7 +12,7 @@
       <record :data="mnemonic_key"></record>
     </tree-node>
 
-    <tree-node title="ed25519" :limited="2">
+    <tree-node title="ed25519">
       <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.ed25519.password"></sm-input>
       <div class="op-panel element">
         <button @click="refreshEd25519">
@@ -23,7 +23,7 @@
       <record :data="Object.keys(ed25519_key).length ? ed25519_key : keys.ed25519.key"></record>
     </tree-node>
 
-    <tree-node title="secp256k1" :limited="2">
+    <tree-node title="secp256k1">
       <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.secp256k1.password"></sm-input>
       <div class="op-panel element">
         <button @click="refreshSecp256k1">
@@ -34,7 +34,7 @@
       <record :data="Object.keys(secp256k1_key).length ? secp256k1_key : keys.secp256k1.key"></record>
     </tree-node>
 
-    <tree-node title="p256" :limited="2">
+    <tree-node title="p256">
       <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.p256.password"></sm-input>
       <div class="op-panel element">
         <button @click="refreshP256">

@@ -5,7 +5,7 @@
         <create-key></create-key>
       </tree-node>
 
-      <tree-node title="Import key" :limited="1">
+      <tree-node title="Import key">
         <import-key></import-key>
       </tree-node>
 
@@ -47,4 +47,5 @@ export default {
 </script>
 
 <style scoped>
+.wrapper { width: 296px; }
 </style>

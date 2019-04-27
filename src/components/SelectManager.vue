@@ -1,6 +1,6 @@
 <template>
   <div>
-    <tree-node :title="manager.name" v-for="manager in managers" :limited="2">
+    <tree-node :title="manager.name" v-for="manager in managers">
       <manager-item :manager="manager"></manager-item>
     </tree-node>
   </div>
