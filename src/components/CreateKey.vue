@@ -181,6 +181,4 @@ export default {
 </script>
 
 <style scoped>
-.element {margin-top: 8px;}
-.op-panel {text-align: center}
 </style>

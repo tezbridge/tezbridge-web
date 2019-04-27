@@ -51,6 +51,10 @@ button {
   display: inline-flex;
   align-items: center;
 }
+button[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}
 button svg {
   margin-right: 8px;
 }
@@ -59,6 +63,6 @@ button:active {
   box-shadow: 1px 1px 0 0 #bbb;
 }
 
-// .btn-sm { line-height: 1rem; }
-// div.block { margin: 8px; background: #f8f8f8; padding: 16px; }
-// div.block-title { font-size: 12px; color: #888;}
+.element {margin-top: 8px;}
+.op-panel {text-align: center}
+.error {text-align: center; font-size: 0.8rem;  color: #ff2933;}

@@ -10,3 +10,11 @@ export function debounce(fn : (..._: any) => any) {
     }, 200)
   }
 }
+
+export function r2tz(input : number) {
+  return '' + Math.round(input * 1000000)
+}
+
+export function tz2r(input : string) {
+  return parseInt(input) / 1000000 + ''
+}

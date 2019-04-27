@@ -138,8 +138,4 @@ export default {
 </script>
 
 <style scoped>
-.element {margin-top: 8px;}
-.error {text-align: center; font-size: 0.8rem;  color: #ff2933;}
-.op-panel {text-align: center}
 </style>
-

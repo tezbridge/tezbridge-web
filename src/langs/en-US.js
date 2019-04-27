@@ -52,6 +52,8 @@ export default {
     desc: 'Accept mnemonic words / Any key with prefix of `edsk`, `spsk`, `p2sk`, `edesk`, `spesk` or `p2esk` / Faucet JSON string for testnet'
   },
   manager: {
+    balance: 'Balance',
+    spendable: 'Spendable',
     create_tab: 'Create',
     import_tab: 'Import',
     add_manager: 'Add manager',

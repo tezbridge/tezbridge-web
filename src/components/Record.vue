@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper" v-if="item" v-for="(item, key) in data">
+    <div class="wrapper" v-if="item !== undefined" v-for="(item, key) in (data || {})">
       <div class="title">
         <span>{{key}}</span>
         <span v-if="item instanceof Array" class="important">(must remember)</span>
