@@ -10,6 +10,7 @@
       </tree-node>
 
       <tree-node title="Select manager">
+        <select-manager></select-manager>
       </tree-node>
 
       <tree-node title="Settings">
@@ -28,12 +29,14 @@
 import TreeNode from './TreeNode'
 import CreateKey from './CreateKey'
 import ImportKey from './ImportKey'
+import SelectManager from './SelectManager'
 
 export default {
   components: {
     TreeNode,
     CreateKey,
-    ImportKey
+    ImportKey,
+    SelectManager
   },
   data() {
     return {
