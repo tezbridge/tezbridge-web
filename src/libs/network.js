@@ -1,9 +1,10 @@
 // @flow
 
 import TBN from 'tezbridge-network'
+import storage from './storage'
 
 export const network_client = new TBN({
-  host: 'https://alphanet.tezrpc.me'
+  host: storage.settings.host
 })
 
 export default {

@@ -14,6 +14,7 @@
       </tree-node>
 
       <tree-node title="Settings">
+        <settings></settings>
       </tree-node>
       
       <tree-node title="About">
@@ -30,13 +31,15 @@ import TreeNode from './TreeNode'
 import CreateKey from './CreateKey'
 import ImportKey from './ImportKey'
 import SelectManager from './SelectManager'
+import Settings from './Settings'
 
 export default {
   components: {
     TreeNode,
     CreateKey,
     ImportKey,
-    SelectManager
+    SelectManager,
+    Settings
   },
   data() {
     return {

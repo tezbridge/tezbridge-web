@@ -15,7 +15,7 @@ const defaults = {
   version: '1',
   managers: '[]',
   settings: '{}',
-  ready_manager: '{"enc": "", "name": "", "source": ""}'
+  ready_manager: '{"enc":"", "name":"", "source":""}'
 }
 
 class Storage {
@@ -34,6 +34,13 @@ class Storage {
     this.managers = JSON.parse(managers)
     this.settings = JSON.parse(settings)
     this.ready_manager = JSON.parse(ready_manager)
+
+    this.recoverSettings()
+  }
+
+  recoverSettings() {
+    if (!this.settings.host)
+      this.settings.host = 'https://alphanet.tezrpc.me'
   }
 
   setReadyManager(box : TBC.crypto.EncryptedBox, name : string, source : string) {

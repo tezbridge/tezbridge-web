@@ -68,6 +68,10 @@ export default {
     access_code: 'Access code',
     listening_operations: 'Listening operations',
   },
+  settings: {
+    host: 'Host',
+    invalid_host: 'Invalid host'
+  },
   operation: {
     kind: 'Kind',
   }
