@@ -1,7 +1,8 @@
 <template>
   <div class="wrapper" ontouchstart>
     <div v-if="!key">
-      <sm-input :title="lang.signer.access_code" v-model="access_code"></sm-input>  
+      <div v-if="no_ready_manager" class="error">{{lang.signer.no_ready_manager}}</div>
+      <sm-input v-else :title="lang.signer.access_code" v-model="access_code"></sm-input>  
     </div>
     <div v-else>
       <tree-node>
@@ -30,6 +31,7 @@ export default {
     return {
       lang,
       ready_manager: storage.ready_manager,
+      no_ready_manager: false,
       access_code: '',
       key: null
     }
@@ -46,6 +48,12 @@ export default {
         this.key = false
       })
     })
+  },
+  mounted() {
+    if (!this.ready_manager.enc) {
+      this.no_ready_manager = true
+      return false
+    }
   }
 }
 </script>

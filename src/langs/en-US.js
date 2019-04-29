@@ -64,6 +64,7 @@ export default {
     get_ready: 'Get ready'
   },
   signer: {
+    no_ready_manager: 'No ready manager',
     ready_manager: 'Ready manager',
     access_code: 'Access code',
     listening_operations: 'Listening operations',
