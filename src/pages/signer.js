@@ -1,8 +1,6 @@
 // @flow
 
 import Vue from 'vue'
-import BootstrapVue from 'bootstrap-vue'
-Vue.use(BootstrapVue)
 Vue.mixin({
   methods: {
     resetData() {

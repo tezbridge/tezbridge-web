@@ -40,7 +40,7 @@ class Storage {
 
   recoverSettings() {
     if (!this.settings.host)
-      this.settings.host = 'https://alphanet.tezrpc.me'
+      this.settings.host = 'https://alphanet-node.tzscan.io'
   }
 
   setReadyManager(box : TBC.crypto.EncryptedBox, name : string, source : string) {
@@ -61,6 +61,11 @@ class Storage {
     })
 
     return password
+  }
+
+  removeReadyManager() {
+    this.ready_manager = JSON.parse(defaults.ready_manager)
+    set('ready_manager', JSON.stringify(this.ready_manager))
   }
 
   useReadyManager() {

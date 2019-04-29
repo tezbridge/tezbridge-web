@@ -5,7 +5,7 @@
   "main": "docs/index.html",
   "scripts": {
     "flow": "flow",
-    "dev": "parcel src/pages/index.html src/pages/signer.html src/pages/plugin.js --target browser --https",
+    "dev": "parcel src/pages/index.html src/pages/signer.html src/pages/dapp-sample.html src/pages/plugin.js --target browser --https",
     "test": "flow && parcel build test/index.js --target node -o test.js && node dist/test.js",
     "build": "rm -rf docs && rm -rf .cache && flow && parcel build src/pages/index.html src/pages/local-signer.html src/pages/plugin.js --no-source-maps --out-dir docs  && cp src/CNAME docs/"
   },

@@ -32,9 +32,10 @@ export default {
 </script>
 
 <style scoped>
+div.wrapper {width: 100%;}
 div.title { font-size: 0.8rem; background: #f4f4f4; text-align: center;}
 span.important {color: #ff2933;}
-input { font-family: Consolas, Menlo, monospace; font-size: 1rem; margin:0; width: 100%; border: 1px solid #eee; border-radius: 0; padding: 4px;}
+input { font-family: Consolas, Menlo, monospace; font-size: 0.8rem; margin:0; width: 100%; border: 1px solid #eee; border-radius: 0; padding: 4px;}
 input[disabled] {
   background: #eee; 
   color: #000;

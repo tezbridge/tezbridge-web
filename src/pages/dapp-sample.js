@@ -9,10 +9,7 @@ Vue.mixin({
   }
 })
 
-import Icons from '../assets/icons'
-Vue.component('icon', Icons)
-
-import Index from '../components/IndexExpert.vue'
+import Index from '../components/DAppSample.vue'
 new Vue({
   el: '#app',
   render: h => h(Index)

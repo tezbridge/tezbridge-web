@@ -32,7 +32,7 @@
         return Promise.resolve()
       }
       else {
-        signer = window.open(`${domain}/local-signer.html`)
+        signer = window.open(`${domain}/signer.html`)
         return new Promise(resolve => {
           if (signer)
             signer.onload = () => {
