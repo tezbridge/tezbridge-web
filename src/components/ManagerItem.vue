@@ -8,13 +8,16 @@
     </div>
     <div v-else>
       <tree-node :title="address">
+        <loading v-if="loading.manager"></loading>
         <record :data="manager_info"></record>
         <div class="element">
           <button @click="genAccessCode(address)">Access code</button>
         </div>
       </tree-node>
-      <tree-node title="contracts">
+      <tree-node :title="lang.manager.contracts">
+        <loading v-if="loading.contracts"></loading>
         <tree-node :title="contract" @first_open="contractOpen(contract)" v-for="(item, contract) in contracts">
+          <loading v-if="loading.contract_item[contract]"></loading>
           <record :data="item"></record>
           <div class="element">
             <button :disabled="!item[lang.manager.spendable]" @click="genAccessCode(contract)">Access code</button>
@@ -55,12 +58,18 @@ export default {
       address: '',
       box: null,
       contracts: {},
-      manager_info: {}
+      manager_info: {},
+      loading: {
+        manager: true,
+        contracts: true,
+        contract_item: {}
+      }
     }
   },
   watch: {
     password: debounce(async function(){
       try {
+
         const box = new TBC.crypto.EncryptedBox(this.manager.enc)
         const key = await box.revealKey(this.password)
 
@@ -73,13 +82,18 @@ export default {
           [this.lang.manager.balance]: tz2r(await network_client.fetch.balance(this.address)) + 'ꜩ',
           [this.lang.signer.access_code]: undefined
         }
+        this.loading.manager = false
 
         const contract_lst = await network_client.external.originated_contracts(this.address, false)
         const contracts = {}
+        const loading_contract_item = {}
         contract_lst.forEach(async contract => {
           contracts[contract] = {}
+          loading_contract_item[contract] = false
         })
         this.contracts = contracts
+        this.loading.contracts = false
+        this.loading.contract_item = loading_contract_item
       } catch {}
     })
   },
@@ -93,6 +107,8 @@ export default {
       }
     },
     async contractOpen(contract : string) {
+      this.loading.contract_item[contract] = true
+
       const info = await network_client.fetch.contract(contract)
       const balance = tz2r(info.balance) + 'ꜩ'
       const spendable = info.spendable
@@ -103,6 +119,8 @@ export default {
         [this.lang.manager.balance]: balance,
         [this.lang.signer.access_code]: undefined
       }
+
+      this.loading.contract_item[contract] = false
     },
     removeManager() {
       storage.removeManager(this.manager.name)

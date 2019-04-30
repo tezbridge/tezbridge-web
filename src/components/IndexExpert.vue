@@ -18,7 +18,12 @@
       </tree-node>
       
       <tree-node title="About">
-        © 2018-2019 TezBridge
+        <div>
+        Version: 2.0.1
+        </div>
+        <div>
+          © 2018-2019 TezBridge
+        </div>
       </tree-node>
     </nav>
   </div>
