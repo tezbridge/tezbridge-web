@@ -17,7 +17,7 @@
         <settings></settings>
       </tree-node>
       
-      <tree-node title="About">
+      <tree-node title="About TezBridge">
         <div>
         Version: 2.0.1
         </div>
