@@ -12,7 +12,10 @@ Vue.mixin({
 import Icons from '../assets/icons'
 Vue.component('icon', Icons)
 
-import Signer from '../components/Signer.vue'
+import Loading from '../components/Loading'
+Vue.component('loading', Loading)
+
+import Signer from '../components/FullSigner.vue'
 new Vue({
   el: '#app',
   render: h => h(Signer)
