@@ -2,7 +2,7 @@
   <div>
     <div v-if="!box">
       <sm-input :title="lang.password" kind="password" v-model="password"></sm-input>
-      <div class="op-panel element">
+      <div v-if="!is_signer" class="op-panel element">
         <button @click="removeManager">Remove</button>
       </div>
     </div>
@@ -10,8 +10,8 @@
       <tree-node :title="address">
         <loading v-if="loading.manager"></loading>
         <record :data="manager_info"></record>
-        <div class="element">
-          <button @click="genAccessCode(address)">Access code</button>
+        <div v-if="is_signer" class="element">
+          <button @click="setAsSource(address)">Set as source</button>
         </div>
       </tree-node>
       <tree-node :title="lang.manager.contracts">
@@ -19,8 +19,8 @@
         <tree-node :title="contract" @first_open="contractOpen(contract)" v-for="(item, contract) in contracts">
           <loading v-if="loading.contract_item[contract]"></loading>
           <record :data="item"></record>
-          <div class="element">
-            <button :disabled="!item[lang.manager.spendable]" @click="genAccessCode(contract)">Access code</button>
+          <div v-if="is_signer" class="element">
+            <button :disabled="!item[lang.manager.spendable]" @click="setAsSource(contract)">Set as source</button>
           </div>
         </tree-node>
       </tree-node>
@@ -50,7 +50,13 @@ export default {
     TreeNode,
     Record
   },
-  props: ['manager'],
+  props: {
+    manager: Object,
+    is_signer: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       lang,
@@ -98,6 +104,12 @@ export default {
     })
   },
   methods: {
+    setAsSource(address : string) {
+      this.$emit('source_set', {
+        manager: this.box,
+        source: address
+      })
+    },
     genAccessCode(address : string) {
       const access_code = storage.setReadyManager(this.box, this.manager.name, address)
       if (address in this.contracts) {

@@ -18,12 +18,7 @@
       </tree-node>
       
       <tree-node title="About TezBridge">
-        <div>
-        Version: 2.0.1
-        </div>
-        <div>
-          © 2018-2019 TezBridge
-        </div>
+        <about></about>
       </tree-node>
     </nav>
   </div>
@@ -37,6 +32,7 @@ import CreateKey from './CreateKey'
 import ImportKey from './ImportKey'
 import SelectManager from './SelectManager'
 import Settings from './Settings'
+import About from './About'
 
 export default {
   components: {
@@ -44,7 +40,8 @@ export default {
     CreateKey,
     ImportKey,
     SelectManager,
-    Settings
+    Settings,
+    About
   },
   data() {
     return {

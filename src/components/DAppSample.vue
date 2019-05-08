@@ -1,6 +1,7 @@
 <template>
   <div>
-    
+    <div>{{source}}</div>
+    <button @click="showSource">Show source address</button>
   </div>
 </template>
 
@@ -10,7 +11,14 @@
 export default {
   data() {
     return {
-
+      source: ''
+    }
+  },
+  methods: {
+    async showSource() {
+      const tezbridge = window.tezbridge
+      await tezbridge.ready()
+      tezbridge.sign({x: 1}).then(x => console.log(x))
     }
   }
 }
