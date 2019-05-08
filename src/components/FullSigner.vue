@@ -18,7 +18,7 @@
 <script>
 // @flow
 
-import Signer from './Signer.js'
+import signer from './Signer.js'
 import TreeNode from './TreeNode'
 import SelectManager from './SelectManager'
 import About from './About'
@@ -36,9 +36,7 @@ export default {
   },
   methods: {
     sourceSet({manager, source} : {manager: Object, source: string}) {
-      this.signer = new Signer(manager, async function(){
-
-      })
+      signer.init(manager, source)
     }
   }
 } 

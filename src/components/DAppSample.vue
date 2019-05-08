@@ -18,7 +18,8 @@ export default {
     async showSource() {
       const tezbridge = window.tezbridge
       await tezbridge.ready()
-      tezbridge.sign({x: 1}).then(x => console.log(x))
+      tezbridge.call({method: 'get_source'}).then(x => console.log(x))
+      // tezbridge.call({method: 'sign', param: []}).then(x => console.log(x))
     }
   }
 }
