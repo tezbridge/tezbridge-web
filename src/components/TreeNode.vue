@@ -51,23 +51,23 @@ export default {
 </script>
 
 <style scoped>
-span.mark {display: inline-flex; border: 1px solid transparent; width: 16px; height: 16px; align-items: center; justify-content: center; }
+span.mark {display: inline-flex; border: 1px solid transparent; border-radius: 2px; width: 16px; height: 16px; align-items: center; justify-content: center; }
 div.content {margin-left: 16px;}
 div.title {padding: 4px 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden}
 div.title:active {background: #eee}
-span.changed {border: 1px solid #888; animation: change-ani 1s infinite}
+span.changed {border: 1px solid #777; animation: change-ani 2s infinite}
 
 @keyframes change-ani {
   0% {
-    border-radius: 4px
+    box-shadow: 0 0 0 0 #777;
   }
 
   50% {
-    border-radius: 8px
+    box-shadow: 1px 1px 0 0 #777;
   }
 
   100% {
-    border-radius: 4px
+    box-shadow: 0 0 0 0 #777;
   }
 }
 </style>
