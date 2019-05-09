@@ -1,7 +1,7 @@
 <template>
   <div>
     <tree-node :title="manager.name" v-for="manager in managers">
-      <manager-item @source_set="sourceSet" :is_signer="is_signer" :manager="manager"></manager-item>
+      <manager-item @signer_set="signerSet" :is_signer="is_signer" :manager="manager"></manager-item>
     </tree-node>
   </div>
 </template>
@@ -33,8 +33,8 @@ export default {
     this.managers = storage.managers
   },
   methods: {
-    sourceSet(source_info : {manager: Object, source: Object}) {
-      this.$emit('source_set', source_info)
+    signerSet(source_info : {manager: Object, source: Object}) {
+      this.$emit('signer_set', source_info)
     }
   }
 }

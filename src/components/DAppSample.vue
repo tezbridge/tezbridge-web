@@ -1,25 +1,36 @@
 <template>
   <div>
     <div>{{source}}</div>
+    <div>{{op}}</div>
     <button @click="showSource">Show source address</button>
+    <button @click="signOp">Sign op</button>
   </div>
 </template>
 
 <script>
 // @flow
 
+const tezbridge = window.tezbridge
+
 export default {
   data() {
     return {
-      source: ''
+      source: '',
+      op: {}
     }
   },
   methods: {
     async showSource() {
-      const tezbridge = window.tezbridge
       await tezbridge.ready()
-      tezbridge.request({method: 'get_source'}).then(x => console.log(x))
-      // tezbridge.call({method: 'sign', param: []}).then(x => console.log(x))
+      this.source = await tezbridge.request({method: 'get_source'})
+    },
+    async signOp() {
+      await tezbridge.ready()
+      tezbridge.request({
+        method: 'sign'
+      })
+      .then(x => this.op = x)
+      .catch(error => this.op = error)
     }
   }
 }

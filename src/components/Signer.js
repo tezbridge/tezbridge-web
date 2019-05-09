@@ -7,13 +7,13 @@ class Signer {
   source : string
   op_queue : Array<{method: string, tezbridge: string, param: Object}>
   is_waiting : boolean
-  method_listener : {[string]: Set<(Object => Promise<boolean>)>}
+  method_listener : {[string]: Set<(Object => Promise<Object>)>}
 
   constructor() {
     this.is_waiting = false
     this.method_listener = {}
     this.op_queue = []
-    
+
     window.addEventListener('message', async (e) => {
       if (e.source !== window.opener || !e.data.tezbridge) return false
 
@@ -23,13 +23,13 @@ class Signer {
     })
   }
 
-  addListener(method: string, listener : (Object => Promise<boolean>)) {
+  addListener(method: string, listener : (Object => Promise<Object>)) {
     if (!this.method_listener[method])
       this.method_listener[method] = new Set()
 
     this.method_listener[method].add(listener)
   }
-  removeListener(method: string, listener : (Object => Promise<boolean>)) {
+  removeListener(method: string, listener : (Object => Promise<Object>)) {
     this.method_listener[method].delete(listener)
   }
 
@@ -45,28 +45,30 @@ class Signer {
 
     let op
     while (op = this.op_queue.shift()) {
-      let pass = true
       const method = op.method
 
       if (this.method_listener[method]) {
-        this.method_listener[method].forEach(async listener => {
-          pass = pass && await listener(op)
-        })
-      }
-
-      if (pass) {
-        await this.methodHandler(op)
+        try {
+          const listeners = Array.from(this.method_listener[method])
+          for (let i = 0; i < listeners.length; i++) {
+            const listener = listeners[i]
+            const result = await listener(op)
+            if (result !== undefined)
+              this.send(op, result)
+          }
+        } catch (e) {
+          await this.send(op, e, true)
+          continue
+        }
       } else {
-        await this.send(op, 'rejected', true)
+        await this.defaultMethodHandler(op)
       }
     }
   }
 
-  async methodHandler(op : Object) {
+  async defaultMethodHandler(op : Object) {
     if (op.method === 'get_source') {
       this.send(op, this.source)
-    } else if (op.method === 'sign') {
-      this.send(op, null, true)
     }
   }
 

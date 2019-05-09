@@ -6,7 +6,7 @@
       </tree-node>
 
       <tree-node title="Local signer">
-        <select-manager @source_set="sourceSet" :is_signer="true"></select-manager>
+        <select-manager @signer_set="signerSet" :is_signer="true"></select-manager>
       </tree-node>
 
       <tree-node title="Remote signer">
@@ -30,6 +30,22 @@ import SelectManager from './SelectManager'
 import Record from './Record'
 import About from './About'
 
+signer.addListener('sign', () => new Promise((resolve, reject) => {
+  const result = window.confirm('do you want to sign?')
+  if (result) 
+    resolve()
+  else
+    reject('failed 1 @ ' + signer.source)
+}))
+
+signer.addListener('sign', () => new Promise((resolve, reject) => {
+  const result = window.confirm('do you want to sign, really?')
+  if (result) 
+    resolve('signed @ ' + signer.source)
+  else
+    reject('failed 2 @' + signer.source)
+}))
+
 export default {
   components: {
     TreeNode,
@@ -47,7 +63,7 @@ export default {
     }
   },
   methods: {
-    async sourceSet({manager, source} : {manager: Object, source: string}) {
+    async signerSet({manager, source} : {manager: Object, source: string}) {
       signer.init(manager, source)
       const key = await manager.revealKey()
       this.using_signer = {

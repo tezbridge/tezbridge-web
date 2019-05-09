@@ -11,7 +11,7 @@
         <loading v-if="loading.manager"></loading>
         <record :data="manager_info"></record>
         <div v-if="is_signer" class="element">
-          <button @click="setAsSource(address)">Set as source</button>
+          <button @click="useAsSigner(address)">Use as signer</button>
         </div>
       </tree-node>
       <tree-node :title="lang.manager.contracts">
@@ -20,7 +20,7 @@
           <loading v-if="loading.contract_item[contract]"></loading>
           <record :data="item"></record>
           <div v-if="is_signer" class="element">
-            <button :disabled="!item[lang.manager.spendable]" @click="setAsSource(contract)">Set as source</button>
+            <button :disabled="!item[lang.manager.spendable]" @click="useAsSigner(contract)">Use as signer</button>
           </div>
         </tree-node>
       </tree-node>
@@ -104,8 +104,8 @@ export default {
     })
   },
   methods: {
-    setAsSource(address : string) {
-      this.$emit('source_set', {
+    useAsSigner(address : string) {
+      this.$emit('signer_set', {
         manager: this.box,
         source: address
       })
