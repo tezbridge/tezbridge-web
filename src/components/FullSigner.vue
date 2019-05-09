@@ -1,6 +1,9 @@
 <template>
   <div class="wrapper" ontouchstart>
     <nav class="link-tree">
+      <tree-node title="Current source">
+      </tree-node>
+
       <tree-node title="Local signer">
         <select-manager @source_set="sourceSet" :is_signer="true"></select-manager>
       </tree-node>
@@ -31,7 +34,6 @@ export default {
   },
   data() {
     return {
-      signer: null
     }
   },
   methods: {

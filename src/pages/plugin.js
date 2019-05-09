@@ -31,7 +31,6 @@
 
     ready() {
       if (this.signer) {
-        this.signer.focus()
         return Promise.resolve()
       }
       else {
@@ -45,17 +44,20 @@
       }
     }
 
-    call(param : Object) {
+    request(param : Object) {
       if (this.signer) {
         this.txid++
 
+        if (param.method === 'sign')
+          this.signer.focus()
+        
         return new Promise<void>((resolve, reject) => {
           this.resolves[this.txid] = resolve  
           this.rejects[this.txid] = reject
 
-          this.signer.postMessage({}, param, {
+          this.signer.postMessage(Object.assign({}, param, {
             tezbridge: this.txid
-          }, domain || '*')
+          }), domain || '*')
         })
       }
       else

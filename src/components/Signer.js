@@ -12,11 +12,14 @@ class Signer {
   constructor() {
     this.is_waiting = false
     this.method_listener = {}
-
+    this.op_queue = []
+    
     window.addEventListener('message', async (e) => {
       if (e.source !== window.opener || !e.data.tezbridge) return false
 
       this.op_queue.push(e.data)
+
+      this.response()
     })
   }
 
@@ -38,6 +41,8 @@ class Signer {
   }
 
   async response() {
+    if (!this.source) return false
+
     let op
     while (op = this.op_queue.shift()) {
       let pass = true
@@ -57,8 +62,12 @@ class Signer {
     }
   }
 
-  methodHandler(op : Object) {
-
+  async methodHandler(op : Object) {
+    if (op.method === 'get_source') {
+      this.send(op, this.source)
+    } else if (op.method === 'sign') {
+      this.send(op, null, true)
+    }
   }
 
   send(prev_op : Object, data : Object, is_error : boolean = false) {
