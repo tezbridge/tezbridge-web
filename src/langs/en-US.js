@@ -65,6 +65,8 @@ export default {
     get_ready: 'Get ready'
   },
   signer: {
+    manager: 'Manager',
+    source: 'Source',
     no_ready_manager: 'No ready manager',
     ready_manager: 'Ready manager',
     access_code: 'Access code',
