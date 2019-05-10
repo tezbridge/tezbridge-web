@@ -1,6 +1,7 @@
 // @flow
 
 import TBC from 'tezbridge-crypto'
+import { network_client } from '../libs/network'
 
 class Signer {
   box : TBC.crypto.EncryptedBox
@@ -23,11 +24,16 @@ class Signer {
     })
   }
 
-  addListener(method: string, listener : (Object => Promise<Object>)) {
-    if (!this.method_listener[method])
-      this.method_listener[method] = new Set()
+  addListener(methods: string | Array<string>, listener : (Object => Promise<Object>)) {
+    if (typeof methods === 'string')
+      methods = [methods]
 
-    this.method_listener[method].add(listener)
+    methods.forEach(method => {
+      if (!this.method_listener[method])
+        this.method_listener[method] = new Set()
+
+      this.method_listener[method].add(listener)
+    })
   }
   removeListener(method: string, listener : (Object => Promise<Object>)) {
     this.method_listener[method].delete(listener)
@@ -61,14 +67,8 @@ class Signer {
           continue
         }
       } else {
-        await this.defaultMethodHandler(op)
+        throw `Invalid method: ${method} for signer`
       }
-    }
-  }
-
-  async defaultMethodHandler(op : Object) {
-    if (op.method === 'get_source') {
-      this.send(op, this.source)
     }
   }
 
@@ -77,10 +77,38 @@ class Signer {
       Object.assign({}, is_error ? {error: data} : {result: data}, {tezbridge: prev_op.tezbridge}), window.opener.origin)
   }
 
-  sign(op_param : Array<{}>) {
+  async autoSign(op_params : Object) {
+    const sk = await this.box.reveal()
+    return await network_client.mixed.makeMinFeeOperation(TBC, this.source, sk, op_params)
+  }
 
+  async inject(sign_result : Object) {
+    return await network_client.submit.inject_operation(sign_result.operation_with_sig)
+  }
+
+  async methodHandler(op : Object, resolve : Object => void) {
+    if (op.method === 'auto_sign_inject') {
+      const result = await signer.autoSign(op.operation)
+      const inject_result = await signer.inject(result)
+      resolve({
+        operation_id: inject_result,
+        originated_contracts: result.originated_contracts
+      })
+    } else if (op.method === 'sign') {
+      const sk = await this.box.reveal()
+      resolve(TBC.crypto.signOperation(op.bytes, sk))
+    } else if (op.method === 'inject') {
+      const inject_result = await signer.inject(op.bytes)
+      resolve(inject_result)
+    }
   }
 }
 
 const signer = new Signer()
+
+signer.addListener('get_source', () => new Promise((resolve, reject) => {
+  resolve(signer.source)
+}))
+
+
 export default signer

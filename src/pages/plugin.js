@@ -48,9 +48,9 @@
       if (this.signer) {
         this.txid++
 
-        if (param.method === 'sign')
+        if (new Set(['auto_sign_inject', 'sign', 'inject']).has(param.method))
           this.signer.focus()
-        
+
         return new Promise<void>((resolve, reject) => {
           this.resolves[this.txid] = resolve  
           this.rejects[this.txid] = reject

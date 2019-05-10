@@ -1,8 +1,16 @@
 <template>
   <div class="wrapper" ontouchstart>
     <nav class="link-tree">
-      <tree-node title="Using signer" :change="using_signer">
-        <record :data="using_signer"></record>
+      <tree-node title="Requests" :change="operations">
+        <div v-for="(item, index) in operations">
+          {{item.op}}
+          <loading v-if="item.processing"></loading>
+          <button :disabled="item.processing" @click="acceptOp(item, index)">Accept</button> 
+          <button :disabled="item.processing" @click="rejectOp(item, index)">Reject</button>
+        </div>
+      </tree-node>
+      <tree-node title="Current signer" :change="curr_signer">
+        <record :data="curr_signer"></record>
       </tree-node>
 
       <tree-node title="Local signer">
@@ -22,29 +30,17 @@
 <script>
 // @flow
 
+
 import lang from '../langs'
 
+
 import signer from './Signer.js'
+import TBC from 'tezbridge-crypto'
+
 import TreeNode from './TreeNode'
 import SelectManager from './SelectManager'
 import Record from './Record'
 import About from './About'
-
-signer.addListener('sign', () => new Promise((resolve, reject) => {
-  const result = window.confirm('do you want to sign?')
-  if (result) 
-    resolve()
-  else
-    reject('failed 1 @ ' + signer.source)
-}))
-
-signer.addListener('sign', () => new Promise((resolve, reject) => {
-  const result = window.confirm('do you want to sign, really?')
-  if (result) 
-    resolve('signed @ ' + signer.source)
-  else
-    reject('failed 2 @' + signer.source)
-}))
 
 export default {
   components: {
@@ -56,21 +52,50 @@ export default {
   data() {
     return {
       lang,
-      using_signer: {
+      curr_signer: {
         [lang.signer.manager]: undefined,
         [lang.signer.source]: undefined
-      } 
+      },
+      operations: []
     }
   },
   methods: {
+    async acceptOp(op_item : Object, index : number) {
+      op_item.processing = true
+
+      try {
+        await signer.methodHandler(op_item.op, op_item.resolve)
+      } catch(e) {
+        op_item.reject(e)
+      }
+
+      op_item.processing = false
+      this.operations.splice(index, 1)
+    },
+    rejectOp(op_item : Object, index : number) {
+      op_item.reject('rejected @ ' + signer.source)
+      this.operations.splice(index, 1)
+    },
     async signerSet({manager, source} : {manager: Object, source: string}) {
       signer.init(manager, source)
       const key = await manager.revealKey()
-      this.using_signer = {
+      this.curr_signer = {
         [lang.signer.manager]: key.address,
         [lang.signer.source]: source
       } 
     }
+  },
+  mounted() {
+    signer.addListener(['auto_sign_inject', 'sign', 'inject'], op => 
+      new Promise((resolve, reject) => {
+        this.operations.push({
+          processing: false,
+          op,
+          resolve,
+          reject
+        })
+      })
+    )
   }
 } 
 </script>

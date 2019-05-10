@@ -20,7 +20,7 @@ export default {
       type: Boolean,
       default: false
     },
-    change: Object
+    change: [Object, Array]
   },
   data() {
     return {
