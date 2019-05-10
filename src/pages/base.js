@@ -15,8 +15,16 @@ Vue.component('icon', Icons)
 import Loading from '../components/Loading'
 Vue.component('loading', Loading)
 
+
 import Index from '../components/IndexExpert.vue'
+import Signer from '../components/FullSigner.vue'
+
+const is_signer = location.hash === '#signer'
+
+if (is_signer)
+  document.title = 'TezBridge Signer'
+
 new Vue({
   el: '#app',
-  render: h => h(Index)
+  render: h => h(is_signer ? Signer : Index)
 })
