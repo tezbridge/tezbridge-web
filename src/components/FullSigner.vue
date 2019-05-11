@@ -85,7 +85,7 @@ export default {
     }
   },
   mounted() {
-    signer.addListener(['auto_sign_inject', 'sign', 'inject'], op => 
+    signer.addListener(signer.ask_methods, op => 
       new Promise((resolve, reject) => {
         this.operations.push({
           processing: false,

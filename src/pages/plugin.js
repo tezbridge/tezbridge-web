@@ -50,7 +50,7 @@
       if (this.signer) {
         this.txid++
 
-        if (new Set(['auto_sign_inject', 'sign', 'inject']).has(param.method))
+        if (param.method !== 'get_source')
           this.signer.focus()
 
         return new Promise<void>((resolve, reject) => {

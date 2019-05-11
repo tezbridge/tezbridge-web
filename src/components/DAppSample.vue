@@ -1,11 +1,18 @@
 <template>
-  <div>
+  <div class="selectable">
     <div class="block">
       <div>source: {{source}}</div>
       <div>request result: {{op}}</div>
     </div>
     <div class="block">
       <button @click="showSource">Show source address</button>
+    </div>
+    <div class="block">
+      <button @click="createAccount">Create Account</button>
+    </div>
+    <div class="block">
+      <sm-input class="element" title="Baker" v-model="baker"></sm-input>
+      <button @click="setDelegate">Set delegate</button>
     </div>
     <div class="block">
       <sm-input class="element" title="Operation bytes" v-model="op_bytes"></sm-input>
@@ -16,7 +23,7 @@
       <button @click="injectOp">Inject operations</button>
     </div>
     <div class="block">
-      {{operation}}
+      <textarea v-model="operations"></textarea>
       <br>
       <button @click="signInjectOp">Auto sign and inject operations</button>
     </div>
@@ -35,9 +42,10 @@ export default {
   },
   data() {
     return {
+      baker: '',
       op_bytes: '',
       op_bytes_with_sig: '',
-      operation: [
+      operations: JSON.stringify([
         {
           kind: 'transaction',
           amount: '10',
@@ -53,7 +61,7 @@ export default {
             storage: {"prim":"Unit"}
           }
         }
-      ],
+      ], null, 2),
       source: '',
       op: {}
     }
@@ -62,9 +70,24 @@ export default {
     async showSource() {
       this.source = await tezbridge.request({method: 'get_source'})
     },
+    async createAccount() {
+      tezbridge.request({
+        method: 'create_account'
+      })
+      .then(x => this.op = x)
+      .catch(error => this.op = error)
+    },
+    async setDelegate() {
+      tezbridge.request({
+        method: 'set_delegate',
+        delegate: this.baker
+      })
+      .then(x => this.op = x)
+      .catch(error => this.op = error)
+    },
     async signOp() {
       tezbridge.request({
-        method: 'sign',
+        method: 'raw_sign',
         bytes: this.op_bytes
       })
       .then(x => this.op = x)
@@ -72,7 +95,7 @@ export default {
     },
     async injectOp() {
       tezbridge.request({
-        method: 'inject',
+        method: 'raw_inject',
         bytes: this.op_bytes_with_sig
       })
       .then(x => this.op = x)
@@ -80,8 +103,8 @@ export default {
     },
     async signInjectOp() {
       tezbridge.request({
-        method: 'auto_sign_inject',
-        operation: this.operation
+        method: 'make_operations',
+        operations: JSON.parse(this.operations)
       })
       .then(x => this.op = x)
       .catch(error => this.op = error)
@@ -91,5 +114,6 @@ export default {
 </script>
 
 <style scoped>
+textarea {width: 100%; height: 300px;}
 .block {margin: 16px;}
 </style>
