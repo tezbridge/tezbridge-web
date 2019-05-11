@@ -34,7 +34,7 @@
         return Promise.resolve()
       }
       else {
-        this.signer = window.open(`${domain}/#signer`)
+        this.signer = window.open(`${domain}/index.html#signer`)
         return new Promise(resolve => {
           if (this.signer)
             this.signer.onload = () => {
@@ -44,7 +44,9 @@
       }
     }
 
-    request(param : Object) {
+    async request(param : Object) {
+      await this.ready()
+      
       if (this.signer) {
         this.txid++
 

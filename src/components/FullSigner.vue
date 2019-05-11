@@ -33,7 +33,6 @@
 
 import lang from '../langs'
 
-
 import signer from './Signer.js'
 import TBC from 'tezbridge-crypto'
 
@@ -101,5 +100,5 @@ export default {
 </script>
 
 <style scoped>
-.wrapper { width: 296px; }
+.wrapper { width: 304px; }
 </style>

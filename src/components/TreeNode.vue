@@ -1,8 +1,7 @@
 <template>
   <div :class="{wrapper: true}">
     <div class="title" @click="titleClick">
-      <span :class="{mark: true, changed: !!changed}">{{is_open || keep_opening ? '-' : '+'}}</span>
-      <span>{{title}}</span>
+      <span :class="{mark: true, changed: !!changed}">{{is_open || keep_opening ? '-' : '+'}}</span><span>{{title}}</span>
     </div>
     <div class="content" v-show="is_open || keep_opening">
       <slot></slot>
@@ -51,7 +50,17 @@ export default {
 </script>
 
 <style scoped>
-span.mark {display: inline-flex; border: 1px solid transparent; border-radius: 2px; width: 16px; height: 16px; align-items: center; justify-content: center; }
+span.mark {
+  display: inline-flex; 
+  border: 1px solid transparent; 
+  border-radius: 2px; 
+  width: 16px; 
+  height: 16px; 
+  align-items: center; 
+  justify-content: center; 
+  margin-right: 4px;
+  line-height: 1rem;
+}
 div.content {margin-left: 16px;}
 div.title {padding: 4px 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden}
 div.title:active {background: #eee}

@@ -52,5 +52,5 @@ export default {
 </script>
 
 <style scoped>
-.wrapper { width: 296px; }
+.wrapper { width: 304px; }
 </style>

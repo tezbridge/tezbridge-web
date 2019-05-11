@@ -60,11 +60,9 @@ export default {
   },
   methods: {
     async showSource() {
-      await tezbridge.ready()
       this.source = await tezbridge.request({method: 'get_source'})
     },
     async signOp() {
-      await tezbridge.ready()
       tezbridge.request({
         method: 'sign',
         bytes: this.op_bytes
@@ -73,7 +71,6 @@ export default {
       .catch(error => this.op = error)
     },
     async injectOp() {
-      await tezbridge.ready()
       tezbridge.request({
         method: 'inject',
         bytes: this.op_bytes_with_sig
@@ -82,7 +79,6 @@ export default {
       .catch(error => this.op = error)
     },
     async signInjectOp() {
-      await tezbridge.ready()
       tezbridge.request({
         method: 'auto_sign_inject',
         operation: this.operation
