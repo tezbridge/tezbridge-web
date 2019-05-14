@@ -79,31 +79,40 @@ export default {
         const box = new TBC.crypto.EncryptedBox(this.manager.enc)
         const key = await box.revealKey(this.password)
 
-        this.password = ''
-        this.address = key.address
-        this.box = new TBC.crypto.EncryptedBox(key.getSecretKey())
-
-        this.manager_info = {
-          [this.lang.key.pkh]: this.address,
-          [this.lang.manager.balance]: tz2r(await network_client.fetch.balance(this.address)) + 'ꜩ',
-          [this.lang.signer.access_code]: undefined
-        }
-        this.loading.manager = false
-
-        const contract_lst = await network_client.external.originated_contracts(this.address, false)
-        const contracts = {}
-        const loading_contract_item = {}
-        contract_lst.forEach(async contract => {
-          contracts[contract] = {}
-          loading_contract_item[contract] = false
-        })
-        this.contracts = contracts
-        this.loading.contracts = false
-        this.loading.contract_item = loading_contract_item
+        await this.init(key)
       } catch {}
     })
   },
+  mounted() {
+    const box = new TBC.crypto.EncryptedBox(this.manager.enc)
+    box.revealKey(this.password)
+    .then(key => this.init(key))
+    .catch(() => {})
+  },
   methods: {
+    async init(key : Object) {        
+      this.password = ''
+      this.address = key.address
+      this.box = new TBC.crypto.EncryptedBox(key.getSecretKey())
+
+      this.manager_info = {
+        [this.lang.key.pkh]: this.address,
+        [this.lang.manager.balance]: tz2r(await network_client.fetch.balance(this.address)) + 'ꜩ',
+        [this.lang.signer.access_code]: undefined
+      }
+      this.loading.manager = false
+
+      const contract_lst = await network_client.external.originated_contracts(this.address, false)
+      const contracts = {}
+      const loading_contract_item = {}
+      contract_lst.forEach(async contract => {
+        contracts[contract] = {}
+        loading_contract_item[contract] = false
+      })
+      this.contracts = contracts
+      this.loading.contracts = false
+      this.loading.contract_item = loading_contract_item
+    },
     useAsSigner(address : string) {
       this.$emit('signer_set', {
         manager: this.box,

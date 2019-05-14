@@ -5,7 +5,7 @@
 
     <div v-if="pwd_required && !result_key" class="error">{{lang.password_incorrect}}</div>
     
-    <div v-if="result_key">
+    <div v-if="result_key && !is_temp">
       <record :data="{[lang.key.pkh]: result_key.address}"></record>
       <sm-input class="element" :title="lang.import_key.manager_name" v-model="manager_name"></sm-input>
       <div v-if="!manager_name_is_valid" class="error">{{lang.import_key.manager_name_invalid}}</div>
@@ -13,6 +13,12 @@
 
       <div class="op-panel element" v-if="manager_name_is_valid">
         <button @click="confirm">{{lang.confirm}}</button>
+      </div>
+    </div>
+
+    <div v-if="result_key && is_temp">
+      <div class="op-panel element">
+        <button @click="confirmTemp">{{lang.confirm}}</button>
       </div>
     </div>
 
@@ -45,6 +51,12 @@ export default {
     TreeNode,
     Record,
     SmInput
+  },
+  props: {
+    is_temp: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -114,6 +126,10 @@ export default {
     })
   },
   methods: {
+    confirmTemp() {
+      this.$emit('temp_manager_confirmed', this.result_key)
+      this.resetData()
+    },
     confirm() {
       const box = new TBC.crypto.EncryptedBox(this.result_key.getSecretKey(), this.lock_pwd)
       box.show().then(enc => {
@@ -122,6 +138,7 @@ export default {
           enc
         })
         this.$emit('manager_added')
+        this.resetData()
       })
     }
   },

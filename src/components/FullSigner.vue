@@ -13,8 +13,12 @@
         <record :data="curr_signer"></record>
       </tree-node>
 
+      <tree-node title="Temp singer">
+        <import-key :is_temp="true" @temp_manager_confirmed="addTempManager"></import-key>
+        <select-manager :managers="temp_managers" @signer_set="signerSet" :is_signer="true"></select-manager>
+      </tree-node>
       <tree-node title="Local signer">
-        <select-manager @signer_set="signerSet" :is_signer="true"></select-manager>
+        <select-manager :managers="storage.managers" @signer_set="signerSet" :is_signer="true"></select-manager>
       </tree-node>
 
       <tree-node title="Remote signer">
@@ -38,19 +42,25 @@ import TBC from 'tezbridge-crypto'
 
 import TreeNode from './TreeNode'
 import SelectManager from './SelectManager'
+import ImportKey from './ImportKey'
 import Record from './Record'
 import About from './About'
+
+import storage from '../libs/storage'
 
 export default {
   components: {
     TreeNode,
     SelectManager,
+    ImportKey,
     Record,
     About
   },
   data() {
     return {
       lang,
+      storage,
+      temp_managers: [],
       curr_signer: {
         [lang.signer.manager]: undefined,
         [lang.signer.source]: undefined
@@ -59,6 +69,15 @@ export default {
     }
   },
   methods: {
+    async addTempManager(key : Object) {
+      const box = new TBC.crypto.EncryptedBox(key.getSecretKey())
+      const enc = await box.show()
+
+      this.temp_managers.push({
+        name: key.address,
+        enc
+      })
+    },
     async acceptOp(op_item : Object, index : number) {
       op_item.processing = true
 

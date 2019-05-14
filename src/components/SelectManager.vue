@@ -10,7 +10,6 @@
 // @flow
 
 import TreeNode from './TreeNode'
-import storage from '../libs/storage'
 import ManagerItem from './ManagerItem'
 
 export default {
@@ -18,6 +17,10 @@ export default {
     is_signer: {
       type: Boolean,
       default: false
+    },
+    managers: {
+      type: Array,
+      default: []
     }
   },
   components: {
@@ -26,11 +29,7 @@ export default {
   },
   data() {
     return {
-      managers: []
     }
-  },
-  mounted() {
-    this.managers = storage.managers
   },
   methods: {
     signerSet(source_info : {manager: Object, source: Object}) {
