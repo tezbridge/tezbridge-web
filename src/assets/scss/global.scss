@@ -41,6 +41,9 @@ body {
   -ms-user-select: text;
   user-select: text;
 }
+.selectable::selection {
+  background: #d3ebff;
+}
 
 button {
   cursor: pointer;

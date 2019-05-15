@@ -2,10 +2,11 @@
   <div>
     <div class="wrapper" v-if="item !== undefined" v-for="(item, key) in (data || {})">
       <div class="title">
-        <span>{{key}}</span>
+        <span> {{key}} </span>
         <span v-if="item instanceof Array" class="important">(must remember)</span>
+        <icon icon="copy" size="sm" class="copy-btn" @click="copyContent(key)"></icon>
       </div>
-      <div class="content selectable">
+      <div class="content selectable" :data-key="key">
         {{item instanceof Array ? item[0] : item}}
       </div>
     </div>
@@ -19,6 +20,17 @@ export default {
   props: ['data'],
   data() {
     return {
+    }
+  },
+  methods: {
+    copyContent(key : string) {
+      const elem = this.$el.querySelector(`[data-key="${key}"]`)
+      const range = document.createRange()
+      const selection = window.getSelection()
+      range.selectNodeContents(elem)
+      selection.removeAllRanges()
+      selection.addRange(range)
+      document.execCommand("copy")
     }
   }
 }
@@ -42,5 +54,13 @@ div.title {
   text-align: left;
   padding-left: 4px;
   color: #999;
+}
+
+.copy-btn {
+  cursor: pointer;
+  transition: all 0.05s; 
+}
+.copy-btn:active {
+  color: black;
 }
 </style>

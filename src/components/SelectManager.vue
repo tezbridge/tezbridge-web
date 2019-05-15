@@ -20,7 +20,7 @@ export default {
     },
     managers: {
       type: Array,
-      default: []
+      default: () => []
     }
   },
   components: {
