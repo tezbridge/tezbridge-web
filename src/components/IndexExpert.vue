@@ -6,11 +6,11 @@
       </tree-node>
 
       <tree-node title="Import key">
-        <import-key></import-key>
+        <import-key @manager_added="confirmedManager"></import-key>
       </tree-node>
 
-      <tree-node title="Select manager">
-        <select-manager></select-manager>
+      <tree-node title="Select manager" :change="managers">
+        <select-manager :managers="managers"></select-manager>
       </tree-node>
 
       <tree-node title="Settings">
@@ -34,6 +34,8 @@ import SelectManager from './SelectManager'
 import Settings from './Settings'
 import About from './About'
 
+import storage from '../libs/storage'
+
 export default {
   components: {
     TreeNode,
@@ -45,7 +47,7 @@ export default {
   },
   data() {
     return {
-
+      managers: storage.managers
     }
   }
 }

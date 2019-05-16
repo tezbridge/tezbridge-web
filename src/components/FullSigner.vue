@@ -18,7 +18,7 @@
         <select-manager :managers="temp_managers" @signer_set="signerSet" :is_signer="true"></select-manager>
       </tree-node>
       <tree-node title="Local signer">
-        <select-manager :managers="storage.managers" @signer_set="signerSet" :is_signer="true"></select-manager>
+        <select-manager :managers="managers" @signer_set="signerSet" :is_signer="true"></select-manager>
       </tree-node>
 
       <tree-node title="Remote signer">
@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       lang,
-      storage,
+      managers: storage.managers,
       temp_managers: [],
       curr_signer: {
         [lang.signer.manager]: undefined,
