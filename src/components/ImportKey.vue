@@ -137,7 +137,6 @@ export default {
           name: this.manager_name,
           enc
         })
-        this.$emit('manager_added')
         this.resetData()
       })
     }

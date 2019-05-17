@@ -34,14 +34,14 @@ div.item {
   display: inline-flex;
   line-height: 0.8rem;
   font-size: 0.8rem;
-  padding: 2px 4px;
+  padding: 4px 8px;
   border: 1px solid #999;
   box-shadow: 0 2px 0 0 #ddd;
 }
 div.item.active {
   box-shadow: none;
-  border: 1px solid #555;
-  background: #eee;
+  border: 1px solid #ccc;
+  background: #f8f8f8;
   transform: translate(0, 1px);
 }
 </style>

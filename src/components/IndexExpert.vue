@@ -6,7 +6,7 @@
       </tree-node>
 
       <tree-node title="Import key">
-        <import-key @manager_added="confirmedManager"></import-key>
+        <import-key></import-key>
       </tree-node>
 
       <tree-node title="Select manager" :change="managers">
