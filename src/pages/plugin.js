@@ -30,7 +30,7 @@
     }
 
     ready() {
-      if (this.signer) {
+      if (this.signer && !this.signer.closed) {
         return Promise.resolve()
       }
       else {
