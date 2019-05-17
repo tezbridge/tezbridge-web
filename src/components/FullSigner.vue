@@ -13,7 +13,7 @@
         <record :data="curr_signer"></record>
       </tree-node>
 
-      <tree-node title="Temp singer" bold>
+      <tree-node title="Temp signer" bold>
         <import-key :is_temp="true" @temp_manager_confirmed="addTempManager"></import-key>
         <select-manager :managers="temp_managers" @signer_set="signerSet" :is_signer="true"></select-manager>
       </tree-node>
