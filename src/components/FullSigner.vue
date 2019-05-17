@@ -1,7 +1,7 @@
 <template>
-  <div class="wrapper" ontouchstart>
+  <div class="container" ontouchstart>
     <nav class="link-tree">
-      <tree-node title="Requests" :change="operations">
+      <tree-node title="Requests" :change="operations" bold>
         <div v-for="(item, index) in operations">
           {{item.op}}
           <loading v-if="item.processing"></loading>
@@ -9,24 +9,28 @@
           <button :disabled="item.processing" @click="rejectOp(item, index)">Reject</button>
         </div>
       </tree-node>
-      <tree-node title="Current signer" :change="curr_signer">
+      <tree-node title="Current signer" :change="curr_signer" bold>
         <record :data="curr_signer"></record>
       </tree-node>
 
-      <tree-node title="Temp singer">
+      <tree-node title="Temp singer" bold>
         <import-key :is_temp="true" @temp_manager_confirmed="addTempManager"></import-key>
         <select-manager :managers="temp_managers" @signer_set="signerSet" :is_signer="true"></select-manager>
       </tree-node>
-      <tree-node title="Local signer">
+      <tree-node title="Local signer" bold>
         <select-manager :managers="managers" @signer_set="signerSet" :is_signer="true"></select-manager>
       </tree-node>
 
-      <tree-node title="Remote signer">
+      <tree-node title="Remote signer" bold>
       </tree-node>
 
-      <tree-node title="About TezBridge">
+      <tree-node title="About" bold>
         <about></about>
       </tree-node>
+
+      <div class="copyright">
+        © 2018-2019 TezBridge
+      </div>
     </nav>
   </div>
 </template>
@@ -119,5 +123,6 @@ export default {
 </script>
 
 <style scoped>
-.wrapper { width: 304px; }
+.container {margin-right: 4px;}
+.copyright {margin: 8px 0 0 2px; font-size: 0.8rem; color: #ccc;}
 </style>

@@ -1,26 +1,30 @@
 <template>
-  <div class="wrapper" ontouchstart>
+  <div class="container" ontouchstart>
     <nav class="link-tree">
-      <tree-node title="Create key">
+      <tree-node title="Create key" bold>
         <create-key></create-key>
       </tree-node>
 
-      <tree-node title="Import key">
+      <tree-node title="Import key" bold>
         <import-key></import-key>
       </tree-node>
 
-      <tree-node title="Select manager" :change="managers">
+      <tree-node title="Select manager" :change="managers" bold>
         <select-manager :managers="managers"></select-manager>
       </tree-node>
 
-      <tree-node title="Settings">
+      <tree-node title="Settings" bold>
         <settings></settings>
       </tree-node>
       
-      <tree-node title="About TezBridge">
+      <tree-node title="About" bold>
         <about></about>
       </tree-node>
     </nav>
+
+    <div class="copyright">
+      © 2018-2019 TezBridge
+    </div>
   </div>
 </template>
 
@@ -54,5 +58,6 @@ export default {
 </script>
 
 <style scoped>
-.wrapper { width: 304px; }
+.container {margin-right: 4px;}
+.copyright {margin: 8px 0 0 2px; font-size: 0.8rem; color: #ccc;}
 </style>

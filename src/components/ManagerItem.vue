@@ -144,7 +144,9 @@ export default {
       this.loading.contract_item[contract] = false
     },
     removeManager() {
-      storage.removeManager(this.manager.name)
+      const result = window.confirm('Confirm to remove manager: ' + this.manager.name)
+      if (result)
+        storage.removeManager(this.manager.name)
     },
     lock() {
       this.resetData()

@@ -3,9 +3,6 @@
     <div>
       Version: 2.0.1
     </div>
-    <div>
-      © 2018-2019 TezBridge
-    </div>
   </div>
 </template>
 
