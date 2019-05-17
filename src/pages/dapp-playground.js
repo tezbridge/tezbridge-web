@@ -9,7 +9,7 @@ Vue.mixin({
   }
 })
 
-import Index from '../components/DAppSample.vue'
+import Index from '../components/DAppPlayground.vue'
 new Vue({
   el: '#app',
   render: h => h(Index)
