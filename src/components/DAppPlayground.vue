@@ -3,9 +3,9 @@
     <h1>DApp playground with TezBridge for developers</h1>
 
     <div class="block" v-for="(title, k) in desc">
-      <textarea v-model="codes[k]"></textarea>
+      <prism-editor class="editor" v-model="codes[k]" language="js"></prism-editor>
       <button @click="runCode(k)">{{title}}</button>
-      <pre>{{output[k]}}</pre>
+      <pre class="output">{{output[k]}}</pre>
     </div>
     
   </div>
@@ -14,11 +14,14 @@
 <script>
 // @flow
 
+import "prismjs"
+import "prismjs/themes/prism-solarizedlight.css"
+import PrismEditor from 'vue-prism-editor'
 import SmInput from './SmInput'
-const tezbridge = window.tezbridge
 
 export default {
   components: {
+    PrismEditor,
     SmInput
   },
   data() {
@@ -29,7 +32,7 @@ export default {
         set_delegate: 'Set delegate for KT1 account',
         sign_op: 'Sign operation bytes directly',
         inject_op: 'Inject signed operation bytes',
-        make_operations: 'Sign and inject operations with minimal fee'
+        inject_operations: 'Sign and inject operations with minimal fee'
       },
       codes: {
         get_source: 
@@ -47,7 +50,7 @@ export default {
         set_delegate:
 `tezbridge.request({
   method: 'set_delegate',
-  delegate: 'THE tz1 ADDRESS OF BAKER'
+  delegate: 'tz...'    // The tz address of any baker
 })
 .then(result => output(result))
 .catch(err => output(err))
@@ -55,7 +58,7 @@ export default {
         sign_op:
 `tezbridge.request({
   method: 'raw_sign',
-  bytes: 'ANY OPERATION BYTES AS STRING'
+  bytes: ''    // Any operation bytes as string
 })
 .then(result => output(result))
 .catch(err => output(err))
@@ -63,14 +66,14 @@ export default {
         inject_op:
 `tezbridge.request({
   method: 'raw_inject',
-  bytes: this.op_bytes_with_sig
+  bytes: ''    // Any operation bytes with signature
 })
 .then(result => output(result))
 .catch(err => output(err))
 `, 
-        make_operations:
+        inject_operations:
 `tezbridge.request({
-  method: 'make_operations',
+  method: 'inject_operations',
   operations: [
     {
       kind: 'transaction',
@@ -99,7 +102,7 @@ export default {
         set_delegate: '',
         sign_op: '',
         inject_op: '',
-        make_operations: ''
+        inject_operations: ''
       }
     }
   },
@@ -112,14 +115,20 @@ export default {
       window.output = x => this.print(x, key)
       eval(this.codes[key])
     }
+  },
+  mounted() { 
   }
 }
 </script>
 
 <style scoped>
 h1 {text-align: center;}
-textarea {width: 100%; height: 300px;}
 .block {margin: 16px;}
-pre {padding: 8px; border: 1px dotted #aaa;}
-pre:before {font-family: consolas, Menlo, monospace; color: #aaa; content: "OUTPUT:"; display: block;}
+pre.output {padding: 8px; border: 1px dotted #aaa;}
+pre.output:before {font-family: consolas, Menlo, monospace; color: #aaa; content: "OUTPUT:"; display: block;}
+</style>
+
+<style>
+.editor code {line-height: 1.4rem; font-size: 1.1rem; vertical-align: baseline; font-family: consolas, Menlo, monospace;}
+.editor code * {line-height: 1.4rem; font-size: 1.1rem; vertical-align: baseline; font-family: consolas, Menlo, monospace;}
 </style>

@@ -16,7 +16,7 @@ class Signer {
     this.method_listener = {}
     this.op_queue = []
     this.ask_methods = [
-      'raw_sign', 'raw_inject', 'make_operations',
+      'raw_sign', 'raw_inject', 'inject_operations',
       'create_account', 'set_delegate'
     ]
 
@@ -115,7 +115,7 @@ class Signer {
           operation_id: inject_result
         })
       },
-      async make_operations()  {
+      async inject_operations()  {
         const result = await this.autoSign(op.operations)
         const inject_result = await this.inject(result)
         resolve({
