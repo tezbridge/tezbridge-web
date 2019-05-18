@@ -38,7 +38,6 @@ export default {
 
 <style scoped>
 div.wrapper { margin-top: 8px }
-div.title { font-size: 0.8rem; background: #f0f0f0; text-align: center;}
 span.important {color: #ff2933;}
 div.content { 
   font-family: TZ, Consolas, Menlo, monospace; 

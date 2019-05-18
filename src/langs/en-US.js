@@ -71,6 +71,14 @@ export default {
     ready_manager: 'Ready manager',
     access_code: 'Access code',
     listening_operations: 'Listening operations',
+    methods: {
+      get_source: 'Get source address',
+      create_account: 'Create KT1 account',
+      set_delegate: 'Set delegate for KT1 account',
+      raw_sign: 'Sign operation bytes directly',
+      raw_inject: 'Inject signed operation bytes',
+      inject_operations: 'Sign & inject operations with minimal fee'
+    }
   },
   settings: {
     host: 'Host',

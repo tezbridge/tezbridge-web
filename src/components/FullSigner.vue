@@ -2,12 +2,7 @@
   <div class="container" ontouchstart>
     <nav class="link-tree">
       <tree-node title="Requests" :change="operations" bold>
-        <div v-for="(item, index) in operations">
-          {{item.op}}
-          <loading v-if="item.processing"></loading>
-          <button :disabled="item.processing" @click="acceptOp(item, index)">Accept</button> 
-          <button :disabled="item.processing" @click="rejectOp(item, index)">Reject</button>
-        </div>
+        <requests :operations="operations"></requests>
       </tree-node>
       <tree-node title="Current signer" :change="curr_signer" bold>
         <record :data="curr_signer"></record>
@@ -47,6 +42,7 @@ import TBC from 'tezbridge-crypto'
 import TreeNode from './TreeNode'
 import SelectManager from './SelectManager'
 import ImportKey from './ImportKey'
+import Requests from './Requests'
 import Record from './Record'
 import About from './About'
 
@@ -57,6 +53,7 @@ export default {
     TreeNode,
     SelectManager,
     ImportKey,
+    Requests,
     Record,
     About
   },
@@ -81,22 +78,6 @@ export default {
         name: key.address,
         enc
       })
-    },
-    async acceptOp(op_item : Object, index : number) {
-      op_item.processing = true
-
-      try {
-        await signer.methodHandler(op_item.op, op_item.resolve)
-      } catch(e) {
-        op_item.reject(e)
-      }
-
-      op_item.processing = false
-      this.operations.splice(index, 1)
-    },
-    rejectOp(op_item : Object, index : number) {
-      op_item.reject('rejected')
-      this.operations.splice(index, 1)
     },
     async signerSet({manager, source} : {manager: Object, source: string}) {
       signer.init(manager, source)
@@ -124,5 +105,5 @@ export default {
 
 <style scoped>
 .container {margin-right: 4px;}
-.copyright {margin: 8px 0 0 2px; font-size: 0.8rem; color: #ccc;}
+.copyright {margin: 8px 0 0 -1px; font-size: 0.8rem; color: #ccc;}
 </style>

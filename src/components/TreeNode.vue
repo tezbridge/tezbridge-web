@@ -56,33 +56,31 @@ export default {
 <style scoped>
 span.mark {
   display: inline-flex; 
-  border: 1px solid transparent; 
   border-radius: 2px; 
-  width: 14px; 
-  height: 14px; 
   align-items: center; 
   justify-content: center; 
   margin-right: 4px;
-  font-size: 0.8rem;
-  line-height: 0.8rem;
+  width: 8px;
+  font-size: 0.9rem;
+  line-height: 0.9rem;
 }
-div.content {margin-left: 18px;}
+div.content {margin-left: 12px;}
 div.title {padding: 4px 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden}
 div.title:active {background: #eee}
 div.bold {font-weight: 700}
-span.changed {border: 1px solid #777; animation: change-ani 2s infinite}
+span.changed {animation: change-ani 1s infinite}
 
 @keyframes change-ani {
   0% {
-    box-shadow: 0 0 0 0 #777;
+    opacity: 1
   }
 
   50% {
-    box-shadow: 1px 1px 0 0 #777;
+    opacity: 0
   }
 
   100% {
-    box-shadow: 0 0 0 0 #777;
+    opacity: 1
   }
 }
 </style>

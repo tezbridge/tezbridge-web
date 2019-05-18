@@ -19,6 +19,8 @@ import "prismjs/themes/prism-solarizedlight.css"
 import PrismEditor from 'vue-prism-editor'
 import SmInput from './SmInput'
 
+import lang from '../langs'
+
 export default {
   components: {
     PrismEditor,
@@ -26,14 +28,7 @@ export default {
   },
   data() {
     return {
-      desc: {
-        get_source: 'Get source address',
-        create_account: 'Create KT1 account',
-        set_delegate: 'Set delegate for KT1 account',
-        sign_op: 'Sign operation bytes directly',
-        inject_op: 'Inject signed operation bytes',
-        inject_operations: 'Sign and inject operations with minimal fee'
-      },
+      desc: lang.signer.methods,
       codes: {
         get_source: 
 `tezbridge.request({method: 'get_source'})
@@ -55,7 +50,7 @@ export default {
 .then(result => output(result))
 .catch(err => output(err))
 `,
-        sign_op:
+        raw_sign:
 `tezbridge.request({
   method: 'raw_sign',
   bytes: ''    // Any operation bytes as string
@@ -63,7 +58,7 @@ export default {
 .then(result => output(result))
 .catch(err => output(err))
 `,
-        inject_op:
+        raw_inject:
 `tezbridge.request({
   method: 'raw_inject',
   bytes: ''    // Any operation bytes with signature
@@ -100,8 +95,8 @@ export default {
         get_source: '',
         create_account: '',
         set_delegate: '',
-        sign_op: '',
-        inject_op: '',
+        raw_sign: '',
+        raw_inject: '',
         inject_operations: ''
       }
     }

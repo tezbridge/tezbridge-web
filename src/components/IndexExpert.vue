@@ -59,5 +59,5 @@ export default {
 
 <style scoped>
 .container {margin-right: 4px;}
-.copyright {margin: 8px 0 0 2px; font-size: 0.8rem; color: #ccc;}
+.copyright {margin: 8px 0 0 -1px; font-size: 0.8rem; color: #ccc;}
 </style>
