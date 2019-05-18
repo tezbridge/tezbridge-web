@@ -1,6 +1,6 @@
 <template>
   <div class="selectable">
-    <h1>DApp playground with TezBridge for developers</h1>
+    <h1>TezBridge playground for developers</h1>
 
     <div class="block" v-for="(title, k) in desc">
       <prism-editor class="editor" v-model="codes[k]" language="js"></prism-editor>

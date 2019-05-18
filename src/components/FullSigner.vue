@@ -95,7 +95,7 @@ export default {
       this.operations.splice(index, 1)
     },
     rejectOp(op_item : Object, index : number) {
-      op_item.reject('rejected @ ' + signer.source)
+      op_item.reject('rejected')
       this.operations.splice(index, 1)
     },
     async signerSet({manager, source} : {manager: Object, source: string}) {
