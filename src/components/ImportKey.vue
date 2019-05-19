@@ -5,8 +5,9 @@
 
     <div v-if="pwd_required && !result_key" class="error">{{lang.password_incorrect}}</div>
     
+    <record v-if="result_key" :data="{[lang.key.pkh]: result_key.address}"></record>
+    
     <div v-if="result_key && !is_temp">
-      <record :data="{[lang.key.pkh]: result_key.address}"></record>
       <sm-input class="element" :title="lang.import_key.manager_name" v-model="manager_name"></sm-input>
       <div v-if="!manager_name_is_valid" class="error">{{lang.import_key.manager_name_invalid}}</div>
       <sm-input class="element" :title="lang.import_key.lock_pwd" kind="password" v-model="lock_pwd"></sm-input>
