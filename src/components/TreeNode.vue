@@ -62,7 +62,7 @@ span.mark {
   margin-right: 4px;
   width: 8px;
   font-size: 0.9rem;
-  line-height: 0.9rem;
+  line-height: 1.2rem;
 }
 div.content {margin-left: 12px;}
 div.title {padding: 4px 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden}

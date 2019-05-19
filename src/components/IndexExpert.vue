@@ -9,12 +9,16 @@
         <import-key></import-key>
       </tree-node>
 
-      <tree-node title="Select manager" :change="managers" bold>
+      <tree-node title="Local managers" :change="managers" bold>
         <select-manager :managers="managers"></select-manager>
       </tree-node>
 
       <tree-node title="Settings" bold>
         <settings></settings>
+      </tree-node>
+
+      <tree-node title="Tools" bold>
+        <a class="link" :href="'/playground.html'">Playground</a>
       </tree-node>
       
       <tree-node title="About" bold>
@@ -60,4 +64,7 @@ export default {
 <style scoped>
 .container {margin-right: 4px;}
 .copyright {margin: 8px 0 0 -1px; font-size: 0.8rem; color: #ccc;}
+a.link { display: block; color: #555;}
+a.link:visited {color: #555;}
+a.link:active {color: #555;}
 </style>

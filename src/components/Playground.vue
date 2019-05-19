@@ -117,13 +117,13 @@ export default {
 </script>
 
 <style scoped>
-h1 {text-align: center;}
+h1 {text-align: center; line-height: 2rem}
 .block {margin: 16px;}
 pre.output {padding: 8px; border: 1px dotted #aaa;}
 pre.output:before {font-family: consolas, Menlo, monospace; color: #aaa; content: "OUTPUT:"; display: block;}
 </style>
 
 <style>
-.editor code {line-height: 1.4rem; font-size: 1.1rem; vertical-align: baseline; font-family: consolas, Menlo, monospace;}
-.editor code * {line-height: 1.4rem; font-size: 1.1rem; vertical-align: baseline; font-family: consolas, Menlo, monospace;}
+.editor code {line-height: 1.2rem; font-size: 1rem; vertical-align: baseline; font-family: consolas, Menlo, monospace;}
+.editor code * {line-height: 1.2rem; font-size: 1rem; vertical-align: baseline; font-family: consolas, Menlo, monospace;}
 </style>

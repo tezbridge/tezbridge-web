@@ -72,6 +72,6 @@ export default {
 </script>
 
 <style scoped>
-* { word-break: break-word; line-height: 1rem; font-family: consolas, Menlo, monospace;}
+* { word-break: break-word; line-height: 1rem; font-family: consolas, Menlo, monospace, TZ;}
 label { margin-top: 4px; display: block; font-weight: 700 }
 </style>
