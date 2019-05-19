@@ -102,13 +102,9 @@ export default {
     }
   },
   methods: {
-    print(content : string, key : string) {
-      this.output[key] = content
-    },
     runCode(key : string) {
       this.output[key] = ''
-      window.output = x => this.print(x, key)
-      eval(this.codes[key])
+      eval(`const output = x => this.output['${key}'] = x;\n${this.codes[key]}`)
     }
   },
   mounted() { 

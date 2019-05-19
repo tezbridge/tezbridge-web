@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="(item, index) in operations">
-      <div class="title">Operation</div>
+      <div class="title">Operation: {{item.op.tezbridge}}</div>
       <div class="content">
         {{lang.signer.methods[item.op.method]}}
         <div class="content-body">

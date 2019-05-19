@@ -55,8 +55,6 @@ class Signer {
     let op
     while (op = this.op_queue.shift()) {
       const method = op.method
-      const id = op.tezbridge
-      delete op.tezbridge
 
       if (this.method_listener[method]) {
         try {
@@ -65,10 +63,10 @@ class Signer {
             const listener = listeners[i]
             const result = await listener(op)
             if (result !== undefined)
-              this.send(op, id, result)
+              this.send(op.tezbridge, result)
           }
         } catch (e) {
-          await this.send(op, id, e, true)
+          await this.send(op.tezbridge, e, true)
           continue
         }
       } else {
@@ -77,7 +75,7 @@ class Signer {
     }
   }
 
-  send(prev_op : Object, id : string, data : Object, is_error : boolean = false) {
+  send(id : string, data : Object, is_error : boolean = false) {
     window.opener.postMessage(
       Object.assign({}, is_error ? {error: data} : {result: data}, {tezbridge: id}), window.opener.origin)
   }
@@ -94,7 +92,8 @@ class Signer {
   async methodHandler(op : Object, resolve : Object => void) {
     const method = op.method
     delete op.method
-
+    delete op.tezbridge
+    
     const handler_mapping = {
       async create_account() {
         const result = await this.autoSign([Object.assign({}, op, {
