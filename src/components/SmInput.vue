@@ -3,7 +3,7 @@
     <div class="title">
       <span>{{title}}</span>
       <span v-if="optional && !value">({{lang.optional}})</span>
-      <span v-if="important && value" class="important">({{important}})</span>
+      <span v-if="important && value" class="important">(important)</span>
     </div>
     <input class="selectable" :disabled="disabled" :type="kind || 'text'" @input="e => $emit('input', e.target.value)" :value="value"/>
   </div>
@@ -17,7 +17,7 @@ import lang from '../langs'
 export default {
   props: {
     title: String,
-    important: String,
+    important: Boolean,
     value: String,
     kind: String,
     disabled: Boolean,

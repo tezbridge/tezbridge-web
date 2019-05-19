@@ -1,22 +1,21 @@
 <template>
   <div class="container" ontouchstart>
     <nav class="link-tree">
-      <tree-node title="Requests" :change="operations" bold>
+      <tree-node title="Requests" :change="[operations, curr_signer]" bold>
+        <record :data="curr_signer"></record>
         <requests :operations="operations"></requests>
       </tree-node>
-      <tree-node title="Current signer" :change="curr_signer" bold>
-        <record :data="curr_signer"></record>
-      </tree-node>
 
-      <tree-node title="Temp signer" bold>
-        <import-key :is_temp="true" @temp_manager_confirmed="addTempManager"></import-key>
-        <select-manager :managers="temp_managers" @signer_set="signerSet" :is_signer="true"></select-manager>
-      </tree-node>
       <tree-node title="Local signer" bold>
         <select-manager :managers="managers" @signer_set="signerSet" :is_signer="true"></select-manager>
       </tree-node>
 
       <tree-node title="Remote signer" bold>
+      </tree-node>
+
+      <tree-node title="Temp signer" bold>
+        <import-key :is_temp="true" @temp_manager_confirmed="addTempManager"></import-key>
+        <select-manager :managers="temp_managers" @signer_set="signerSet" :is_signer="true"></select-manager>
       </tree-node>
 
       <tree-node title="About" bold>

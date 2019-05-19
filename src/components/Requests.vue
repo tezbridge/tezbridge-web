@@ -62,6 +62,6 @@ export default {
 
 <style scoped>
 div.title { font-size: 0.8rem; background: #f0f0f0; text-align: center;}
-div.content { margin-bottom: 8px; font-size: 0.85rem; padding: 4px; border: 1px solid #eee;}
+div.content { margin-bottom: 8px;  font-size: 0.85rem; padding: 4px; padding-bottom: 8px; border: 1px solid #eee;}
 .op-item { border-top: 1px dotted #aaa; padding-bottom: 6px;}
 </style>

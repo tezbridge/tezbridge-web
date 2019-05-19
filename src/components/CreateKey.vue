@@ -2,7 +2,7 @@
   <div>
     <tree-node title="mnemonic">
       <sm-input class="element" :title="lang.gen_key.bits" v-model="keys.mnemonic.bits"></sm-input>
-      <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.mnemonic.password"></sm-input>
+      <sm-input class="element" :title="lang.password" :optional="true" important kind="password" v-model="keys.mnemonic.password"></sm-input>
       <div class="op-panel element">
         <button @click="refreshWords">
           <icon icon="sync" spin size="sm"></icon>
@@ -13,7 +13,7 @@
     </tree-node>
 
     <tree-node title="ed25519">
-      <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.ed25519.password"></sm-input>
+      <sm-input class="element" :title="lang.password" :optional="true" important kind="password" v-model="keys.ed25519.password"></sm-input>
       <div class="op-panel element">
         <button @click="refreshEd25519">
           <icon icon="sync" spin size="sm"></icon>
@@ -24,7 +24,7 @@
     </tree-node>
 
     <tree-node title="secp256k1">
-      <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.secp256k1.password"></sm-input>
+      <sm-input class="element" :title="lang.password" :optional="true" important kind="password" v-model="keys.secp256k1.password"></sm-input>
       <div class="op-panel element">
         <button @click="refreshSecp256k1">
           <icon icon="sync" spin size="sm"></icon>
@@ -35,7 +35,7 @@
     </tree-node>
 
     <tree-node title="p256">
-      <sm-input class="element" :title="lang.password" :optional="true" :important="lang.must_remember" kind="password" v-model="keys.p256.password"></sm-input>
+      <sm-input class="element" :title="lang.password" :optional="true" important kind="password" v-model="keys.p256.password"></sm-input>
       <div class="op-panel element">
         <button @click="refreshP256">
           <icon icon="sync" spin size="sm"></icon>
