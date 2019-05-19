@@ -12,13 +12,13 @@
       <sm-input class="element" :title="lang.import_key.lock_pwd" kind="password" v-model="lock_pwd"></sm-input>
 
       <div class="op-panel element" v-if="manager_name_is_valid">
-        <button @click="confirm">{{lang.confirm}}</button>
+        <button :disabled="confirming" @click="confirm">{{lang.confirm}}</button>
       </div>
     </div>
 
     <div v-if="result_key && is_temp">
       <div class="op-panel element">
-        <button @click="confirmTemp">{{lang.confirm}}</button>
+        <button :disabled="confirming" @click="confirmTemp">{{lang.confirm}}</button>
       </div>
     </div>
 
@@ -36,6 +36,8 @@ import SmInput from './SmInput'
 import Record from './Record'
 import { debounce } from '../libs/util'
 import storage from '../libs/storage'
+
+import { network_client } from '../libs/network'
 
 const scheme_require_pwd = new Set([
   'ed25519_encrypted_seed', 'secp256k1_encrypted_secret_key',
@@ -67,7 +69,8 @@ export default {
       password: '',
       result_key: null,
       manager_name: '',
-      lock_pwd: ''
+      lock_pwd: '',
+      confirming: false
     }
   },
   watch: {
@@ -104,8 +107,8 @@ export default {
       } catch(e) {
         try {
           const faucet = JSON.parse(this.user_key)
-          if (faucet.mnemonic && faucet.password && faucet.secret) {
-            this.result_key = TBC.crypto.getKeyFromWords(faucet.mnemonic, faucet.password)
+          if (faucet.mnemonic && faucet.password && faucet.email && faucet.secret) {
+            this.result_key = TBC.crypto.getKeyFromWords(faucet.mnemonic.join(' '), faucet.email + faucet.password)
             this.key_type = lang.key.faucet
             this.pwd_required = false
           }
@@ -126,11 +129,37 @@ export default {
     })
   },
   methods: {
-    confirmTemp() {
+    async activateAccount() {
+      if (this.key_type !== lang.key.faucet)          
+        return false
+
+      const balance = await network_client.fetch.balance(this.result_key.address)
+      if (balance === '0') {
+        this.confirming = true
+        const faucet = JSON.parse(this.user_key)
+        const branch = await network_client.fetch.hash()
+        const protocol = await network_client.fetch.protocol()
+        const ops = [{
+          kind: 'activate_account',
+          secret: faucet.secret,
+          pkh: this.result_key.address
+        }]
+        const bytes = await network_client.submit.forge_operation(branch, ops)
+        const sig = TBC.crypto.signOperation(bytes, this.result_key.getSecretKey())
+        const op_with_sig = bytes + TBC.codec.toHex(TBC.codec.bs58checkDecode(sig))
+        await network_client.submit.inject_operation(op_with_sig)
+        this.confirming = false
+      }
+    },
+    async confirmTemp() {
+      await this.activateAccount()
+
       this.$emit('temp_manager_confirmed', this.result_key)
       this.resetData()
     },
-    confirm() {
+    async confirm() {
+      await this.activateAccount()
+
       const box = new TBC.crypto.EncryptedBox(this.result_key.getSecretKey(), this.lock_pwd)
       box.show().then(enc => {
         storage.addManager({

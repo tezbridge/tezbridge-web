@@ -28,7 +28,7 @@
     "forms": "^1.3.0",
     "prismjs": "^1.16.0",
     "tezbridge-crypto": "^1.0.32",
-    "tezbridge-network": "^1.0.19",
+    "tezbridge-network": "^1.0.21",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3",
     "vue-prism-editor": "^0.2.1"
