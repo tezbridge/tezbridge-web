@@ -1,30 +1,30 @@
 <template>
   <div>
-    <div v-if="op.kind">
+    <div v-if="op.kind !== undefined">
       <label>Type:</label>
       <div>{{op.kind}}</div>
     </div>
-    <div v-if="op.amount">
+    <div v-if="op.amount !== undefined">
       <label>Amount:</label>
       <div>{{tz2r(op.amount)}}ꜩ</div>
     </div>
-    <div v-if="op.balance">
+    <div v-if="op.balance !== undefined">
       <label>Balance:</label>
       <div>{{tz2r(op.balance)}}ꜩ</div>
     </div>
-    <div v-if="op.destination">
+    <div v-if="op.destination !== undefined">
       <label>Destination:</label>
       <div>{{op.destination}}</div>
     </div>
-    <div v-if="op.fee">
+    <div v-if="op.fee !== undefined">
       <label>Fee:</label>
       <div>{{tz2r(op.fee)}}ꜩ</div>
     </div>
-    <div v-if="op.gas_limit">
+    <div v-if="op.gas_limit !== undefined">
       <label>Gas limit:</label>
       <div>{{op.gas_limit}}</div>
     </div>
-    <div v-if="op.storage_limit">
+    <div v-if="op.storage_limit !== undefined">
       <label>Storage limit:</label>
       <div>{{op.storage_limit}}</div>
     </div>
@@ -36,19 +36,19 @@
       <label>Spendable:</label>
       <div>{{op.spendable}}</div>
     </div>
-    <div v-if="op.delegate">
+    <div v-if="op.delegate !== undefined">
       <label>Delegate:</label>
       <div>{{op.delegate}}</div>
     </div>
-    <div v-if="op.script">
+    <div v-if="op.script !== undefined">
       <label>Script:</label>
       <div>{{op.script}}</div>
     </div>
-    <div v-if="op.parameters">
+    <div v-if="op.parameters !== undefined">
       <label>Parameters:</label>
       <div>{{op.parameters}}</div>
     </div>
-    <div v-if="op.bytes">
+    <div v-if="op.bytes !== undefined">
       <label>Bytes:</label>
       <div>{{op.bytes}}</div>
     </div>
@@ -67,6 +67,9 @@ export default {
   },
   methods: {
     tz2r
+  },
+  mounted() {
+    console.log(this.op)
   }
 }
 </script>
