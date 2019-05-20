@@ -49,7 +49,6 @@ import { Connection } from '../libs/rtc'
 import ImportKey from './forms/ImportKey'
 import GenNewKey from './forms/GenNewKey'
 import SelectManager from './forms/SelectManager'
-import Manager from './Manager'
 import ReadyManager from './ReadyManager'
 
 export default {
@@ -57,7 +56,6 @@ export default {
     ImportKey,
     GenNewKey,
     SelectManager,
-    Manager,
     ReadyManager
   },
   methods: {
