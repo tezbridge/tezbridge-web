@@ -69,7 +69,6 @@ export default {
     tz2r
   },
   mounted() {
-    console.log(this.op)
   }
 }
 </script>

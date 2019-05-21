@@ -2,6 +2,7 @@
 
 import TBC from 'tezbridge-crypto'
 import { network_client } from '../libs/network'
+import { Connection } from '../libs/rtc'
 
 class Signer {
   box : TBC.crypto.EncryptedBox
@@ -10,6 +11,8 @@ class Signer {
   ask_methods : Array<string>
   is_waiting : boolean
   method_listener : {[string]: Set<(Object => Promise<Object>)>}
+
+  conn : Connection
 
   constructor() {
     this.is_waiting = false
@@ -22,8 +25,15 @@ class Signer {
 
     window.addEventListener('message', async (e) => {
       if (e.source !== window.opener || !e.data.tezbridge) return false
-      this.op_queue.push(e.data)
-      this.response()
+
+      if (this.conn) {
+        await this.conn.connected
+
+        this.conn.channel.send(JSON.stringify(e.data))
+      } else {
+        this.op_queue.push(e.data)
+        this.response() 
+      }
     })
   }
 
@@ -42,11 +52,43 @@ class Signer {
     this.method_listener[method].delete(listener)
   }
 
-  init(box : TBC.crypto.EncryptedBox, source: string) {
+  initLocal(box : TBC.crypto.EncryptedBox, source: string) {
     this.box = box
     this.source = source
 
     this.response()
+  }
+
+  async initRemote(remote_info? : string) {
+    this.conn = new Connection(remote_info)
+    await this.conn.prepared
+
+    ;(async () => {
+      await this.conn.connected
+
+      console.log('remote connected')
+
+      let op
+      while (op = this.op_queue.shift()) {
+        this.conn.channel.send(JSON.stringify(op))
+      }
+      
+      this.conn.channel.onmessage = e => {
+        const input = JSON.parse(e.data)
+        if (window.opener && (input.result || input.error)) {
+          window.opener.postMessage(input, window.opener.origin)
+        } else {
+          this.op_queue.push(input)
+          this.response()
+        }
+      }
+    })()
+
+    return this.conn.genMyInfo()
+  }
+
+  async setRemote(remote_info : string) {
+    this.conn.setRemoteConnInfo(remote_info)
   }
 
   async response() {
@@ -76,8 +118,11 @@ class Signer {
   }
 
   send(id : string, data : Object, is_error : boolean = false) {
-    window.opener.postMessage(
-      Object.assign({}, is_error ? {error: data} : {result: data}, {tezbridge: id}), window.opener.origin)
+    const reply_msg = Object.assign({}, is_error ? {error: data} : {result: data}, {tezbridge: id})
+    if (this.conn)
+      this.conn.channel.send(JSON.stringify(reply_msg))
+    else
+      window.opener.postMessage(reply_msg, window.opener.origin)
   }
 
   async autoSign(op_params : Object) {

@@ -1,21 +1,23 @@
 <template>
   <div class="container" ontouchstart>
     <nav class="link-tree">
-      <tree-node title="Requests" :change="[operations, curr_signer]" bold>
+      <tree-node title="Requests" :change="operations" :change1="curr_signer" bold>
         <record :data="curr_signer"></record>
         <requests :operations="operations"></requests>
       </tree-node>
 
       <tree-node title="Local signer" bold>
-        <select-manager :managers="managers" @signer_set="signerSet" :is_signer="true"></select-manager>
+        <select-manager :managers="managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
-      <tree-node title="Remote signer" bold>
+      <tree-node title="Remote signer" bold @first_open="remoteSignerInit">
+        <record :data="{Connection: conn_info}"></record>
+        <textarea v-model="remote_conn_info"></textarea>
       </tree-node>
 
       <tree-node title="Temp signer" bold>
         <import-key :is_temp="true" @temp_manager_confirmed="addTempManager"></import-key>
-        <select-manager :managers="temp_managers" @signer_set="signerSet" :is_signer="true"></select-manager>
+        <select-manager :managers="temp_managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
       <tree-node title="About" bold>
@@ -65,7 +67,17 @@ export default {
         [lang.signer.manager]: undefined,
         [lang.signer.source]: undefined
       },
+      conn_info: '',
+      remote_conn_info: '',
       operations: []
+    }
+  },
+  watch: {
+    async remote_conn_info(x : string) {
+      if (x.indexOf('answer') > -1)
+        await signer.setRemote(x)
+      else
+        this.conn_info = await signer.initRemote(x)
     }
   },
   methods: {
@@ -78,13 +90,16 @@ export default {
         enc
       })
     },
-    async signerSet({manager, source} : {manager: Object, source: string}) {
-      signer.init(manager, source)
+    async localSignerInit({manager, source} : {manager: Object, source: string}) {
+      signer.initLocal(manager, source)
       const key = await manager.revealKey()
       this.curr_signer = {
         [lang.signer.manager]: key.address,
         [lang.signer.source]: source
       } 
+    },
+    async remoteSignerInit() {
+      this.conn_info = await signer.initRemote()
     }
   },
   mounted() {

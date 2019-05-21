@@ -18,6 +18,7 @@
         if (e.source !== this.signer ||
             !e.data.tezbridge) return false
 
+        console.log(e.data)
         if (e.data.error) {
           this.rejects[e.data.tezbridge](e.data.error)
         } else {

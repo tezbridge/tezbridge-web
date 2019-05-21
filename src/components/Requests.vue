@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <tree-node title="Results">
+    <tree-node title="Results" :change="results">
       <div v-for="item in results">
         <div class="title">Operation: {{item.op.tezbridge}}</div>
         <div class="op-content">

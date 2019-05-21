@@ -20,6 +20,7 @@ export default {
       default: false
     },
     change: [Object, Array],
+    change1: [Object, Array],
     bold: {
       type: Boolean,
       default: false
@@ -34,6 +35,10 @@ export default {
   },
   watch: {
     change() {
+      if (!this.is_open)
+        this.changed = true
+    },
+    change1() {
       if (!this.is_open)
         this.changed = true
     }
