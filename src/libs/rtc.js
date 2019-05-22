@@ -15,8 +15,11 @@ export class Connection {
   prepared : Promise<void>
   connected : Promise<void>
 
+  is_connected : boolean
+
   constructor(conn_info? : string) {
     this.prepared = Promise.resolve()
+    this.is_connected = false
 
     if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
       alert('For remote signer connection\nmicrophone premission needs to be allowed\nit will only be active for 1 second.')
@@ -44,6 +47,12 @@ export class Connection {
         prepared_resolve()
       }
     }
+    this.conn.oniceconnectionstatechange = e => {
+      if (this.conn.iceConnectionState === 'disconnected') {
+        this.is_connected = false
+      }
+    }
+
     if (conn_info) {
 
       this.setRemoteConnInfo(conn_info)
@@ -57,12 +66,14 @@ export class Connection {
         this.channel = e.channel
 
         e.channel.onmessage = event => {
-          console.log(2, event)
         } 
         e.channel.onopen = event => {
+          this.is_connected = true
           connected_resolve()
         } 
-        e.channel.onclose = () => {} 
+        e.channel.onclose = () => {
+          this.is_connected = false
+        } 
       }
 
     } else {
@@ -70,13 +81,16 @@ export class Connection {
       this.channel = this.conn.createDataChannel('TezBridge-WebRTC-Connection')
 
       this.channel.onmessage = event => {
-        console.log(1, event)
       } 
       this.channel.onopen = event => {
+        this.is_connected = true
         connected_resolve()
       } 
 
-      this.channel.onclose = () => {} 
+      this.channel.onclose = () => {
+        this.is_connected = false
+      } 
+
       this.conn.createOffer()
       .then(offer => {
         this.offer = offer

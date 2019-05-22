@@ -26,9 +26,7 @@ class Signer {
     window.addEventListener('message', async (e) => {
       if (e.source !== window.opener || !e.data.tezbridge) return false
 
-      if (this.conn) {
-        await this.conn.connected
-
+      if (this.conn && this.conn.is_connected) {
         this.conn.channel.send(JSON.stringify(e.data))
       } else {
         this.op_queue.push(e.data)
@@ -68,10 +66,11 @@ class Signer {
 
       console.log('remote connected')
 
-      let op
-      while (op = this.op_queue.shift()) {
+      const ops = this.op_queue
+      this.op_queue = []
+      ops.forEach(op => {
         this.conn.channel.send(JSON.stringify(op))
-      }
+      })
       
       this.conn.channel.onmessage = e => {
         const input = JSON.parse(e.data)
@@ -94,8 +93,9 @@ class Signer {
   async response() {
     if (!this.source) return false
 
-    let op
-    while (op = this.op_queue.shift()) {
+    const ops = this.op_queue
+    this.op_queue = []
+    ops.forEach(async op => {
       const method = op.method
 
       if (this.method_listener[method]) {
@@ -108,18 +108,17 @@ class Signer {
               this.send(op.tezbridge, result)
           }
         } catch (e) {
-          await this.send(op.tezbridge, e, true)
-          continue
+          this.send(op.tezbridge, e, true)
         }
       } else {
         throw `Invalid method: ${method} for signer`
       }
-    }
+    })
   }
 
   send(id : string, data : Object, is_error : boolean = false) {
     const reply_msg = Object.assign({}, is_error ? {error: data} : {result: data}, {tezbridge: id})
-    if (this.conn)
+    if (this.conn && this.conn.is_connected)
       this.conn.channel.send(JSON.stringify(reply_msg))
     else
       window.opener.postMessage(reply_msg, window.opener.origin)
