@@ -34,6 +34,7 @@
 <script>
 // @flow
 
+import zlib from 'zlib'
 
 import lang from '../langs'
 
@@ -99,7 +100,10 @@ export default {
       } 
     },
     async remoteSignerInit() {
-      this.conn_info = await signer.initRemote()
+      const raw_conn_info = await signer.initRemote()
+      zlib.deflate(raw_conn_info, {level: 9}, (err, result) => {
+        this.conn_info = TBC.codec.bs58checkEncode(result, new Uint8Array([]))
+      })
     }
   },
   mounted() {
