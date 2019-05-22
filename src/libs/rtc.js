@@ -11,11 +11,14 @@ export class Connection {
   my_ice_candidates : Set<Object>
   offer : Object
   answer : Object
+
+  onmessage : (...any) => void
   
   prepared : Promise<void>
   connected : Promise<void>
 
   is_connected : boolean
+
 
   constructor(conn_info? : string) {
     this.prepared = Promise.resolve()
@@ -65,8 +68,8 @@ export class Connection {
       this.conn.ondatachannel = e => {
         this.channel = e.channel
 
-        e.channel.onmessage = event => {
-        } 
+        e.channel.onmessage = this.onmessage
+        
         e.channel.onopen = event => {
           this.is_connected = true
           connected_resolve()
@@ -80,8 +83,8 @@ export class Connection {
 
       this.channel = this.conn.createDataChannel('TezBridge-WebRTC-Connection')
 
-      this.channel.onmessage = event => {
-      } 
+      this.channel.onmessage = this.onmessage
+
       this.channel.onopen = event => {
         this.is_connected = true
         connected_resolve()

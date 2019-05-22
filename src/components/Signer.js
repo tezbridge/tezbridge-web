@@ -12,6 +12,7 @@ class Signer {
   is_waiting : boolean
   method_listener : {[string]: Set<(Object => Promise<Object>)>}
 
+  caller_origin : string
   conn : Connection
 
   constructor() {
@@ -25,6 +26,8 @@ class Signer {
 
     window.addEventListener('message', async (e) => {
       if (e.source !== window.opener || !e.data.tezbridge) return false
+
+      this.caller_origin = e.origin
 
       if (this.conn && this.conn.is_connected) {
         this.conn.channel.send(JSON.stringify(e.data))
@@ -59,27 +62,28 @@ class Signer {
 
   async initRemote(remote_info? : string) {
     this.conn = new Connection(remote_info)
+    this.conn.onmessage = e => {
+      const input = JSON.parse(e.data)
+      if (this.caller_origin) {
+        window.opener.postMessage(input, this.caller_origin)
+      } else {
+        this.op_queue.push(input)
+        this.response()
+      }
+    }
+
     await this.conn.prepared
 
     ;(async () => {
       await this.conn.connected
 
-      console.log('remote connected')
-
-      const ops = this.op_queue
-      this.op_queue = []
-      ops.forEach(op => {
-        this.conn.channel.send(JSON.stringify(op))
-      })
-      
-      this.conn.channel.onmessage = e => {
-        const input = JSON.parse(e.data)
-        if (window.opener && (input.result || input.error)) {
-          window.opener.postMessage(input, window.opener.origin)
-        } else {
-          this.op_queue.push(input)
-          this.response()
-        }
+      if (this.caller_origin) {
+        const ops = this.op_queue
+        this.op_queue = []
+        ops.forEach(op => {
+          console.log('send', op)
+          this.conn.channel.send(JSON.stringify(op))
+        })
       }
     })()
 
@@ -91,8 +95,11 @@ class Signer {
   }
 
   async response() {
+
+    console.log(123)
     if (!this.source) return false
 
+    console.log(this.source)
     const ops = this.op_queue
     this.op_queue = []
     ops.forEach(async op => {
@@ -121,7 +128,7 @@ class Signer {
     if (this.conn && this.conn.is_connected)
       this.conn.channel.send(JSON.stringify(reply_msg))
     else
-      window.opener.postMessage(reply_msg, window.opener.origin)
+      window.opener.postMessage(reply_msg, this.caller_origin)
   }
 
   async autoSign(op_params : Object) {
