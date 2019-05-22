@@ -19,7 +19,7 @@ Vue.component('loading', Loading)
 import Index from '../components/IndexExpert.vue'
 import Signer from '../components/FullSigner.vue'
 
-const is_signer = location.hash === '#signer'
+const is_signer = location.search.indexOf('?signer') === 0
 
 if (is_signer)
   document.title = 'TezBridge Signer'

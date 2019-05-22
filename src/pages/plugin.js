@@ -35,7 +35,7 @@
         return Promise.resolve()
       }
       else {
-        this.signer = window.open(`${domain}/index.html#signer`)
+        this.signer = window.open(`${domain}/index.html?signer`)
         return new Promise(resolve => {
           if (this.signer)
             this.signer.onload = () => {
