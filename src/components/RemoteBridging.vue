@@ -126,7 +126,7 @@ export default {
       if (!this.access_granted)
         return false
 
-      if (signer.conn)
+      if (signer.conn && signer.conn.channel)
         signer.conn.channel.close()
 
       const raw_conn_info = await signer.initRemote(remote_info)
