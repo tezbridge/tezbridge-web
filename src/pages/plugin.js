@@ -9,17 +9,20 @@
     resolves : {[number] : ( ..._ : any) => any}
     txid: number
 
+    mode : string
     constructor() {
       this.rejects = {}
       this.resolves = {}
       this.txid = 0
+      this.mode = 'local'
 
       window.addEventListener('message', e => {
         if (e.source !== this.signer ||
             !e.data.tezbridge) return false
 
-        console.log(e.data)
-        if (e.data.error) {
+        if (e.data.mode) {
+          this.mode = e.data.mode
+        } else if (e.data.error) {
           this.rejects[e.data.tezbridge](e.data.error)
         } else {
           this.resolves[e.data.tezbridge](e.data.result)
@@ -51,7 +54,7 @@
       if (this.signer) {
         this.txid++
 
-        if (param.method !== 'get_source')
+        if (param.method !== 'get_source' && this.mode === 'local')
           this.signer.focus()
 
         return new Promise<void>((resolve, reject) => {

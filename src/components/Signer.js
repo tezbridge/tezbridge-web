@@ -61,6 +61,10 @@ class Signer {
   }
 
   async initRemote(remote_info? : string) {
+    if (this.caller_origin) {
+      window.opener.postMessage({mode: 'local', tezbridge: -1}, this.caller_origin)
+    }
+
     this.conn = new Connection(remote_info)
     this.conn.onmessage = e => {
       const input = JSON.parse(e.data)
@@ -71,17 +75,17 @@ class Signer {
         this.response()
       }
     }
-
+  
     await this.conn.prepared
 
     ;(async () => {
       await this.conn.connected
 
       if (this.caller_origin) {
+        window.opener.postMessage({mode: 'remote', tezbridge: -1}, this.caller_origin)
         const ops = this.op_queue
         this.op_queue = []
         ops.forEach(op => {
-          console.log('send', op)
           this.conn.channel.send(JSON.stringify(op))
         })
       }
@@ -95,11 +99,8 @@ class Signer {
   }
 
   async response() {
-
-    console.log(123)
     if (!this.source) return false
 
-    console.log(this.source)
     const ops = this.op_queue
     this.op_queue = []
     ops.forEach(async op => {
