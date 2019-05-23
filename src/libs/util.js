@@ -18,3 +18,5 @@ export function r2tz(input : number) {
 export function tz2r(input : string) {
   return parseInt(input) / 1000000 + ''
 }
+
+export const is_safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)

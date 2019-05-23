@@ -5,6 +5,8 @@ declare var RTCSessionDescription
 declare var RTCIceCandidate
 declare var RTCIceCandidate
 
+import { is_safari } from './util'
+
 export class Connection {
   conn : RTCPeerConnection
   channel : any
@@ -20,18 +22,19 @@ export class Connection {
 
   is_connected : boolean
 
+  static grantMediaAccess(kind : 'video' | 'audio') {
+    if (navigator.mediaDevices)
+      return navigator.mediaDevices.getUserMedia(({video: {video: true}, audio: {audio: true}})[kind])
+             .then(stream => {
+               stream.getTracks().forEach(x => x.stop())
+             })
+
+    throw 'No media devices'
+  }
 
   constructor(conn_info? : string) {
     this.prepared = Promise.resolve()
     this.is_connected = false
-
-    if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
-      alert('For remote signer connection\nmicrophone premission needs to be allowed\nit will only be active for 1 second.')
-      this.prepared = this.prepared.then(() => 
-        navigator.mediaDevices 
-          ? navigator.mediaDevices.getUserMedia({audio: true}).then(x => x.getAudioTracks()[0].stop())
-          : Promise.resolve())
-    }
 
     this.connected = new Promise<void>(connected_resolve => {
       this.prepared = this.prepared.then(() => new Promise<void>(prepared_resolve => {

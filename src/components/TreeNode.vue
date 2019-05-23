@@ -3,7 +3,7 @@
     <div :class="{title: true, bold}" @click="titleClick">
       <span :class="{mark: true, changed: !!changed}">{{is_open || keep_opening ? '-' : '+'}}</span><span>{{title}}</span>
     </div>
-    <div class="content" v-show="is_open || keep_opening">
+    <div class="content" v-show="is_open || keep_opening" v-if="!hard_close || (hard_close && is_open)">
       <slot></slot>
     </div>
   </div>
@@ -22,6 +22,10 @@ export default {
     change: [Object, Array],
     change1: [Object, Array],
     bold: {
+      type: Boolean,
+      default: false
+    },
+    hard_close: {
       type: Boolean,
       default: false
     }
