@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div class="wrapper" v-if="item !== undefined" v-for="(item, key) in (data || {})">
+    <div :class="{wrapper: !nomargin}" v-if="item !== undefined" v-for="(item, key) in (data || {})">
       <div class="title">
         <span> {{key}} </span>
         <span v-if="item instanceof Array" class="important">(important)</span>
-        <icon icon="copy" size="sm" class="copy-btn" @click="copyContent(key)"></icon>
+        <icon icon="copy" size="sm" class="copy-btn" @click="copyContent(key)" v-if="!nocopy"></icon>
+        <slot></slot>
         <span :data-copied="key">copied</span>
       </div>
       <div class="content selectable" :data-key="key">
@@ -18,7 +19,11 @@
 // @flow
 
 export default {
-  props: ['data'],
+  props: {
+    data: Object,
+    nocopy: Boolean,
+    nomargin: Boolean
+  },
   data() {
     return {
       copied: false

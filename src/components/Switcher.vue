@@ -3,6 +3,9 @@
     <div @click="click(v)" :class="{item: true, active: value === v}" v-for="(v, k) in data">
       {{k}}
     </div>
+    <div class="content-wrapper">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -32,16 +35,17 @@ export default {
 <style scoped>
 div.item {
   display: inline-flex;
-  line-height: 0.8rem;
-  font-size: 0.8rem;
+  line-height: 1rem;
+  font-size: 1rem;
   padding: 4px 8px;
-  border: 1px solid #999;
-  box-shadow: 0 2px 0 0 #ddd;
+  color: #999
 }
 div.item.active {
-  box-shadow: none;
-  border: 1px solid #ccc;
-  background: #f8f8f8;
-  transform: translate(0, 1px);
+  background: #289cff;
+  color: white;
+}
+.content-wrapper {
+  border: 1px solid #289cff;
+  border-top: none;
 }
 </style>

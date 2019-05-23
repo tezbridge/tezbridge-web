@@ -13,7 +13,8 @@ export class Connection {
   answer : Object
 
   onmessage : (...any) => void
-  
+  onchecking : () => void
+
   prepared : Promise<void>
   connected : Promise<void>
 
@@ -51,7 +52,9 @@ export class Connection {
       }
     }
     this.conn.oniceconnectionstatechange = e => {
-      console.log(this.conn.iceConnectionState)
+      if (this.conn.iceConnectionState === 'checking') {
+        this.onchecking && this.onchecking()
+      }
       if (this.conn.iceConnectionState === 'disconnected') {
         this.is_connected = false
       }

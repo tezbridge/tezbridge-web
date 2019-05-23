@@ -6,12 +6,12 @@
         <requests :operations="operations"></requests>
       </tree-node>
 
-      <tree-node title="Local signer" bold>
+      <tree-node title="Local managers" bold>
         <select-manager :managers="managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
-      <tree-node title="Remote signer" bold>
-        <remote-signer></remote-signer>
+      <tree-node title="Remote bridging" bold>
+        <remote-bridging></remote-bridging>
       </tree-node>
 
       <tree-node title="Temp signer" bold>
@@ -44,7 +44,7 @@ import ImportKey from './ImportKey'
 import Requests from './Requests'
 import Record from './Record'
 import About from './About'
-import RemoteSigner from './RemoteSigner'
+import RemoteBridging from './RemoteBridging'
 
 import storage from '../libs/storage'
 
@@ -53,7 +53,7 @@ export default {
     TreeNode,
     SelectManager,
     ImportKey,
-    RemoteSigner,
+    RemoteBridging,
     Requests,
     Record,
     About
