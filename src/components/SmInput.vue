@@ -5,7 +5,7 @@
       <span v-if="optional && !value">({{lang.optional}})</span>
       <span v-if="important && value" class="important">(important)</span>
     </div>
-    <input class="selectable" :disabled="disabled" :type="kind || 'text'" @input="e => $emit('input', e.target.value)" :value="value"/>
+    <input class="selectable" :disabled="disabled" :type="kind || 'text'" @paste="e => $emit('paste', e)" @input="e => $emit('input', e.target.value)" :value="value"/>
   </div>
 </template>
 

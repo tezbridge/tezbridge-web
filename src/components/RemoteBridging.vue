@@ -37,7 +37,7 @@
               </div>
             </div>
             <div v-else>
-              <sm-input title="Paste remote connection here" v-model="remote_info_text"></sm-input>
+              <sm-input title="Paste connection text or QRCode image" v-model="remote_info_text" @paste="connPasted"></sm-input>
 
               <tree-node title="Scan QRCode by camera" hard_close>
                 <qrcode-stream @decode="setRemoteInfo"></qrcode-stream>
@@ -69,6 +69,7 @@ import pako from 'pako'
 import TBC from 'tezbridge-crypto'
 import QRCode from 'qrcode'
 import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
+import jsQR from 'jsqr'
 
 import signer from './Signer.js'
 
@@ -156,6 +157,34 @@ export default {
     cleanCapture() {
       this.$refs.capture.$el.removeAttribute('capture')
       this.$refs.capture.$el.removeAttribute('multiple')
+    },
+    connPasted(e : Object) {
+      const items = (e.clipboardData || e.originalEvent.clipboardData).items
+      if (!items.length)
+        return false
+
+      const pic = items[0]
+      if (pic.kind === 'file') {
+        const reader = new FileReader()
+        reader.onload = e => {
+          const img = new Image()
+          img.onload = () => {
+            const canvas = document.createElement('canvas')
+            const ctx = canvas.getContext('2d')
+            canvas.width = img.width
+            canvas.height = img.height
+
+            ctx.drawImage(img, 0, 0)
+
+            const imageData = ctx.getImageData(0, 0, img.width, img.height)
+            const code = jsQR(imageData.data, imageData.width, imageData.height)
+            if (code)
+              this.setRemoteInfo(code.data)
+          }
+          img.src = e.target.result
+        }
+        reader.readAsDataURL(pic.getAsFile())
+      }
     }
   },
   mounted() {
