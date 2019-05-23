@@ -51,8 +51,11 @@ export class Connection {
     this.conn.onicecandidate = e => {
       if (e.candidate) {
         this.my_ice_candidates.add(e.candidate)
-        prepared_resolve()
       }
+    }
+    this.conn.onicegatheringstatechange = e => {
+      if (e.target.iceGatheringState === 'complete')
+        prepared_resolve()
     }
     this.conn.oniceconnectionstatechange = e => {
       if (this.conn.iceConnectionState === 'checking') {

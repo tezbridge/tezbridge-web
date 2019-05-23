@@ -17,12 +17,16 @@
         <switcher class="switcher" :data="{'As bridge': 'bridge', 'As signer': 'signer'}" v-model="mode">
           <div class="step-desc">
             <span v-if="mode === 'bridge'">
-              {{in_step1 ? 'Step: 1 -> Send this connection info to your remote signer' : 
-              'Step: 2 -> Paste or scan your remote connection info'}}
+              <span>
+                {{in_step1 ? 'Step 1 -> Send this connection info to your remote signer' : 
+                'Step 2 -> Paste or scan your remote connection info'}}
+              </span>
+              <a href="javascript:;" class="next-step" v-if="in_step1" @click="in_step1 = false">Go step 2</a>
+              <a href="javascript:;" class="next-step" v-if="!in_step1" @click="in_step1 = true">Back</a>
             </span>
             <span v-if="mode === 'signer'">
-              {{in_step1 ? 'Step: 1 -> Paste or scan your remote connection info' :
-              'Step: 2 -> Send this connection info to your remote bridge'}}
+              {{in_step1 ? 'Step 1 -> Paste or scan your remote connection info' :
+              'Step 2 -> Send this connection info to your remote bridge'}}
             </span>
           </div>
           <div class="conn-wrapper">
@@ -45,8 +49,8 @@
                   </div>
                 </qrcode-drop-zone>
               </tree-node>
-              <tree-node title="Scan QRCode by image uploading">
-                <qrcode-capture @decode="setRemoteInfo"></qrcode-capture>
+              <tree-node title="Scan QRCode by image uploading" @first_open="cleanCapture">
+                <qrcode-capture @decode="setRemoteInfo" ref="capture"></qrcode-capture>
               </tree-node>
             </div>
           </div>
@@ -148,6 +152,10 @@ export default {
       this.resetData()
       this.access_granted = true
       this.init()
+    },
+    cleanCapture() {
+      this.$refs.capture.$el.removeAttribute('capture')
+      this.$refs.capture.$el.removeAttribute('multiple')
     }
   },
   mounted() {
@@ -162,10 +170,11 @@ export default {
 .dropzone:hover {background: rgba(40,156,255,0.2);}
 .dropover {background: rgba(40,156,255,0.2);}
 a.link {color: #555;}
-a.link:visited {color: #555;}
 a.link:active {color: #555;}
 .switcher {margin-top: 4px;}
-.step-desc {padding: 2px 4px; font-size: 0.8rem; line-height: 0.8rem; background: #289cff; color: white; }
+.step-desc { display: flex; align-items: center; padding: 6px 8px; min-height: 32px; font-size: 0.9rem;  line-height: 0.9rem; background: #289cff; color: white; }
+.step-desc .next-step { display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; line-height: 1.2rem; padding: 0px 6px;background: white; color: #289cff; text-decoration: none;}
+.step-desc .next-step:active {color: white;}
 .conn-wrapper {
   padding: 8px;
 }
