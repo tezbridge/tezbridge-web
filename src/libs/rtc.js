@@ -51,6 +51,7 @@ export class Connection {
       }
     }
     this.conn.oniceconnectionstatechange = e => {
+      console.log(this.conn.iceConnectionState)
       if (this.conn.iceConnectionState === 'disconnected') {
         this.is_connected = false
       }
