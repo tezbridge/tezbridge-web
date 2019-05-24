@@ -39,18 +39,13 @@
             <div v-else>
               <sm-input title="Paste connection text or QRCode image" v-model="remote_info_text" @paste="connPasted"></sm-input>
 
-              <tree-node title="Scan QRCode by camera" hard_close>
-                <qrcode-stream @decode="setRemoteInfo"></qrcode-stream>
-              </tree-node>
               <tree-node title="Scan QRCode by image dropping">
-                <qrcode-drop-zone @decode="setRemoteInfo" @dragover="x => dropover = x">
-                  <div :class="{dropzone: true, dropover}">
-                    Drop remote connection QRCode here!
-                  </div>
-                </qrcode-drop-zone>
+                <div :class="{dropzone: true, dropover}" @drop.prevent="fileDrop" @dragleave="dropover = false" @dragover.prevent="x => dropover = x">
+                  Drop remote connection QRCode here!
+                </div>
               </tree-node>
-              <tree-node title="Scan QRCode by image uploading" @first_open="cleanCapture">
-                <qrcode-capture @decode="setRemoteInfo" ref="capture"></qrcode-capture>
+              <tree-node title="Scan QRCode by image uploading">
+                <input type="file" @change="e => scanFile(e.target.files[0])" accept="image/*" />
               </tree-node>
             </div>
           </div>
@@ -69,7 +64,6 @@
 import pako from 'pako'
 import TBC from 'tezbridge-crypto'
 import QRCode from 'qrcode'
-import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
 import jsQR from 'jsqr'
 
 import signer from './Signer.js'
@@ -87,10 +81,7 @@ export default {
     TreeNode,
     SmInput,
     Switcher,
-    Record,
-    QrcodeStream,
-    QrcodeDropZone,
-    QrcodeCapture
+    Record
   },
   data() {
     return {
@@ -155,9 +146,40 @@ export default {
       this.access_granted = true
       this.init()
     },
-    cleanCapture() {
-      this.$refs.capture.$el.removeAttribute('capture')
-      this.$refs.capture.$el.removeAttribute('multiple')
+    scanFile(file : File) {
+      const reader = new FileReader()
+      reader.onload = e => {
+        const img = new Image()
+        img.onload = () => {
+          const canvas = document.createElement('canvas')
+          const ctx = canvas.getContext('2d')
+          canvas.width = img.width
+          canvas.height = img.height
+
+          ctx.drawImage(img, 0, 0)
+
+          const imageData = ctx.getImageData(0, 0, img.width, img.height)
+          const code = jsQR(imageData.data, imageData.width, imageData.height)
+          if (code)
+            this.setRemoteInfo(code.data)
+        }
+        img.src = e.target.result
+      }
+      reader.readAsDataURL(file)
+    },
+    fileDrop(e : Object) {
+      if (e.dataTransfer.items) {
+        for (let i = 0; i < e.dataTransfer.items.length; i++) {
+          const item = e.dataTransfer.items[i]
+          if (item.kind !== 'file')
+            continue
+
+          this.scanFile(item.getAsFile())
+          break
+        }
+      } else {
+        this.scanFile(e.dataTransfer.files[0])
+      }
     },
     connPasted(e : Object) {
       const items = (e.clipboardData || e.originalEvent.clipboardData).items
@@ -169,34 +191,14 @@ export default {
         if (item.kind !== 'file')
           continue
 
-        const reader = new FileReader()
-        reader.onload = e => {
-          const img = new Image()
-          img.onload = () => {
-            const canvas = document.createElement('canvas')
-            const ctx = canvas.getContext('2d')
-            canvas.width = img.width
-            canvas.height = img.height
-
-            ctx.drawImage(img, 0, 0)
-
-            const imageData = ctx.getImageData(0, 0, img.width, img.height)
-            const code = jsQR(imageData.data, imageData.width, imageData.height)
-            if (code)
-              this.setRemoteInfo(code.data)
-          }
-          img.src = e.target.result
-        }
-        reader.readAsDataURL(item.getAsFile())
+        this.scanFile(item.getAsFile())
         break
       }
-
 
     }
   },
   mounted() {
     this.init()
-
   }
 }
 </script>
