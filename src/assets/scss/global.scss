@@ -52,7 +52,7 @@ body {
   background: #d3ebff;
 }
 
-button {
+button, .button {
   cursor: pointer;
   font-size: 0.9rem;
   padding: 4px 8px;
@@ -71,7 +71,7 @@ button[disabled] {
 button svg {
   margin-right: 8px;
 }
-button:active {
+button:active, .button:active {
   transform: translate(1px, 1px);
   box-shadow: 1px 1px 0 0 #bbb;
 }

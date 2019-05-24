@@ -39,13 +39,14 @@
             <div v-else>
               <sm-input title="Paste connection text or QRCode image" v-model="remote_info_text" @paste="connPasted"></sm-input>
 
-              <tree-node title="Scan QRCode by image dropping">
+              <tree-node title="QRCode image dropping">
                 <div :class="{dropzone: true, dropover}" @drop.prevent="fileDrop" @dragleave="dropover = false" @dragover.prevent="x => dropover = x">
                   Drop remote connection QRCode here!
                 </div>
               </tree-node>
-              <tree-node title="Scan QRCode by image uploading">
-                <input type="file" @change="e => scanFile(e.target.files[0])" accept="image/*" />
+              <tree-node title="QRCode image file scanning">
+                <input class="file-input" type="file" @change="e => scanFile(e.target.files[0])" accept="image/*" name="qrcode_file" id="qrcode_file" />
+                <label class="button" for="qrcode_file">Scan</label>
               </tree-node>
             </div>
           </div>
@@ -73,7 +74,7 @@ import Record from './Record'
 import SmInput from './SmInput'
 import Switcher from './Switcher'
 
-import { is_safari } from '../libs/util'
+import { is_safari, has_camera } from '../libs/util'
 import { Connection } from '../libs/rtc'
 
 export default {
@@ -168,6 +169,7 @@ export default {
       reader.readAsDataURL(file)
     },
     fileDrop(e : Object) {
+      debugger
       if (e.dataTransfer.items) {
         for (let i = 0; i < e.dataTransfer.items.length; i++) {
           const item = e.dataTransfer.items[i]
@@ -218,4 +220,5 @@ a.link:active {color: #555;}
   padding: 8px;
 }
 .access-grant-wrapper { font-size: 0.8rem; line-height: 1rem }
+.file-input {width: 0px; height: 0px; opacity: 0}
 </style>
