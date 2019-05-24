@@ -46,7 +46,7 @@
               </tree-node>
               <tree-node title="QRCode image file scanning">
                 <input class="file-input" type="file" @change="e => scanFile(e.target.files[0])" accept="image/*" name="qrcode_file" id="qrcode_file" />
-                <label class="button" for="qrcode_file">Scan</label>
+                <label class="button" for="qrcode_file">Load</label>
               </tree-node>
             </div>
           </div>
@@ -152,13 +152,19 @@ export default {
       img.onload = () => {
         const canvas = document.createElement('canvas')
         const ctx = canvas.getContext('2d')
-        canvas.width = img.width
-        canvas.height = img.height
 
-        ctx.drawImage(img, 0, 0)
+        const scale_ratio = Math.min(1, 1024 / img.width, 1024 / img.height)
 
-        const imageData = ctx.getImageData(0, 0, img.width, img.height)
-        const code = jsQR(imageData.data, imageData.width, imageData.height)
+        canvas.width =  img.width * scale_ratio
+        canvas.height = img.height * scale_ratio
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        const code = jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: 'dontInvert'
+        })
+
         if (code)
           this.setRemoteInfo(code.data)
       }
