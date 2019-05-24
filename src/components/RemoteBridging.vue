@@ -147,37 +147,43 @@ export default {
       this.access_granted = true
       this.init()
     },
-    scanFile(file : File) {
+    scanImage(data_url : string) {
+      const img = new Image()
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        const ctx = canvas.getContext('2d')
+        canvas.width = img.width
+        canvas.height = img.height
+
+        ctx.drawImage(img, 0, 0)
+
+        const imageData = ctx.getImageData(0, 0, img.width, img.height)
+        const code = jsQR(imageData.data, imageData.width, imageData.height)
+        if (code)
+          this.setRemoteInfo(code.data)
+      }
+      img.src = data_url
+    },
+    scanFile(blob : File) {
       const reader = new FileReader()
       reader.onload = e => {
-        const img = new Image()
-        img.onload = () => {
-          const canvas = document.createElement('canvas')
-          const ctx = canvas.getContext('2d')
-          canvas.width = img.width
-          canvas.height = img.height
-
-          ctx.drawImage(img, 0, 0)
-
-          const imageData = ctx.getImageData(0, 0, img.width, img.height)
-          const code = jsQR(imageData.data, imageData.width, imageData.height)
-          if (code)
-            this.setRemoteInfo(code.data)
-        }
-        img.src = e.target.result
+        this.scanImage(e.target.result)
       }
-      reader.readAsDataURL(file)
+      reader.readAsDataURL(blob)
     },
     fileDrop(e : Object) {
-      debugger
       if (e.dataTransfer.items) {
         for (let i = 0; i < e.dataTransfer.items.length; i++) {
           const item = e.dataTransfer.items[i]
-          if (item.kind !== 'file')
-            continue
-
-          this.scanFile(item.getAsFile())
-          break
+          if (item.kind === 'string' && item.type === 'text/plain') {
+            item.getAsString(s => {
+              if (s.indexOf('data:image') === 0)
+                this.scanImage(s)
+            })
+          } else if (item.kind === 'file') {
+            this.scanFile(item.getAsFile())
+            break
+          }
         }
       } else {
         this.scanFile(e.dataTransfer.files[0])
