@@ -65,6 +65,7 @@
 <script>
 // @flow
 
+
 import pako from 'pako'
 import TBC from 'tezbridge-crypto'
 import QRCode from 'qrcode'
@@ -163,8 +164,11 @@ export default {
       if (!items.length)
         return false
 
-      const pic = items[0]
-      if (pic.kind === 'file') {
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i]
+        if (item.kind !== 'file')
+          continue
+
         const reader = new FileReader()
         reader.onload = e => {
           const img = new Image()
@@ -183,12 +187,16 @@ export default {
           }
           img.src = e.target.result
         }
-        reader.readAsDataURL(pic.getAsFile())
+        reader.readAsDataURL(item.getAsFile())
+        break
       }
+
+
     }
   },
   mounted() {
     this.init()
+
   }
 }
 </script>
