@@ -24,7 +24,36 @@ const is_signer = location.search.indexOf('?signer') === 0
 if (is_signer)
   document.title = 'TezBridge Signer'
 
+window.errors = []
+Vue.config.errorHandler = (msg, vm, info) => {
+  const wrapper = {
+    error: msg.stack,
+    tag: vm.$options._componentTag,
+    uid: vm._uid,
+    info
+  }
+  window.errors.unshift({
+    kind: 'vue',
+    message: JSON.stringify(wrapper)
+  })
+}
+window.onerror = (message, source, lineno, colno, error)=> {
+  console.log(error.stack)
+  const wrapper = {
+    error: error.stack,
+    source,
+    lineno,
+    colno
+  }
+  window.errors.unshift({
+    kind: 'script',
+    message: JSON.stringify(wrapper)
+  })
+  return true
+}
+
 new Vue({
   el: '#app',
   render: h => h(is_signer ? Signer : Index)
 })
+

@@ -19,6 +19,10 @@
         <select-manager :managers="temp_managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
+      <tree-node title="Errors log" bold :change="errors">
+        <errors></errors>
+      </tree-node>
+
       <tree-node title="About" bold>
         <about></about>
       </tree-node>
@@ -45,13 +49,14 @@ import Requests from './Requests'
 import Record from './Record'
 import About from './About'
 import RemoteBridging from './RemoteBridging'
-
+import Errors from './Errors'
 import storage from '../libs/storage'
 
 export default {
   components: {
     TreeNode,
     SelectManager,
+    Errors,
     ImportKey,
     RemoteBridging,
     Requests,
@@ -61,6 +66,7 @@ export default {
   data() {
     return {
       lang,
+      errors: window.errors,
       managers: storage.managers,
       temp_managers: [],
       curr_signer: {

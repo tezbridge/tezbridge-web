@@ -39,12 +39,15 @@
             <div v-else>
               <sm-input title="Paste connection text or QRCode image" v-model="remote_info_text" @paste="connPasted"></sm-input>
 
+              <tree-node title="QRCode image scanning" hard_close>
+              </tree-node>
+
               <tree-node title="QRCode image dropping">
                 <div :class="{dropzone: true, dropover}" @drop.prevent="fileDrop" @dragleave="dropover = false" @dragover.prevent="x => dropover = x">
                   Drop remote connection QRCode here!
                 </div>
               </tree-node>
-              <tree-node title="QRCode image file scanning">
+              <tree-node title="QRCode image file loading">
                 <input class="file-input" type="file" @change="e => scanFile(e.target.files[0])" accept="image/*" name="qrcode_file" id="qrcode_file" />
                 <label class="button" for="qrcode_file">Load</label>
               </tree-node>

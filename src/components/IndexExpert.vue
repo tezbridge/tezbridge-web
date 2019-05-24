@@ -22,6 +22,10 @@
         <a class="link" :href="'/index.html?signer'">Signer</a>
       </tree-node>
       
+      <tree-node title="Errors log" bold :change="errors">
+        <errors></errors>
+      </tree-node>
+
       <tree-node title="About" bold>
         <about></about>
       </tree-node>
@@ -41,6 +45,7 @@ import CreateKey from './CreateKey'
 import ImportKey from './ImportKey'
 import SelectManager from './SelectManager'
 import Settings from './Settings'
+import Errors from './Errors'
 import About from './About'
 
 import storage from '../libs/storage'
@@ -52,10 +57,12 @@ export default {
     ImportKey,
     SelectManager,
     Settings,
+    Errors,
     About
   },
   data() {
     return {
+      errors: window.errors,
       managers: storage.managers
     }
   },
