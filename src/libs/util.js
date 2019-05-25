@@ -21,10 +21,10 @@ export function tz2r(input : string) {
 
 export const is_safari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)
 
-export async function has_camera() {
+export async function list_camera() {
   if (navigator.mediaDevices){
     const devices = await navigator.mediaDevices.enumerateDevices()
-    return devices.some(x => x.kind === 'videoinput')
+    return devices.filter(x => x.kind === 'videoinput')
   } else
     throw 'no camera'
 }

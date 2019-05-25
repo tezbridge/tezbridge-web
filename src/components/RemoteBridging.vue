@@ -39,9 +39,6 @@
             <div v-else>
               <sm-input title="Paste connection text or QRCode image" v-model="remote_info_text" @paste="connPasted"></sm-input>
 
-              <tree-node title="QRCode image scanning" hard_close>
-              </tree-node>
-
               <tree-node title="QRCode image dropping">
                 <div :class="{dropzone: true, dropover}" @drop.prevent="fileDrop" @dragleave="dropover = false" @dragover.prevent="x => dropover = x">
                   Drop remote connection QRCode here!
@@ -64,7 +61,6 @@
 <script>
 // @flow
 
-
 import pako from 'pako'
 import TBC from 'tezbridge-crypto'
 import QRCode from 'qrcode'
@@ -77,7 +73,7 @@ import Record from './Record'
 import SmInput from './SmInput'
 import Switcher from './Switcher'
 
-import { is_safari, has_camera } from '../libs/util'
+import { is_safari } from '../libs/util'
 import { Connection } from '../libs/rtc'
 
 export default {
@@ -150,35 +146,36 @@ export default {
       this.access_granted = true
       this.init()
     },
+    scanBitMap(img : Object) {
+      const standard = 1024
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+
+      const scale_ratio = Math.min(1, standard / img.width, standard / img.height)
+
+      canvas.width =  img.width * scale_ratio
+      canvas.height = img.height * scale_ratio
+
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      const code = jsQR(imageData.data, imageData.width, imageData.height, {
+        inversionAttempts: 'dontInvert'
+      })
+
+      if (code)
+        this.setRemoteInfo(code.data)
+    },
     scanImage(data_url : string) {
       const img = new Image()
       img.onload = () => {
-        const canvas = document.createElement('canvas')
-        const ctx = canvas.getContext('2d')
-
-        const scale_ratio = Math.min(1, 1024 / img.width, 1024 / img.height)
-
-        canvas.width =  img.width * scale_ratio
-        canvas.height = img.height * scale_ratio
-
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-        const code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: 'dontInvert'
-        })
-
-        if (code)
-          this.setRemoteInfo(code.data)
+        URL.revokeObjectURL(data_url)
+        this.scanBitMap(img)
       }
       img.src = data_url
     },
     scanFile(blob : File) {
-      const reader = new FileReader()
-      reader.onload = e => {
-        this.scanImage(e.target.result)
-      }
-      reader.readAsDataURL(blob)
+      this.scanImage(URL.createObjectURL(blob))
     },
     fileDrop(e : Object) {
       if (e.dataTransfer.items) {
@@ -211,7 +208,6 @@ export default {
         this.scanFile(item.getAsFile())
         break
       }
-
     }
   },
   mounted() {
