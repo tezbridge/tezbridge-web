@@ -19,7 +19,7 @@
         <select-manager :managers="temp_managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
-      <tree-node title="Errors log" bold :change="errors">
+      <tree-node title="Error logs" bold :change="errors">
         <errors></errors>
       </tree-node>
 

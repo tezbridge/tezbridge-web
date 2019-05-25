@@ -22,7 +22,7 @@
         <a class="link" :href="'/index.html?signer'">Signer</a>
       </tree-node>
       
-      <tree-node title="Errors log" bold :change="errors">
+      <tree-node title="Error logs" bold :change="errors">
         <errors></errors>
       </tree-node>
 
