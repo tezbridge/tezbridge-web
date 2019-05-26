@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div class="host">@ {{settings.host}}</div>
     <div v-for="(item, index) in operations">
       <div class="title">Operation: {{item.op.tezbridge}}</div>
       <div class="op-content">
@@ -41,6 +42,8 @@ import lang from '../langs'
 import RequestDesc from './RequestDesc'
 import TreeNode from './TreeNode'
 
+import storage from '../libs/storage'
+
 export default {
   components: {
     RequestDesc,
@@ -50,7 +53,8 @@ export default {
   data() {
     return {
       lang,
-      results: []
+      results: [],
+      settings: storage.settings
     }
   },
   methods: {
@@ -86,4 +90,5 @@ div.op-content { margin-bottom: 8px;  font-size: 0.85rem; padding: 4px; padding-
 .approved { background: #27bd1d }
 .rejected { background: #bd1d1d }
 .op-result .failed { color: black; border: 1px solid #bd1d1d }
+.host {font-size: 0.8rem; color: #aaa;}
 </style>

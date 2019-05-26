@@ -18,8 +18,8 @@
       </tree-node>
 
       <tree-node title="Tools" bold>
-        <a class="link" :href="'/playground.html'">Playground</a>
         <a class="link" :href="'/index.html?signer'">Signer</a>
+        <a class="link" :href="'/playground.html'">Playground</a>
       </tree-node>
       
       <tree-node title="Error logs" bold :change="errors">

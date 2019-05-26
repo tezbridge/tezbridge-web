@@ -19,6 +19,11 @@
         <select-manager :managers="temp_managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
+      <tree-node title="Tools" bold>
+        <a class="link" :href="'/index.html'">Home</a>
+        <a class="link" :href="'/playground.html'">Playground</a>
+      </tree-node>
+
       <tree-node title="Error logs" bold :change="errors">
         <errors></errors>
       </tree-node>
@@ -113,4 +118,7 @@ export default {
 <style scoped>
 .container {margin-right: 4px;}
 .copyright {margin: 8px 0 0 -1px; font-size: 0.8rem; color: #ccc;}
+a.link { margin: 4px 0; display: block; color: #555;}
+a.link:visited {color: #555;}
+a.link:active {color: #555;}
 </style>
