@@ -161,6 +161,9 @@ export default {
     async confirm() {
       await this.activateAccount()
 
+      if (!this.lock_pwd)
+        return false
+      
       const box = new TBC.crypto.EncryptedBox(this.result_key.getSecretKey(), this.lock_pwd)
       box.show().then(enc => {
         storage.addManager({

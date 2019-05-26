@@ -33,12 +33,11 @@ Vue.config.errorHandler = (msg, vm, info) => {
     info
   }
   window.errors.unshift({
-    kind: 'vue',
+    kind: 'component',
     message: JSON.stringify(wrapper)
   })
 }
 window.onerror = (message, source, lineno, colno, error)=> {
-  console.log(error.stack)
   const wrapper = {
     error: error.stack,
     source,

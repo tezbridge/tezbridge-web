@@ -32,7 +32,7 @@
     </nav>
 
     <div class="copyright">
-      © 2018-2019 TezBridge
+      <span>© 2018-2019</span> <span class="logo">TezBridge</span> 
     </div>
   </div>
 </template>
@@ -74,6 +74,8 @@ export default {
 <style scoped>
 .container {margin-right: 4px;}
 .copyright {margin: 8px 0 0 -1px; font-size: 0.8rem; color: #ccc;}
+.copyright * {vertical-align: baseline;}
+.logo {font-family: 'Dancing Script'; font-weight: 700; font-size: 1rem; color: #777;}
 a.link { margin: 4px 0; display: block; color: #555;}
 a.link:visited {color: #555;}
 a.link:active {color: #555;}
