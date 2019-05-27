@@ -7,6 +7,9 @@
       </tree-node>
 
       <tree-node title="Local managers" bold>
+        <tree-node title="Import key" bold>
+          <import-key></import-key>
+        </tree-node>
         <select-manager :managers="managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
@@ -14,7 +17,7 @@
         <remote-bridging></remote-bridging>
       </tree-node>
 
-      <tree-node title="Temp signer" bold>
+      <tree-node title="Temporary signer" bold>
         <import-key :is_temp="true" @temp_manager_confirmed="addTempManager"></import-key>
         <select-manager :managers="temp_managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
