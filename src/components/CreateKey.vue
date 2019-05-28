@@ -2,7 +2,8 @@
   <div>
     <tree-node title="mnemonic">
       <sm-input class="element" :title="lang.gen_key.bits" v-model="keys.mnemonic.bits"></sm-input>
-      <sm-input class="element" :title="lang.password" :optional="true" important kind="password" v-model="keys.mnemonic.password"></sm-input>
+      <sm-input class="element" :title="lang.password" :optional="true" important kind="password" v-model="keys.mnemonic._password"></sm-input>
+      <sm-input class="element" title="Derive path" placeholder="m/44'/1729'/0'/0'|tz2" :optional="true" important v-model="keys.mnemonic._derive_path"></sm-input>
       <div class="op-panel element">
         <button @click="refreshWords">
           <icon icon="sync" spin size="sm"></icon>
@@ -52,8 +53,11 @@
 <script>
 // @flow
 
+import * as bip32 from 'bip32'
+import { mnemonicToSeedSync } from 'bip39'
 import TBC from 'tezbridge-crypto'
 import lang from '../langs'
+import { debounce } from '../libs/util'
 
 import TreeNode from './TreeNode'
 import SmInput from './SmInput'
@@ -83,9 +87,12 @@ export default {
             '한국어': 'korean'
           },
           lang: 'english',
+          derive_path: '',
+          _derive_path: '',
           bits: '128',
           words: '',
           password: '',
+          _password: '',
         },
         ed25519: {
           seed: '',
@@ -156,18 +163,41 @@ export default {
   watch: {
     'keys.mnemonic.lang'() {
       this.refreshWords()
-    }
+    },
+    'keys.mnemonic._password': debounce(function(pwd : string){
+      this.keys.mnemonic.password = pwd
+    }),
+    'keys.mnemonic._derive_path': debounce(function(path : string){
+      this.keys.mnemonic.derive_path = path
+    })
   },
   computed: {
     mnemonic_key() {
-      const seed = TBC.crypto.getSeedFromWords(this.keys.mnemonic.words, this.keys.mnemonic.password)
-      const key = TBC.crypto.getKeyFromSeed(seed)
+      const seed = mnemonicToSeedSync(this.keys.mnemonic.words, this.keys.mnemonic.password)
+      const node = bip32.fromSeed(seed)
+      let key
+      try {
+        const [path, prefix] = this.keys.mnemonic.derive_path.split('|')
+        const child = node.derivePath(path)
 
-      const seed_tz = TBC.codec.bs58checkEncode(seed, TBC.codec.prefix.ed25519_seed)
+        const key_mapping = {
+          tz1: TBC.codec.prefix.ed25519_seed,
+          tz2: TBC.codec.prefix.secp256k1_secret_key,
+          tz3: TBC.codec.prefix.p256_secret_key
+        }
+
+        const getKey = prefix === 'tz1' ? TBC.crypto.getKeyFromSeed : TBC.crypto.getKeyFromSecretKey
+        key = getKey(
+          TBC.codec.bs58checkEncode(child.privateKey, key_mapping[prefix])
+        )
+
+      } catch (e) {
+        key = TBC.crypto.getKeyFromWords(this.keys.mnemonic.words, this.keys.mnemonic.password)
+      }
+
       return {
         [this.lang.gen_key.words]: [this.keys.mnemonic.words],
         [this.lang.key.pkh]: key.address, 
-        [this.lang.key.seed]: seed_tz, 
         [this.lang.key.sk]: key.getSecretKey(),
         [this.lang.key.pk]: key.getPublicKey()
       }

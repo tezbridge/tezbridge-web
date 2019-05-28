@@ -1,10 +1,12 @@
 <template>
   <div>
     <sm-input class="element" :title="lang.import_key.your_key" v-model="user_key"></sm-input>
-    <sm-input v-if="pwd_required" class="element" :title="lang.password" kind="password" v-model="password"></sm-input>
 
+    <sm-input v-if="pwd_required" class="element" :title="lang.password" kind="password" v-model="password"></sm-input>
     <div v-if="pwd_required && !result_key" class="error">{{lang.password_incorrect}}</div>
-    
+
+    <sm-input v-if="derive_possible" placeholder="m/44'/1729'/0'/0'|tz2" class="element" title="Derive path" v-model="derive_path"></sm-input>
+        
     <record v-if="result_key" :data="{[lang.key.pkh]: result_key.address}"></record>
     
     <div v-if="result_key && !is_temp">
@@ -29,6 +31,8 @@
 <script>
 // @flow
 
+import * as bip32 from 'bip32'
+import { mnemonicToSeedSync } from 'bip39'
 import TBC from 'tezbridge-crypto'
 import TreeNode from './TreeNode'
 import lang from '../langs'
@@ -69,12 +73,17 @@ export default {
       pwd_required: false,
       password: '',
       result_key: null,
+      derive_path: ``,
+      derive_possible: false,
       manager_name: '',
       lock_pwd: '',
       confirming: false
     }
   },
   watch: {
+    derive_path: debounce(function(path : string) {
+      this.changeDerivePath(path)
+    }),
     password: debounce(function(p : string) {
       this.result_key = null
 
@@ -87,10 +96,12 @@ export default {
         })
       } else {
         this.result_key = TBC.crypto.getKeyFromWords(this.user_key, this.password)
+        this.changeDerivePath(this.derive_path)
       }
     }),
     user_key: debounce(function() {
       this.result_key = null
+      this.derive_possible = false
 
       try {
         const prefix = TBC.codec.bs58checkPrefixPick(this.user_key)
@@ -120,6 +131,7 @@ export default {
               this.key_type = lang.key.mnemonic
               this.pwd_required = true
               this.password = ''
+              this.derive_possible = true
             }
           } catch(e) {
             this.pwd_required = false
@@ -130,6 +142,28 @@ export default {
     })
   },
   methods: {
+    changeDerivePath(path_prefix : string) {
+      const [path, prefix] = path_prefix.split('|')
+      const seed = mnemonicToSeedSync(this.user_key, this.password)
+      const node = bip32.fromSeed(seed)
+      try {
+        const child = node.derivePath(path)
+
+        const key_mapping = {
+          tz1: TBC.codec.prefix.ed25519_seed,
+          tz2: TBC.codec.prefix.secp256k1_secret_key,
+          tz3: TBC.codec.prefix.p256_secret_key
+        }
+
+        const getKey = prefix === 'tz1' ? TBC.crypto.getKeyFromSeed : TBC.crypto.getKeyFromSecretKey
+        this.result_key = getKey(
+          TBC.codec.bs58checkEncode(child.privateKey, key_mapping[prefix])
+        )
+
+      } catch (e) {
+        this.result_key = TBC.crypto.getKeyFromWords(this.user_key, this.password)
+      }
+    },
     async activateAccount() {
       if (this.key_type !== lang.key.faucet)          
         return false

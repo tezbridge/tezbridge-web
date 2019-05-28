@@ -7,7 +7,7 @@ export function debounce(fn : (..._: any) => any) {
     clearTimeout(t)
     t = setTimeout(() => {
       fn.apply(self, args)
-    }, 200)
+    }, 300)
   }
 }
 

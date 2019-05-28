@@ -5,7 +5,7 @@
       <span v-if="optional && !value">({{lang.optional}})</span>
       <span v-if="important && value" class="important">(important)</span>
     </div>
-    <input class="selectable" :disabled="disabled" :type="kind || 'text'" @paste="e => $emit('paste', e)" @input="e => $emit('input', e.target.value)" :value="value"/>
+    <input class="selectable" :disabled="disabled" :placeholder="placeholder" :type="kind || 'text'" @paste="e => $emit('paste', e)" @input="e => $emit('input', e.target.value)" :value="value"/>
   </div>
 </template>
 
@@ -16,6 +16,7 @@ import lang from '../langs'
 
 export default {
   props: {
+    placeholder: String,
     title: String,
     important: Boolean,
     value: String,
@@ -42,5 +43,7 @@ input[disabled] {
   -webkit-text-fill-color: #000;
   opacity: 1;
 }
-
+::placeholder {
+  color: #ccc;
+}
 </style>
