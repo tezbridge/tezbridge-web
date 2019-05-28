@@ -31,8 +31,6 @@
 <script>
 // @flow
 
-import * as bip32 from 'bip32'
-import { mnemonicToSeedSync } from 'bip39'
 import TBC from 'tezbridge-crypto'
 import TreeNode from './TreeNode'
 import lang from '../langs'
@@ -95,7 +93,6 @@ export default {
         .catch(err => {
         })
       } else {
-        this.result_key = TBC.crypto.getKeyFromWords(this.user_key, this.password)
         this.changeDerivePath(this.derive_path)
       }
     }),
@@ -143,23 +140,21 @@ export default {
   },
   methods: {
     changeDerivePath(path_prefix : string) {
-      const [path, prefix] = path_prefix.split('|')
-      const seed = mnemonicToSeedSync(this.user_key, this.password)
-      const node = bip32.fromSeed(seed)
+      const scheme_mapping = {
+        tz1: 'ed25519',
+        tz2: 'secp256k1',
+        tz3: 'p256'
+      }
+
+      let key
       try {
-        const child = node.derivePath(path)
-
-        const key_mapping = {
-          tz1: TBC.codec.prefix.ed25519_seed,
-          tz2: TBC.codec.prefix.secp256k1_secret_key,
-          tz3: TBC.codec.prefix.p256_secret_key
-        }
-
-        const getKey = prefix === 'tz1' ? TBC.crypto.getKeyFromSeed : TBC.crypto.getKeyFromSecretKey
-        this.result_key = getKey(
-          TBC.codec.bs58checkEncode(child.privateKey, key_mapping[prefix])
+        const [path, prefix] = path_prefix.split('|')
+        this.result_key = TBC.crypto.deriveKeyFromWords(
+          this.user_key,
+          this.password,
+          path,
+          scheme_mapping[prefix]
         )
-
       } catch (e) {
         this.result_key = TBC.crypto.getKeyFromWords(this.user_key, this.password)
       }

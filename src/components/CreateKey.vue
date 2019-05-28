@@ -53,8 +53,6 @@
 <script>
 // @flow
 
-import * as bip32 from 'bip32'
-import { mnemonicToSeedSync } from 'bip39'
 import TBC from 'tezbridge-crypto'
 import lang from '../langs'
 import { debounce } from '../libs/util'
@@ -173,28 +171,25 @@ export default {
   },
   computed: {
     mnemonic_key() {
-      const seed = mnemonicToSeedSync(this.keys.mnemonic.words, this.keys.mnemonic.password)
-      const node = bip32.fromSeed(seed)
+      const scheme_mapping = {
+        tz1: 'ed25519',
+        tz2: 'secp256k1',
+        tz3: 'p256'
+      }
+
       let key
       try {
         const [path, prefix] = this.keys.mnemonic.derive_path.split('|')
-        const child = node.derivePath(path)
-
-        const key_mapping = {
-          tz1: TBC.codec.prefix.ed25519_seed,
-          tz2: TBC.codec.prefix.secp256k1_secret_key,
-          tz3: TBC.codec.prefix.p256_secret_key
-        }
-
-        const getKey = prefix === 'tz1' ? TBC.crypto.getKeyFromSeed : TBC.crypto.getKeyFromSecretKey
-        key = getKey(
-          TBC.codec.bs58checkEncode(child.privateKey, key_mapping[prefix])
+        key = TBC.crypto.deriveKeyFromWords(
+          this.keys.mnemonic.words,
+          this.keys.mnemonic.password,
+          path,
+          scheme_mapping[prefix]
         )
-
       } catch (e) {
         key = TBC.crypto.getKeyFromWords(this.keys.mnemonic.words, this.keys.mnemonic.password)
       }
-
+      
       return {
         [this.lang.gen_key.words]: [this.keys.mnemonic.words],
         [this.lang.key.pkh]: key.address, 

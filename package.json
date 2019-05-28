@@ -5,9 +5,9 @@
   "main": "docs/index.html",
   "scripts": {
     "flow": "flow",
-    "dev": "parcel src/pages/index.html src/pages/playground.html src/pages/plugin.js --target browser --https",
+    "dev": "NODE_ENV=browser parcel src/pages/index.html src/pages/playground.html src/pages/plugin.js --target browser --https",
     "test": "flow && parcel build test/index.js --target node -o test.js && node dist/test.js",
-    "build": "rm -rf docs && rm -rf .cache && flow && parcel build src/pages/index.html src/pages/playground.html src/pages/plugin.js --no-source-maps --out-dir docs  && cp src/CNAME docs/"
+    "build": "rm -rf docs && rm -rf .cache && NODE_ENV=browser parcel build src/pages/index.html src/pages/playground.html src/pages/plugin.js --no-source-maps --out-dir docs  && cp src/CNAME docs/"
   },
   "repository": {
     "type": "git",
@@ -23,20 +23,18 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/vue-fontawesome": "^0.1.6",
-    "bip32": "^2.0.3",
     "jsqr": "^1.2.0",
     "pako": "^1.0.10",
     "prismjs": "^1.16.0",
     "qrcode": "^1.3.3",
-    "tezbridge-crypto": "^1.0.34",
-    "tezbridge-network": "^1.0.21",
+    "tezbridge-crypto": "^1.0.37",
+    "tezbridge-network": "^1.0.24",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3",
     "vue-prism-editor": "^0.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
-    "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-transform-flow-strip-types": "^7.4.0",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@vue/component-compiler-utils": "^2.6.0",
@@ -44,5 +42,11 @@
     "flow-bin": "^0.89.0",
     "sass": "^1.19.0",
     "vue-template-compiler": "^2.6.10"
+  },
+  "babel": {
+    "plugins": [
+      "@babel/plugin-transform-runtime",
+      "@babel/plugin-transform-flow-strip-types"
+    ]
   }
 }
