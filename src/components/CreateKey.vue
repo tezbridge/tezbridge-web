@@ -9,7 +9,8 @@
           {{lang.refresh}}
         </button>
       </div>
-      <record :data="mnemonic_key"></record>
+      <switcher class="element" :data="keys.mnemonic.lang_lst" v-model="keys.mnemonic.lang"></switcher>
+      <record class="mnemonic-record" :data="mnemonic_key"></record>
     </tree-node>
 
     <tree-node title="ed25519">
@@ -56,13 +57,14 @@ import lang from '../langs'
 
 import TreeNode from './TreeNode'
 import SmInput from './SmInput'
-
+import Switcher from './Switcher'
 import Record from './Record'
 
 export default {
   components: {
     Record,
     TreeNode,
+    Switcher,
     SmInput
   },
   data() {
@@ -70,6 +72,17 @@ export default {
       lang,
       keys: {
         mnemonic: {
+          lang_lst: {
+            'English': 'english',
+            '日本語': 'japanese',
+            'Español': 'spanish',
+            '中文(简体)': 'chinese_simplified',
+            '中文(繁體)': 'chinese_traditional',
+            'Français': 'french',
+            'Italiano': 'italian',
+            '한국어': 'korean'
+          },
+          lang: 'english',
           bits: '128',
           words: '',
           password: '',
@@ -100,7 +113,7 @@ export default {
   },
   methods: {
     refreshWords() {
-      this.keys.mnemonic.words = TBC.crypto.genMnemonic(this.keys.mnemonic.bits)
+      this.keys.mnemonic.words = TBC.crypto.genMnemonic(this.keys.mnemonic.bits, this.keys.mnemonic.lang)
     },
     refreshEd25519() {
       const seed = TBC.crypto.genRandomBytes(32)
@@ -138,6 +151,11 @@ export default {
       } else {
         return basic
       }
+    }
+  },
+  watch: {
+    'keys.mnemonic.lang'() {
+      this.refreshWords()
     }
   },
   computed: {

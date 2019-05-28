@@ -3,7 +3,7 @@
     <div @click="click(v)" :class="{item: true, active: value === v}" v-for="(v, k) in data">
       {{k}}
     </div>
-    <div class="content-wrapper">
+    <div class="content-wrapper" v-if="$slots.default">
       <slot></slot>
     </div>
   </div>
