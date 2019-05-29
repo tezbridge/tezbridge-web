@@ -21,6 +21,7 @@ export default {
     pk: 'Public key',
     sk: 'Secret key',
     seed: 'Seed',
+    ed25519_seed: 'Ed25519 seed',
     encrypted: 'Encrypted key'
   },
   gen_key: {

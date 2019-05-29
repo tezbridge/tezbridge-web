@@ -1,7 +1,7 @@
 // @flow
 
 export function debounce(fn : (..._: any) => any) {
-  let t = setTimeout(() => {}, 0)
+  let t
   return function() {
     const [self, args] = [this, arguments]
     clearTimeout(t)
