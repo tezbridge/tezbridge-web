@@ -36,7 +36,7 @@ export default {
 div.item {
   display: inline-flex;
   line-height: 1rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 4px 8px;
   color: #999
 }

@@ -62,6 +62,7 @@ div.content {
   word-break: break-word;
 }
 div.title {
+  font-size: 0.8rem;
   background: #f8f8f8;
   text-align: left;
   padding-left: 4px;
