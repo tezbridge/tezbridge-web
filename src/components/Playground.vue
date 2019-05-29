@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      desc: lang.signer.methods,
+      desc: lang.requests.methods,
       codes: {
         get_source: 
 `tezbridge.request({method: 'get_source'})

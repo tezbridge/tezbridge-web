@@ -14,7 +14,7 @@ const langs = {
   zh_CN
 }
 
-const current_lang = langs.en_US
+const current_lang = Object.assign({}, langs.zh_CN)
 
 export function switchLang(name : string) {
   if (!langs[name])

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      Version: 2.0.1
+      {{lang.general.version}}: 2.0.2
     </div>
   </div>
 </template>
@@ -9,9 +9,13 @@
 <script>
 // @flow
 
+import lang from '../langs'
+
 export default {
   data() {
-    return {}
+    return {
+      lang
+    }
   }
 }
 </script>

@@ -1,9 +1,9 @@
 <template>
   <div>
     <div v-if="!box">
-      <sm-input :title="lang.password" kind="password" v-model="password"></sm-input>
+      <sm-input :title="lang.general.password" kind="password" v-model="password"></sm-input>
       <div v-if="!is_signer" class="op-panel element">
-        <button @click="removeManager">Remove</button>
+        <button @click="removeManager">{{lang.general.remove}}</button>
       </div>
     </div>
     <div v-else>
@@ -11,21 +11,21 @@
         <loading v-if="loading.manager"></loading>
         <record :data="manager_info"></record>
         <div v-if="is_signer" class="element">
-          <button @click="useAsSigner(address)">Use as signer</button>
+          <button @click="useAsSigner(address)">{{lang.manager.use_as_signer}}</button>
         </div>
       </tree-node>
-      <tree-node :title="lang.manager.contracts">
+      <tree-node :title="lang.menu.subordinate_contracts + '/' + lang.general.account">
         <loading v-if="loading.contracts"></loading>
         <tree-node :title="contract" @first_open="contractOpen(contract)" v-for="(item, contract) in contracts">
           <loading v-if="loading.contract_item[contract]"></loading>
           <record :data="item"></record>
           <div v-if="is_signer" class="element">
-            <button :disabled="!item[lang.manager.spendable]" @click="useAsSigner(contract)">Use as signer</button>
+            <button :disabled="!item[lang.manager.spendable]" @click="useAsSigner(contract)">{{lang.manager.use_as_signer}}</button>
           </div>
         </tree-node>
       </tree-node>
       <div class="element">
-        <button @click="lock">Lock</button>
+        <button @click="lock">{{lang.general.lock}}</button>
       </div>
     </div>
   </div>
@@ -97,8 +97,7 @@ export default {
 
       this.manager_info = {
         [this.lang.key.pkh]: this.address,
-        [this.lang.manager.balance]: tz2r(await network_client.fetch.balance(this.address)) + 'ꜩ',
-        [this.lang.signer.access_code]: undefined
+        [this.lang.manager.balance]: tz2r(await network_client.fetch.balance(this.address)) + 'ꜩ'
       }
       this.loading.manager = false
 
@@ -119,14 +118,6 @@ export default {
         source: address
       })
     },
-    genAccessCode(address : string) {
-      const access_code = storage.setReadyManager(this.box, this.manager.name, address)
-      if (address in this.contracts) {
-        this.contracts[address][this.lang.signer.access_code] = access_code
-      } else {
-        this.manager_info[this.lang.signer.access_code] = access_code
-      }
-    },
     async contractOpen(contract : string) {
       this.loading.contract_item[contract] = true
 
@@ -137,8 +128,7 @@ export default {
       this.contracts[contract] = {
         [this.lang.key.pkh]: contract,
         [this.lang.manager.spendable]: spendable,
-        [this.lang.manager.balance]: balance,
-        [this.lang.signer.access_code]: undefined
+        [this.lang.manager.balance]: balance
       }
 
       this.loading.contract_item[contract] = false

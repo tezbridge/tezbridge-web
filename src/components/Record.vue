@@ -3,10 +3,10 @@
     <div :class="{wrapper: !nomargin}" v-if="item !== undefined" v-for="(item, key) in (data || {})">
       <div class="title">
         <span> {{key}} </span>
-        <span v-if="item instanceof Array" class="important">(important)</span>
+        <span v-if="item instanceof Array" class="important">({{lang.general.important}})</span>
         <icon icon="copy" size="sm" class="copy-btn" @click="copyContent(key)" v-if="!nocopy"></icon>
         <slot></slot>
-        <span :data-copied="key">copied</span>
+        <span :data-copied="key">{{lang.general.copied}}</span>
       </div>
       <div class="content selectable" :data-key="key">
         {{item instanceof Array ? item[0] : item}}
@@ -18,6 +18,8 @@
 <script>
 // @flow
 
+import lang from '../langs'
+
 export default {
   props: {
     data: Object,
@@ -26,6 +28,7 @@ export default {
   },
   data() {
     return {
+      lang,
       copied: false
     }
   },

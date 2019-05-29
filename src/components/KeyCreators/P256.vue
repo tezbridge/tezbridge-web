@@ -1,10 +1,10 @@
 <template>
   <div>
-    <sm-input class="element" :title="lang.password" :optional="true" important kind="password" v-model="password"></sm-input>
+    <sm-input class="element" :title="lang.general.password" :optional="true" important kind="password" v-model="password"></sm-input>
     <div class="op-panel element">
       <button @click="newKey">
         <icon icon="sync" spin size="sm"></icon>
-        {{lang.refresh}}
+        {{lang.general.refresh}}
       </button>
     </div>
     <record :data="key_info"></record>

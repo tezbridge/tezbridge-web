@@ -1,12 +1,12 @@
 <template>
   <div>
-    <sm-input class="element" :title="lang.gen_key.bits" v-model="bits"></sm-input>
-    <sm-input class="element" :title="lang.password" :optional="true" important kind="password" v-model="password"></sm-input>
-    <sm-input class="element" title="Derive path" placeholder="m/44'/1729'/0'/0'|tz2" :optional="true" important v-model="derive_path"></sm-input>
+    <sm-input class="element" :title="lang.key.bits_of_entropy" v-model="bits"></sm-input>
+    <sm-input class="element" :title="lang.general.password" :optional="true" important kind="password" v-model="password"></sm-input>
+    <sm-input class="element" :title="lang.key.derive_path" placeholder="m/44'/1729'/0'/0'|tz2" :optional="true" important v-model="derive_path"></sm-input>
     <div class="op-panel element">
       <button @click="newWords">
         <icon icon="sync" spin size="sm"></icon>
-        {{lang.refresh}}
+        {{lang.general.refresh}}
       </button>
     </div>
     <switcher class="element" :data="lang_lst" v-model="words_lang"></switcher>
@@ -84,7 +84,7 @@ export default {
       }
       
       this.key_info = {
-        [this.lang.gen_key.words]: [this.words],
+        [this.lang.key.words]: [this.words],
         [this.lang.key.pkh]: key.address, 
         [this.lang.key.sk]: key.getSecretKey(),
         [this.lang.key.pk]: key.getPublicKey()

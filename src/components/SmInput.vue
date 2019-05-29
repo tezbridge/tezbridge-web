@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div class="title">
       <span>{{title}}</span>
-      <span v-if="optional && !value">({{lang.optional}})</span>
-      <span v-if="important && value" class="important">(important)</span>
+      <span v-if="optional && !value">({{lang.general.optional}})</span>
+      <span v-if="important && value" class="important">({{lang.general.important}})</span>
     </div>
     <input class="selectable" :disabled="disabled" :placeholder="placeholder" :type="kind || 'text'" @paste="e => $emit('paste', e)" @input="e => $emit('input', e.target.value)" :value="value"/>
   </div>

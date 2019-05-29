@@ -1,55 +1,55 @@
 <template>
   <div>
     <div v-if="op.kind !== undefined">
-      <label>Type:</label>
+      <label>{{lang.requests.op_desc.kind}}:</label>
       <div>{{op.kind}}</div>
     </div>
     <div v-if="op.amount !== undefined">
-      <label>Amount:</label>
+      <label>{{lang.requests.op_desc.amount}}:</label>
       <div>{{tz2r(op.amount)}}ꜩ</div>
     </div>
     <div v-if="op.balance !== undefined">
-      <label>Balance:</label>
+      <label>{{lang.requests.op_desc.balance}}:</label>
       <div>{{tz2r(op.balance)}}ꜩ</div>
     </div>
     <div v-if="op.destination !== undefined">
-      <label>Destination:</label>
+      <label>{{lang.requests.op_desc.destination}}:</label>
       <div>{{op.destination}}</div>
     </div>
     <div v-if="op.fee !== undefined">
-      <label>Fee:</label>
+      <label>{{lang.requests.op_desc.fee}}:</label>
       <div>{{tz2r(op.fee)}}ꜩ</div>
     </div>
     <div v-if="op.gas_limit !== undefined">
-      <label>Gas limit:</label>
+      <label>{{lang.requests.op_desc.gas_limit}}:</label>
       <div>{{op.gas_limit}}</div>
     </div>
     <div v-if="op.storage_limit !== undefined">
-      <label>Storage limit:</label>
+      <label>{{lang.requests.op_desc.storage_limit}}:</label>
       <div>{{op.storage_limit}}</div>
     </div>
     <div v-if="op.delegatable !== undefined">
-      <label>Delegatable:</label>
+      <label>{{lang.requests.op_desc.delegatable}}:</label>
       <div>{{op.delegatable}}</div>
     </div>
     <div v-if="op.spendable !== undefined">
-      <label>Spendable:</label>
+      <label>{{lang.requests.op_desc.spendable}}:</label>
       <div>{{op.spendable}}</div>
     </div>
     <div v-if="op.delegate !== undefined">
-      <label>Delegate:</label>
+      <label>{{lang.requests.op_desc.delegate}}:</label>
       <div>{{op.delegate}}</div>
     </div>
     <div v-if="op.script !== undefined">
-      <label>Script:</label>
+      <label>{{lang.requests.op_desc.script}}:</label>
       <div>{{op.script}}</div>
     </div>
     <div v-if="op.parameters !== undefined">
-      <label>Parameters:</label>
+      <label>{{lang.requests.op_desc.parameters}}:</label>
       <div>{{op.parameters}}</div>
     </div>
     <div v-if="op.bytes !== undefined">
-      <label>Bytes:</label>
+      <label>{{lang.requests.op_desc.bytes}}:</label>
       <div>{{op.bytes}}</div>
     </div>
   </div>
@@ -59,11 +59,14 @@
 // @flow
 
 import { tz2r } from '../libs/util'
+import lang from '../langs'
 
 export default {
   props: ['op'],
   data() {
-    return {}
+    return {
+      lang
+    }
   },
   methods: {
     tz2r

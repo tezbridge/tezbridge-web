@@ -1,37 +1,37 @@
 <template>
   <div class="container" ontouchstart>
     <nav class="link-tree">
-      <tree-node title="Requests" :change="operations" :change1="curr_signer" bold>
+      <tree-node :title="lang.menu.dapp_requests" :change="operations" :change1="curr_signer" bold>
         <record :data="curr_signer"></record>
         <requests :operations="operations"></requests>
       </tree-node>
 
-      <tree-node title="Local managers" bold>
-        <tree-node title="Import key" bold>
+      <tree-node :title="lang.menu.local_managers" bold>
+        <tree-node :title="lang.menu.import_key" bold>
           <import-key></import-key>
         </tree-node>
         <select-manager :managers="managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
-      <tree-node title="Remote bridging" bold>
+      <tree-node :title="lang.menu.remote_bridging" bold>
         <remote-bridging></remote-bridging>
       </tree-node>
 
-      <tree-node title="Temporary signer" bold>
+      <tree-node :title="lang.menu.temp_signer" bold>
         <import-key :is_temp="true" @temp_manager_confirmed="addTempManager"></import-key>
         <select-manager :managers="temp_managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
-      <tree-node title="Tools" bold>
-        <a class="link" :href="'/index.html'">Home</a>
-        <a class="link" :href="'/playground.html'">Playground</a>
+      <tree-node :title="lang.menu.tools" bold>
+        <a class="link" :href="'/index.html'">{{lang.tools.home}}</a>
+        <a class="link" :href="'/playground.html'">{{lang.tools.playground}}</a>
       </tree-node>
 
-      <tree-node title="Error logs" bold :change="errors">
+      <tree-node :title="lang.menu.error_logs" bold :change="errors">
         <errors></errors>
       </tree-node>
 
-      <tree-node title="About" bold>
+      <tree-node :title="lang.menu.about" bold>
         <about></about>
       </tree-node>
 

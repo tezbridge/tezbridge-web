@@ -1,27 +1,27 @@
 <template>
   <div>
-    <sm-input class="element" :title="lang.import_key.your_key" v-model="user_key"></sm-input>
+    <sm-input class="element" :title="['sk', 'words', 'encrypted', 'faucet'].map(x => lang.key[x]).join(' / ')" v-model="user_key"></sm-input>
 
-    <sm-input v-if="pwd_required" class="element" :title="lang.password" kind="password" v-model="password"></sm-input>
-    <div v-if="pwd_required && !result_key" class="error">{{lang.password_incorrect}}</div>
+    <sm-input v-if="pwd_required" class="element" :title="lang.general.password" kind="password" v-model="password"></sm-input>
+    <div v-if="pwd_required && !result_key" class="error">{{lang.general.pwd_incorrect}}</div>
 
-    <sm-input v-if="derive_possible" placeholder="m/44'/1729'/0'/0'|tz2" class="element" title="Derive path" v-model="derive_path"></sm-input>
+    <sm-input v-if="derive_possible" placeholder="m/44'/1729'/0'/0'|tz2" class="element" :title="lang.key.derive_path" v-model="derive_path"></sm-input>
         
     <record v-if="result_key" :data="{[lang.key.pkh]: result_key.address}"></record>
     
     <div v-if="result_key && !is_temp">
       <sm-input class="element" :title="lang.import_key.manager_name" v-model="manager_name"></sm-input>
-      <div v-if="!manager_name_is_valid" class="error">{{lang.import_key.manager_name_invalid}}</div>
-      <sm-input class="element" :title="lang.import_key.lock_pwd" kind="password" v-model="lock_pwd"></sm-input>
+      <div v-if="!manager_name_is_valid" class="error">{{lang.import_key.manager_name_used}}</div>
+      <sm-input class="element" :title="lang.import_key.lock_password" kind="password" v-model="lock_pwd"></sm-input>
 
       <div class="op-panel element" v-if="manager_name_is_valid">
-        <button :disabled="confirming" @click="confirm">{{lang.confirm}}</button>
+        <button :disabled="confirming" @click="confirm">{{lang.general.confirm}}</button>
       </div>
     </div>
 
     <div v-if="result_key && is_temp">
       <div class="op-panel element">
-        <button :disabled="confirming" @click="confirmTemp">{{lang.confirm}}</button>
+        <button :disabled="confirming" @click="confirmTemp">{{lang.general.confirm}}</button>
       </div>
     </div>
 
@@ -118,21 +118,21 @@ export default {
           const faucet = JSON.parse(this.user_key)
           if (faucet.mnemonic && faucet.password && faucet.email && faucet.secret) {
             this.result_key = TBC.crypto.getKeyFromWords(faucet.mnemonic.join(' '), faucet.email + faucet.password)
-            this.key_type = lang.key.faucet
+            this.key_type = 'faucet'
             this.pwd_required = false
           }
         } catch(e) {
           try {
             if (this.user_key.split(/\s+/g).length >= 12) {
               this.result_key = TBC.crypto.getKeyFromWords(this.user_key)
-              this.key_type = lang.key.mnemonic
+              this.key_type = 'mnemonic'
               this.pwd_required = true
               this.password = ''
               this.derive_possible = true
             }
           } catch(e) {
             this.pwd_required = false
-            this.key_type = lang.key.no_scheme
+            this.key_type = 'no_scheme'
           }
         }
       }
@@ -160,7 +160,7 @@ export default {
       }
     },
     async activateAccount() {
-      if (this.key_type !== lang.key.faucet)          
+      if (this.key_type !== 'faucet')          
         return false
 
       const balance = await network_client.fetch.balance(this.result_key.address)

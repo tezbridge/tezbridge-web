@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="access-grant-wrapper" v-if="!access_granted">
-      Mircophone permission is needed for 1 second to enable the Remote bridging function in Safari browser
+      {{lang.remote.safari_warning}}
       <div class="op-panel">
-        <button @click="grantAccess">Allow</button>
+        <button @click="grantAccess">{{lang.general.allow}}</button>
       </div>
     </div>
     <div v-else>
@@ -61,6 +61,8 @@
 <script>
 // @flow
 
+import lang from '../langs'
+
 import pako from 'pako'
 import TBC from 'tezbridge-crypto'
 import QRCode from 'qrcode'
@@ -85,6 +87,7 @@ export default {
   },
   data() {
     return {
+      lang,
       mode: is_safari ? 'signer' : 'bridge',
       conn: null,
       remote_info_text: '',

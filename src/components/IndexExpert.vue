@@ -1,32 +1,32 @@
 <template>
   <div class="container" ontouchstart>
     <nav class="link-tree">
-      <tree-node title="Create key" bold>
+      <tree-node :title="lang.menu.create_key" bold>
         <create-key></create-key>
       </tree-node>
 
-      <tree-node title="Import key" bold>
+      <tree-node :title="lang.menu.import_key" bold>
         <import-key></import-key>
       </tree-node>
 
-      <tree-node title="Local managers" :change="managers" bold>
+      <tree-node :title="lang.menu.local_managers" :change="managers" bold>
         <select-manager :managers="managers"></select-manager>
       </tree-node>
 
-      <tree-node title="Settings" bold>
+      <tree-node :title="lang.menu.settings" bold>
         <settings></settings>
       </tree-node>
 
-      <tree-node title="Tools" bold>
-        <a class="link" :href="'/index.html?signer'">Signer</a>
-        <a class="link" :href="'/playground.html'">Playground</a>
+      <tree-node :title="lang.menu.tools" bold>
+        <a class="link" :href="'/index.html?signer'">{{lang.tools.signer}}</a>
+        <a class="link" :href="'/playground.html'">{{lang.tools.playground}}</a>
       </tree-node>
       
-      <tree-node title="Error logs" bold :change="errors">
+      <tree-node :title="lang.menu.error_logs" bold :change="errors">
         <errors></errors>
       </tree-node>
 
-      <tree-node title="About" bold>
+      <tree-node :title="lang.menu.about" bold>
         <about></about>
       </tree-node>
     </nav>
@@ -39,6 +39,8 @@
 
 <script>
 // @flow
+
+import lang from '../langs'
 
 import TreeNode from './TreeNode'
 import CreateKey from './CreateKey'
@@ -62,6 +64,7 @@ export default {
   },
   data() {
     return {
+      lang,
       errors: window.errors,
       managers: storage.managers
     }

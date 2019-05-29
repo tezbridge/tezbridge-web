@@ -1,4 +1,8 @@
 export default {
+  _: 'en_US',
+  menu: {
+    create_key: 'Create key'
+  },
   or: 'or',
   recommended: 'recommended',
   password: 'Password',
