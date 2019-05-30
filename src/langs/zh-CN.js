@@ -117,8 +117,6 @@ export default {
     playground: '试验场'
   },
   manager: {
-    balance: '余额',
-    spendable: '可使用',
     use_as_signer: '用此账号签名'
   }
 }

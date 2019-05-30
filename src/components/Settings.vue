@@ -30,7 +30,7 @@ export default {
       lang_lst: {
         'English': 'en_US',
         '日本語': 'ja_JP',
-        '中文(简体)': 'zh_CN',
+        '中文': 'zh_CN',
         '한국어': 'ko_KR'
       },
       settings: storage.settings,
@@ -40,6 +40,8 @@ export default {
   watch: {
     'curr_lang': debounce(function(lang : string) {
       switchLang(lang)
+      storage.settings.language = lang
+      storage.saveSettings()
     }),
     'settings.host': debounce(async function(host){
       storage.saveSettings()

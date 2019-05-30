@@ -39,6 +39,9 @@ class Storage {
   }
 
   recoverSettings() {
+    if (!this.settings.language)
+      this.settings.language = 'en_US'
+    
     if (!this.settings.host)
       this.settings.host = 'https://alphanet-node.tzscan.io'
   }

@@ -1,5 +1,7 @@
 // @flow
 
+import storage from '../libs/storage'
+
 import de_DE from './de-DE'
 import en_US from './en-US'
 import ja_JP from './ja-JP'
@@ -14,7 +16,7 @@ const langs = {
   zh_CN
 }
 
-const current_lang = Object.assign({}, langs.en_US)
+const current_lang = Object.assign({}, langs[storage.settings.language])
 
 export function switchLang(name : string) {
   if (!langs[name])
