@@ -8,45 +8,43 @@
     </div>
     <div v-else>
       <div class="status" v-if="conn">
-        <record :data="{Connected: conn.is_connected}" nomargin nocopy>
-          <a href="javascript:;" class="link" @click="reset()">reset</a>
+        <record :data="{[lang.general.state]: conn.is_connected ? lang.remote.connected : lang.remote.disconnected}" nomargin nocopy>
+          <a href="javascript:;" class="link" @click="reset()">{{lang.general.reset}}</a>
         </record>
       </div>
 
       <div v-if="conn && !conn.is_connected">
-        <switcher class="switcher" :data="{'As bridge': 'bridge', 'As signer': 'signer'}" v-model="mode">
+        <switcher class="switcher" :data="{[lang.remote.as_repeater]: 'bridge', [lang.remote.as_signer]: 'signer'}" v-model="mode">
           <div class="step-desc">
             <span v-if="mode === 'bridge'">
               <span>
-                {{in_step1 ? 'Step 1 -> Send this connection info to your remote signer' : 
-                'Step 2 -> Paste or scan your remote connection info'}}
+                {{in_step1 ? lang.remote.repeater_step1 : lang.remote.repeater_step2}}
               </span>
-              <a href="javascript:;" class="next-step" v-if="in_step1" @click="in_step1 = false">Go step 2</a>
-              <a href="javascript:;" class="next-step" v-if="!in_step1" @click="in_step1 = true">Back</a>
+              <a href="javascript:;" class="next-step" v-if="in_step1" @click="in_step1 = false">{{lang.remote.go_step2}}</a>
+              <a href="javascript:;" class="next-step" v-if="!in_step1" @click="in_step1 = true">{{lang.general.back}}</a>
             </span>
             <span v-if="mode === 'signer'">
-              {{in_step1 ? 'Step 1 -> Paste or scan your remote connection info' :
-              'Step 2 -> Send this connection info to your remote bridge'}}
+              {{in_step1 ? lang.remote.signer_step1 : lang.remote.signer_step2}}
             </span>
           </div>
           <div class="conn-wrapper">
             <div v-if="(mode === 'bridge' && in_step1) || (mode === 'signer' && !in_step1)">
-              <record nomargin :data="{'Connection info': conn_info}"></record>
+              <record nomargin :data="{[lang.remote.conn_info]: conn_info}"></record>
               <div class="op-panel">
                 <img class="qrcode" :src="conn_info_qrcode">
               </div>
             </div>
             <div v-else>
-              <sm-input title="Paste connection text or QRCode image" v-model="remote_info_text" @paste="connPasted"></sm-input>
+              <sm-input :title="lang.remote.paste_txt_image" v-model="remote_info_text" @paste="connPasted"></sm-input>
 
-              <tree-node title="QRCode image dropping">
+              <tree-node :title="lang.remote.qrcode_dropping">
                 <div :class="{dropzone: true, dropover}" @drop.prevent="fileDrop" @dragleave="dropover = false" @dragover.prevent="x => dropover = x">
-                  Drop remote connection QRCode here!
+                  {{lang.remote.drop_qrcode_here}}
                 </div>
               </tree-node>
-              <tree-node title="QRCode image file loading">
+              <tree-node :title="lang.remote.qrcode_loading">
                 <input class="file-input" type="file" @change="e => scanFile(e.target.files[0])" accept="image/*" name="qrcode_file" id="qrcode_file" />
-                <label class="button" for="qrcode_file">Load</label>
+                <label class="button" for="qrcode_file">{{lang.general.load}}</label>
               </tree-node>
             </div>
           </div>
