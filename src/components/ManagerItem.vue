@@ -20,7 +20,7 @@
           <loading v-if="loading.contract_item[contract]"></loading>
           <record :data="item"></record>
           <div v-if="is_signer" class="element">
-            <button :disabled="!item[lang.manager.spendable]" @click="useAsSigner(contract)">{{lang.manager.use_as_signer}}</button>
+            <button :disabled="!item[lang.requests.op_desc.spendable]" @click="useAsSigner(contract)">{{lang.manager.use_as_signer}}</button>
           </div>
         </tree-node>
       </tree-node>
@@ -97,7 +97,7 @@ export default {
 
       this.manager_info = {
         [this.lang.key.pkh]: this.address,
-        [this.lang.manager.balance]: tz2r(await network_client.fetch.balance(this.address)) + 'ꜩ'
+        [this.lang.requests.op_desc.balance]: tz2r(await network_client.fetch.balance(this.address)) + 'ꜩ'
       }
       this.loading.manager = false
 
@@ -127,8 +127,8 @@ export default {
 
       this.contracts[contract] = {
         [this.lang.key.pkh]: contract,
-        [this.lang.manager.spendable]: spendable,
-        [this.lang.manager.balance]: balance
+        [this.lang.requests.op_desc.spendable]: spendable,
+        [this.lang.requests.op_desc.balance]: balance
       }
 
       this.loading.contract_item[contract] = false

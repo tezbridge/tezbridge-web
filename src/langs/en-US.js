@@ -1,94 +1,122 @@
 export default {
   _: 'en_US',
-  menu: {
-    create_key: 'Create key'
-  },
-  or: 'or',
-  recommended: 'recommended',
-  password: 'Password',
-  password_confirm: 'Password again',
-  password_not_match: 'Passwords do not match',
-  password_correct: 'Password is correct',
-  password_incorrect: 'Password is incorrect',
+  general: {
+    confirm: 'Confirm',
+    remove: 'Remove',
+    lock: 'Lock',
+    load: 'Load',
+    back: 'Back',
+    password: 'Password',
+    pwd_incorrect: 'password incorrect',
+    optional: 'optional',
+    refresh: 'Refresh',
+    important: 'important',
+    address: 'address',
+    version: 'Version',
+    key: 'Key',
+    copied: 'copied',
 
-  generated: 'Generated',
-  refresh: 'Refresh',
-  optional: 'optional',
-  confirm: 'Confirm',
-  ok: 'OK',
-  cancel: 'Cancel',
-  key: {
-    no_scheme: 'no scheme',
-    mnemonic: 'mnemonic words',
-    faucet: 'faucet',
-    pkh: 'Public key hash',
-    pk: 'Public key',
-    sk: 'Secret key',
-    seed: 'Seed',
-    ed25519_seed: 'Ed25519 seed',
-    encrypted: 'Encrypted key'
+    state: 'State',
+    reset: 'reset',
+    results: 'results',
+    account: 'account',
+
+    allow: 'Allow',
+    approve: 'Approve',
+    reject: 'Reject',
+    approved: 'Approved',
+    rejected: 'Rejected'
   },
-  gen_key: {
-    bits: 'Bits of entropy',
-    words: 'Words',
+  menu: {
+    create_key: 'Create key',
+    import_key: 'Import key',
+    local_managers: 'Local managers',
+    settings: 'Settings',
+    tools: 'Tools',
+    error_logs: 'Error logs',
+    about: 'About',
+
     mnemonic: 'Mnemonic',
-    ed25519: 'Ed25519',
-    secp256k1: 'Secp256k1',
-    p256: 'P256',
-    key_tbl_head: {
-      key: 'Type',
-      value: 'Value'
-    },
-    use_this_key: 'Use this key'
+    subordinate_contracts: 'Subordinate contracts',
+
+    dapp_requests: 'DApp requests',
+    remote_bridging: 'Remote bridging',
+    temp_signer: 'Temporary signer',
+
   },
   import_key: {
-    user_key_invalid: 'Invalid key detected',
-    user_key_valid: 'Valid key detected',
-    pwd_desc: 'Input the password to decrypt your key',
-    your_key: 'Your key',
     manager_name: 'Manager name',
-    manager_name_valid: 'You can use this manager name',
-    manager_name_invalid: 'This manager name is used',
-    lock_pwd: 'Lock password',
-    lock_pwd_valid: 'The lock password is valid',
-    lock_pwd_invalid: 'The lock password is invalid',
-    lock_pwd_desc: 'This password is used to lock your secret key in TezBridge',
-    desc: 'Accept mnemonic words / Any key with prefix of `edsk`, `spsk`, `p2sk`, `edesk`, `spesk` or `p2esk` / Faucet JSON string for testnet'
-  },
-  manager: {
-    contracts: 'contracts',
-    balance: 'Balance',
-    spendable: 'Spendable',
-    create_tab: 'Create',
-    import_tab: 'Import',
-    add_manager: 'Add manager',
-    ready_manager: 'Ready manager',
-    current_manager: 'Current manager',
-    no_ready_manager: 'No ready manager',
-    select_manager: 'Select your manager',
-    get_ready: 'Get ready'
+    manager_name_used: 'manager name is used',
+    lock_password: 'Locking password'
   },
   signer: {
     manager: 'Manager',
-    source: 'Source',
-    no_ready_manager: 'No ready manager',
-    ready_manager: 'Ready manager',
-    access_code: 'Access code',
-    listening_operations: 'Listening operations',
+    source: 'Source'
+  },
+  requests: {
+    operation: 'Operation',
     methods: {
       get_source: 'Get source address',
       create_account: 'Create KT1 account',
       set_delegate: 'Set delegate for KT1 account',
-      raw_sign: 'Sign operation bytes directly',
+      raw_sign: 'Sign operation bytes',
       raw_inject: 'Inject signed operation bytes',
       inject_operations: 'Sign & inject operations with minimal fee'
+    },
+    op_desc: {
+      kind: 'Kind',
+      amount: 'Amount',
+      balance: 'Balance',
+      destination: 'Destination',
+      fee: 'Fee',
+      gas_limit: 'Gas limit',
+      storage_limit: 'Storage limit',
+      delegatable: 'Delegatable',
+      spendable: 'Spendable',
+      delegate: 'Delegate',
+      script: 'Script',
+      parameters: 'Parameters',
+      bytes: 'Bytes'
     }
+  },
+  key: {
+    bits_of_entropy: 'Bits of entropy',
+    derive_path: 'Derive path',
+    words: 'Words',
+    pkh: 'Public key hash',
+    sk: 'Secret key',
+    pk: 'Public key',
+    encrypted: 'Encrypted key',
+    ed25519_seed: 'Ed25519 seed',
+    faucet: 'Faucet'
   },
   settings: {
     host: 'Host',
-    invalid_host: 'Invalid host'
+    invalid_host: 'invalid host'
   },
-  operation: {
-    kind: 'Kind',
+  remote: {
+    safari_warning: '在Safari上需要允许麦克风权限(仅开启1秒钟)来开启远程桥接功能',
+    as_repeater: 'As repeater',
+    as_signer: 'As signer',
+    disconnected: 'Disconnected',
+    connected: 'Connected',
+    go_step2: 'Go step 2',
+    repeater_step1: 'Step 1 -> Send the connection info to the signer',
+    repeater_step2: 'Step 2 -> Paste or scan the connection info from the signer',
+    signer_step1: 'Step 1 -> Paste or scan the connection info from the repeater',
+    signer_step2: 'Step 2 -> Send the connection info to the repeater',
+    conn_info: 'Connection info',
+    paste_txt_image: 'Paste the connection text or QRCode image',
+    qrcode_dropping: 'QRCode from image dropping',
+    drop_qrcode_here: 'Drop remote connection QRCode here',
+    qrcode_loading: 'QRCode from image loading'
+  },
+  tools: {
+    home: 'Home',
+    signer: 'Signer',
+    playground: 'Playground'
+  },
+  manager: {
+    use_as_signer: 'Use as signer'
   }
 }
