@@ -1,6 +1,6 @@
 <template>
   <div>
-    <switcher :data="lang_lst" v-model="curr_lang"></switcher>
+    <!-- <switcher :data="lang_lst" v-model="curr_lang"></switcher> -->
     <sm-input :title="lang.settings.host" v-model="settings.host"></sm-input>
     <div v-if="host_error" class="error">{{lang.settings.invalid_host}}</div>
   </div>
