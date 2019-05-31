@@ -91,6 +91,7 @@ export default {
     faucet: 'Faucet'
   },
   settings: {
+    loading_protocol: 'Loading protocol script',
     host: 'Host',
     invalid_host: 'invalid host'
   },

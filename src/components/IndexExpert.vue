@@ -1,6 +1,10 @@
 <template>
   <div class="container" ontouchstart>
-    <nav class="link-tree">
+    <div v-if="!protocol_js_loaded">
+      {{lang.settings.loading_protocol}}
+      <loading></loading>
+    </div>
+    <nav class="link-tree" v-else>
       <tree-node :title="lang.menu.create_key" bold>
         <create-key></create-key>
       </tree-node>
@@ -51,6 +55,7 @@ import Errors from './Errors'
 import About from './About'
 
 import storage from '../libs/storage'
+import { loadProtocolJS } from '../libs/network'
 
 export default {
   components: {
@@ -65,11 +70,16 @@ export default {
   data() {
     return {
       lang,
+      protocol_js_loaded: false,
       errors: window.errors,
       managers: storage.managers
     }
   },
   methods: {
+  },
+  async mounted() {
+    await loadProtocolJS()
+    this.protocol_js_loaded = true
   }
 }
 </script>

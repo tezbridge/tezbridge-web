@@ -45,10 +45,11 @@
 <script>
 // @flow
 
+declare var TBC : any
+
 import lang from '../langs'
 
 import signer from './Signer.js'
-import TBC from 'tezbridge-crypto'
 
 import TreeNode from './TreeNode'
 import SelectManager from './SelectManager'
@@ -59,6 +60,7 @@ import About from './About'
 import RemoteBridging from './RemoteBridging'
 import Errors from './Errors'
 import storage from '../libs/storage'
+
 
 export default {
   components: {

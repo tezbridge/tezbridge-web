@@ -14,13 +14,15 @@
 <script>
 // @flow
 
-import TBC from 'tezbridge-crypto'
+declare var TBC : any
+
 import lang from '../../langs'
 import { debounce } from '../../libs/util'
 
 import Record from '../Record'
 import Switcher from '../Switcher'
 import SmInput from '../SmInput'
+
 
 export default {
   components: {

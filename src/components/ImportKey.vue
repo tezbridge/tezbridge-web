@@ -31,7 +31,8 @@
 <script>
 // @flow
 
-import TBC from 'tezbridge-crypto'
+declare var TBC : any
+
 import TreeNode from './TreeNode'
 import lang from '../langs'
 import SmInput from './SmInput'
@@ -50,6 +51,7 @@ const scheme_not_require_pwd = new Set([
   'ed25519_secret_key', 'ed25519_seed', 
   'secp256k1_secret_key', 'p256_secret_key'
 ])
+
 
 export default {
   components: {

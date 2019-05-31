@@ -34,7 +34,8 @@
 <script>
 // @flow
 
-import TBC from 'tezbridge-crypto'
+declare var TBC : any
+
 import TreeNode from './TreeNode'
 import SmInput from './SmInput'
 import Record from './Record'
@@ -43,6 +44,7 @@ import lang from '../langs'
 import storage from '../libs/storage'
 import { debounce, tz2r } from '../libs/util'
 import { network_client } from '../libs/network'
+
 
 export default {
   components: {

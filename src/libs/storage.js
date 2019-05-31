@@ -1,6 +1,6 @@
 // @flow
 
-import TBC from 'tezbridge-crypto'
+declare var TBC : any
 
 const get = key => localStorage.getItem(key)
 const set = (k, v) => localStorage.setItem(k, v + '')

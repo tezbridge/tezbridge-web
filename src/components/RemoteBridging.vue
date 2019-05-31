@@ -59,10 +59,11 @@
 <script>
 // @flow
 
+declare var TBC : any
+
 import lang from '../langs'
 
 import pako from 'pako'
-import TBC from 'tezbridge-crypto'
 import QRCode from 'qrcode'
 import jsQR from 'jsqr'
 
@@ -75,6 +76,7 @@ import Switcher from './Switcher'
 
 import { is_safari } from '../libs/util'
 import { Connection } from '../libs/rtc'
+
 
 export default {
   components: {

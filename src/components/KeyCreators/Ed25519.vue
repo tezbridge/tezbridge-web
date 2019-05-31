@@ -14,7 +14,8 @@
 <script>
 // @flow
 
-import TBC from 'tezbridge-crypto'
+declare var TBC : any
+
 import lang from '../../langs'
 import { debounce } from '../../libs/util'
 

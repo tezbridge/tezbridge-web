@@ -16,7 +16,7 @@ import lang from '../langs'
 import { switchLang } from '../langs'
 
 import { debounce } from '../libs/util'
-import { network_client } from '../libs/network'
+import { network_client, loadProtocolJS } from '../libs/network'
 
 export default {
   components: {
@@ -45,10 +45,9 @@ export default {
     }),
     'settings.host': debounce(async function(host){
       storage.saveSettings()
-      network_client.host = host
-      
       try {
-        await network_client.fetch.protocol()
+        await loadProtocolJS()
+
         this.host_error = false
       } catch(e) {
         this.host_error = true

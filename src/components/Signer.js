@@ -1,8 +1,10 @@
 // @flow
 
-import TBC from 'tezbridge-crypto'
+declare var TBC : any
+
 import { network_client } from '../libs/network'
 import { Connection } from '../libs/rtc'
+
 
 class Signer {
   box : TBC.crypto.EncryptedBox
