@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="host">{{protocol}} @ {{settings.host}}</div>
+    <div class="host">{{network.protocol}} @ {{settings.host}}</div>
     <div v-for="(item, index) in operations">
       <div class="title">{{lang.requests.operation}}: {{item.op.tezbridge}}</div>
       <div class="op-content">
@@ -10,7 +10,7 @@
           <request-desc :op="item.op" class="op-item" v-if="item.op.method !== 'inject_operations'"></request-desc>
         </div>
         <loading v-if="item.processing"></loading>
-        <div>
+        <div class="element">
           <button :disabled="item.processing" @click="approveOp(item, index)">{{lang.general.approve}}</button> 
           <button :disabled="item.processing" @click="rejectOp(item, index)">{{lang.general.reject}}</button>
         </div>
@@ -44,7 +44,7 @@ import TreeNode from './TreeNode'
 
 import storage from '../libs/storage'
 
-import { protocol } from '../libs/network'
+import * as network from '../libs/network'
 
 export default {
   components: {
@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       lang,
-      protocol,
+      network,
       responses: [],
       settings: storage.settings
     }
@@ -93,5 +93,5 @@ div.op-content { margin-bottom: 8px;  font-size: 0.85rem; padding: 4px; padding-
 .approved { background: #27bd1d }
 .rejected { background: #bd1d1d }
 .op-result .failed { color: black; border: 1px solid #bd1d1d }
-.host {font-size: 0.8rem; color: #aaa;}
+.host { display: inline-block; font-size: 0.8rem;  padding: 2px 6px; border-radius: 4px; margin: 4px 0; background: #fffa08 }
 </style>

@@ -14,7 +14,7 @@
           <button @click="useAsSigner(address)">{{lang.manager.use_as_signer}}</button>
         </div>
       </tree-node>
-      <tree-node :title="lang.menu.subordinate_contracts + '/' + lang.general.account">
+      <tree-node :title="lang.menu.originated_accounts">
         <loading v-if="loading.contracts"></loading>
         <tree-node :title="contract" @first_open="contractOpen(contract)" v-for="(item, contract) in contracts">
           <loading v-if="loading.contract_item[contract]"></loading>
@@ -97,13 +97,17 @@ export default {
       this.address = key.address
       this.box = new TBC.crypto.EncryptedBox(key.getSecretKey())
 
+      if (!network_client)
+        throw `invalid network_client`
+
       this.manager_info = {
         [this.lang.key.pkh]: this.address,
         [this.lang.requests.op_desc.balance]: tz2r(await network_client.fetch.balance(this.address)) + 'ꜩ'
       }
       this.loading.manager = false
 
-      const contract_lst = await network_client.external.originated_contracts(this.address, false)
+      const net_type = storage.settings.host.indexOf('alphanet') > -1 ? 'alphanet' : 'mainnet'
+      const contract_lst = await network_client.external.originated_contracts(this.address, true, net_type)
       const contracts = {}
       const loading_contract_item = {}
       contract_lst.forEach(async contract => {
@@ -122,6 +126,9 @@ export default {
     },
     async contractOpen(contract : string) {
       this.loading.contract_item[contract] = true
+
+      if (!network_client)
+        throw `invalid network_client`
 
       const info = await network_client.fetch.contract(contract)
       const balance = tz2r(info.balance) + 'ꜩ'

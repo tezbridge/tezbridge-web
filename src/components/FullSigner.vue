@@ -26,6 +26,10 @@
         <select-manager :managers="temp_managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
+      <tree-node :title="lang.menu.settings" bold>
+        <settings></settings>
+      </tree-node>
+      
       <tree-node :title="lang.menu.tools" bold>
         <a class="link" :href="'/index.html'">{{lang.tools.home}}</a>
         <a class="link" :href="'/playground.html'">{{lang.tools.playground}}</a>
@@ -63,8 +67,9 @@ import Record from './Record'
 import About from './About'
 import RemoteBridging from './RemoteBridging'
 import Errors from './Errors'
-import storage from '../libs/storage'
+import Settings from './Settings'
 
+import storage from '../libs/storage'
 import { loadProtocolJS } from '../libs/network'
 
 export default {
@@ -76,6 +81,7 @@ export default {
     RemoteBridging,
     Requests,
     Record,
+    Settings,
     About
   },
   data() {

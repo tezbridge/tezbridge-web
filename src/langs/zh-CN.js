@@ -37,7 +37,7 @@ export default {
     about: '关于',
 
     mnemonic: '助记词',
-    subordinate_contracts: '从属合约',
+    originated_accounts: '创建的账号',
 
     dapp_requests: 'DApp请求',
     remote_bridging: '远程桥接',

@@ -37,7 +37,7 @@ export default {
     about: 'About',
 
     mnemonic: 'Mnemonic',
-    subordinate_contracts: 'Subordinate contracts',
+    originated_accounts: 'Originated accounts',
 
     dapp_requests: 'DApp requests',
     remote_bridging: 'Remote bridging',
