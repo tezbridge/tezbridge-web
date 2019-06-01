@@ -33,11 +33,12 @@
       <tree-node :title="lang.menu.about" bold>
         <about></about>
       </tree-node>
+      
+      <div class="copyright">
+        <span>© 2018-2019</span> <span class="logo">TezBridge</span> 
+      </div>
     </nav>
 
-    <div class="copyright">
-      <span>© 2018-2019</span> <span class="logo">TezBridge</span> 
-    </div>
   </div>
 </template>
 

@@ -18,7 +18,7 @@ export default {
 
     state: 'State',
     reset: 'reset',
-    results: 'results',
+    responses: 'responses',
     account: 'account',
 
     allow: 'Allow',
@@ -96,7 +96,7 @@ export default {
     invalid_host: 'invalid host'
   },
   remote: {
-    safari_warning: '在Safari上需要允许麦克风权限(仅开启1秒钟)来开启远程桥接功能',
+    safari_warning: 'The permission of microphone is needed(for 1 second)  to enable bridging function in Safari',
     as_repeater: 'As repeater',
     as_signer: 'As signer',
     disconnected: 'Disconnected',

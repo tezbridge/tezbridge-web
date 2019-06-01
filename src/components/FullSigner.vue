@@ -1,6 +1,10 @@
 <template>
   <div class="container" ontouchstart>
-    <nav class="link-tree">
+    <div v-if="!protocol_js_loaded">
+      {{lang.settings.loading_protocol}}
+      <loading></loading>
+    </div>
+    <nav class="link-tree" v-else>
       <tree-node :title="lang.menu.dapp_requests" :change="operations" :change1="curr_signer" bold>
         <record :data="curr_signer"></record>
         <requests :operations="operations"></requests>
@@ -61,6 +65,7 @@ import RemoteBridging from './RemoteBridging'
 import Errors from './Errors'
 import storage from '../libs/storage'
 
+import { loadProtocolJS } from '../libs/network'
 
 export default {
   components: {
@@ -77,6 +82,7 @@ export default {
     return {
       lang,
       errors: window.errors,
+      protocol_js_loaded: false,
       managers: storage.managers,
       temp_managers: [],
       curr_signer: {
@@ -105,7 +111,10 @@ export default {
       } 
     }
   },
-  mounted() {
+  async mounted() {
+    await loadProtocolJS()
+    this.protocol_js_loaded = true
+
     signer.addListener(signer.ask_methods, op => 
       new Promise((resolve, reject) => {
         this.operations.push({

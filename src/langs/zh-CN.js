@@ -18,7 +18,7 @@ export default {
 
     state: '状态',
     reset: '重置',
-    results: '处理结果',
+    responses: '回应结果',
     account: '账号',
 
     allow: '允许',

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="host">@ {{settings.host}}</div>
+    <div class="host">{{protocol}} @ {{settings.host}}</div>
     <div v-for="(item, index) in operations">
       <div class="title">{{lang.requests.operation}}: {{item.op.tezbridge}}</div>
       <div class="op-content">
@@ -16,8 +16,8 @@
         </div>
       </div>
     </div>
-    <tree-node :title="lang.general.results" :change="results">
-      <div v-for="item in results">
+    <tree-node :title="lang.general.responses" :change="responses">
+      <div v-for="item in responses">
         <div class="result-title">{{lang.requests.operation}}: {{item.op.tezbridge}}</div>
         <div class="op-content">
           {{lang.requests.methods[item.op.method]}}
@@ -44,6 +44,8 @@ import TreeNode from './TreeNode'
 
 import storage from '../libs/storage'
 
+import { protocol } from '../libs/network'
+
 export default {
   components: {
     RequestDesc,
@@ -53,7 +55,8 @@ export default {
   data() {
     return {
       lang,
-      results: [],
+      protocol,
+      responses: [],
       settings: storage.settings
     }
   },
@@ -71,12 +74,12 @@ export default {
       }
 
       op_item.processing = false
-      this.results.unshift(this.operations.splice(index, 1)[0])
+      this.responses.unshift(this.operations.splice(index, 1)[0])
     },
     rejectOp(op_item : Object, index : number) {
       op_item.reject('rejected')
       op_item.result = 'rejected'
-      this.results.unshift(this.operations.splice(index, 1)[0])
+      this.responses.unshift(this.operations.splice(index, 1)[0])
     }
   }
 }
