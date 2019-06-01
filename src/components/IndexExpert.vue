@@ -1,6 +1,6 @@
 <template>
   <div class="container" ontouchstart>
-    <div v-if="!protocol_js_loaded">
+    <div v-if="!protocol_js_loaded" class="protocol-loading">
       {{lang.settings.loading_protocol}}
       <loading></loading>
     </div>
