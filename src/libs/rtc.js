@@ -5,8 +5,6 @@ declare var RTCSessionDescription
 declare var RTCIceCandidate
 declare var RTCIceCandidate
 
-import { is_safari } from './util'
-
 export class Connection {
   conn : RTCPeerConnection
   channel : any

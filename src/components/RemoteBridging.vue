@@ -43,7 +43,7 @@
                 </div>
               </tree-node>
               <tree-node :title="lang.remote.qrcode_loading">
-                <input class="file-input" type="file" @change="e => scanFile(e.target.files[0])" accept="image/*" name="qrcode_file" id="qrcode_file" />
+                <input class="file-input" type="file" @change="e => scanFile(e.target.files[0])" capture accept="image/*" name="qrcode_file" id="qrcode_file" />
                 <label class="button" for="qrcode_file">{{lang.general.load}}</label>
               </tree-node>
             </div>
@@ -74,7 +74,7 @@ import Record from './Record'
 import SmInput from './SmInput'
 import Switcher from './Switcher'
 
-import { is_safari } from '../libs/util'
+import { is_apple_device, is_mobile, bsQREncode, bsQRDecode } from '../libs/util'
 import { Connection } from '../libs/rtc'
 
 
@@ -88,14 +88,14 @@ export default {
   data() {
     return {
       lang,
-      mode: is_safari ? 'signer' : 'bridge',
+      mode: is_mobile ? 'signer' : 'bridge',
       conn: null,
       remote_info_text: '',
       conn_info: '',
       conn_info_qrcode: '',
       in_step1: true,
       connected_before: false,
-      access_granted: is_safari ? false : true,
+      access_granted: is_apple_device ? false : true,
       dropover: false
     }
   },
@@ -131,7 +131,9 @@ export default {
       const compressed = pako.deflate(raw_conn_info, {level: 9})
       this.conn = signer.conn
       this.conn_info = TBC.codec.bs58checkEncode(compressed, new Uint8Array([]))
-      this.conn_info_qrcode = await QRCode.toDataURL(this.conn_info, { errorCorrectionLevel: 'low'})
+      this.conn_info_qrcode = await QRCode.toDataURL(
+        [{data: bsQREncode(compressed), mode: 'alphanumeric'}], 
+        { errorCorrectionLevel: 'L'})
 
       if (remote_info)
         this.in_step1 = false
@@ -166,8 +168,10 @@ export default {
         inversionAttempts: 'dontInvert'
       })
 
-      if (code)
-        this.setRemoteInfo(code.data)
+      if (code) {
+        const bytes = bsQRDecode(code.data)
+        this.setRemoteInfo(TBC.codec.bs58checkEncode(bytes, new Uint8Array([])))
+      }
     },
     scanImage(data_url : string) {
       const img = new Image()
