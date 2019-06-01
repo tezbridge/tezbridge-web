@@ -127,7 +127,13 @@ class Signer {
   }
 
   send(id : string, data : Object, is_error : boolean = false) {
-    const reply_msg = Object.assign({}, is_error ? {error: data} : {result: data}, {tezbridge: id})
+    if (data instanceof Error)
+      window.errors.unshift({
+        kind: 'signer',
+        message: data.stack
+      })
+
+    const reply_msg = Object.assign({}, is_error ? {error: data.toString()} : {result: data}, {tezbridge: id})
     if (this.conn && this.conn.is_connected)
       this.conn.channel.send(JSON.stringify(reply_msg))
     else
@@ -136,11 +142,17 @@ class Signer {
 
   async autoSign(op_params : Object) {
     const sk = await this.box.reveal()
-    return await network_client.mixed.makeMinFeeOperation(TBC, this.source, sk, op_params)
+    if (network_client)
+      return await network_client.mixed.makeMinFeeOperation(TBC, this.source, sk, op_params)
+    else
+      throw `Network client hasn't been set to specific protocol`
   }
 
   async inject(sign_result : Object) {
-    return await network_client.submit.inject_operation(sign_result.operation_with_sig)
+    if (network_client)
+      return await network_client.submit.inject_operation(sign_result.operation_with_sig)
+    else
+      throw `Network client hasn't been set to specific protocol`
   }
 
   async methodHandler(op : Object, resolve : Object => void) {
