@@ -89,9 +89,9 @@ export default {
 div.title, div.result-title { font-size: 0.8rem; background: #f0f0f0; text-align: center;}
 div.op-content { margin-bottom: 8px;  font-size: 0.85rem; padding: 4px; padding-bottom: 8px; border: 1px solid #eee;}
 .op-item { border-top: 1px dotted #aaa; padding-bottom: 6px;}
-.op-result > div { display: inline-block; font-size: 0.8rem; line-height: 1rem; color: white; padding: 2px 4px; border-radius: 4px; }
+.op-result > div { display: inline-block; word-break: break-word; font-size: 0.8rem; line-height: 1rem; color: white; padding: 2px 4px; border-radius: 4px; }
 .approved { background: #27bd1d }
 .rejected { background: #bd1d1d }
-.op-result .failed { color: black; border: 1px solid #bd1d1d }
+.op-result .failed { background: #bd1d1d }
 .host { display: inline-block; font-size: 0.8rem;  padding: 2px 6px; border-radius: 4px; margin: 4px 0; background: #fffa08 }
 </style>
