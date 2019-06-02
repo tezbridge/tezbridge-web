@@ -96,7 +96,7 @@ export default {
     invalid_host: 'invalid host'
   },
   remote: {
-    safari_warning: 'The permission of microphone is needed(for 1 second) to enable bridging function in Safari',
+    safari_warning: 'The permission of microphone is needed to enable bridging function in Safari (for 1 second)',
     as_repeater: 'As repeater',
     as_signer: 'As signer',
     disconnected: 'Disconnected',

@@ -96,7 +96,7 @@ export default {
     invalid_host: '无效主机'
   },
   remote: {
-    safari_warning: '在Safari上需要允许麦克风权限(仅开启1秒钟)来开启远程桥接功能',
+    safari_warning: '在Safari上需要允许麦克风权限来开启远程桥接功能(仅需1秒钟)',
     as_repeater: '作为中继端',
     as_signer: '作为签名端',
     disconnected: '未连接',

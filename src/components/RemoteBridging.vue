@@ -133,7 +133,7 @@ export default {
       this.conn_info = TBC.codec.bs58checkEncode(compressed, new Uint8Array([]))
       this.conn_info_qrcode = await QRCode.toDataURL(
         [{data: bsQREncode(compressed), mode: 'alphanumeric'}], 
-        { errorCorrectionLevel: 'L'})
+        { errorCorrectionLevel: 'L', margin: 0 })
 
       if (remote_info)
         this.in_step1 = false
