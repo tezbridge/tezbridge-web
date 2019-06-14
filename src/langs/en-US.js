@@ -57,6 +57,7 @@ export default {
     operation: 'Operation',
     methods: {
       get_source: 'Get source address',
+      set_host: 'Set RPC host',
       create_account: 'Create KT1 account',
       set_delegate: 'Set delegate for KT1 account',
       raw_sign: 'Sign operation bytes',

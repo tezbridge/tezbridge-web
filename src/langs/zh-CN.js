@@ -57,6 +57,7 @@ export default {
     operation: '操作',
     methods: {
       get_source: '获取当前账号',
+      set_host: '设置RPC远程主机',
       create_account: '创建从属账号',
       set_delegate: '为从属账号设置委托',
       raw_sign: '给操作字节信息签名',
