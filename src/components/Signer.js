@@ -2,7 +2,7 @@
 
 declare var TBC : any
 
-import { network_client } from '../libs/network'
+import { network_client, loadProtocolJS } from '../libs/network'
 import { Connection } from '../libs/rtc'
 
 
@@ -23,7 +23,7 @@ class Signer {
     this.op_queue = []
     this.ask_methods = [
       'raw_sign', 'raw_inject', 'inject_operations',
-      'create_account', 'set_delegate'
+      'create_account', 'set_delegate', 'set_host'
     ]
 
     window.addEventListener('message', async (e) => {
@@ -195,6 +195,10 @@ class Signer {
       async raw_inject() {
         const inject_result = await signer.inject(op.bytes)
         resolve(inject_result)
+      },
+      async set_host() {
+        await loadProtocolJS(op.host)
+        resolve(true)
       }
     }
 

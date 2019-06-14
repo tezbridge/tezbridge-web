@@ -77,7 +77,8 @@ export default {
       delegate: '代理账号',
       script: '脚本',
       parameters: '参数',
-      bytes: '字节'
+      bytes: '字节',
+      host: 'RPC远程主机'
     }
   },
   key: {

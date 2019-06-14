@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="host">{{network.protocol}} @ {{settings.host}}</div>
+    <div class="host">{{network.protocol}} @ {{host}}</div>
     <div v-for="(item, index) in operations">
       <div class="title">{{lang.requests.operation}}: {{item.op.tezbridge}}</div>
       <div class="op-content">
@@ -80,6 +80,14 @@ export default {
       op_item.reject('rejected')
       op_item.result = 'rejected'
       this.responses.unshift(this.operations.splice(index, 1)[0])
+    }
+  },
+  computed: {
+    host() {
+      if (this.network.network_client)
+        return this.network.network_client.host
+      else
+        return this.settings.host
     }
   }
 }

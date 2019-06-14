@@ -77,7 +77,8 @@ export default {
       delegate: 'Delegate',
       script: 'Script',
       parameters: 'Parameters',
-      bytes: 'Bytes'
+      bytes: 'Bytes',
+      host: 'RPC Host'
     }
   },
   key: {

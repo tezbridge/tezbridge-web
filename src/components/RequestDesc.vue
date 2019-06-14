@@ -52,6 +52,10 @@
       <label>{{lang.requests.op_desc.bytes}}:</label>
       <div>{{op.bytes}}</div>
     </div>
+    <div v-if="op.host !== undefined">
+      <label>{{lang.requests.op_desc.host}}:</label>
+      <div>{{op.host}}</div>
+    </div>
   </div>
 </template>
 

@@ -35,6 +35,14 @@ export default {
 .then(address => output(address))
 .catch(err => output(err))
 `,
+        set_host:
+`tezbridge.request({
+  method: 'set_host',
+  host: 'https://mainnet-node.tzscan.io'
+})
+.then(address => output(address))
+.catch(err => output(err))
+`,
         create_account: 
 `tezbridge.request({
   method: 'create_account'
@@ -93,6 +101,7 @@ export default {
       },
       output: {
         get_source: '',
+        set_host: '',
         create_account: '',
         set_delegate: '',
         raw_sign: '',
