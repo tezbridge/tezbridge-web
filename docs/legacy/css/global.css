@@ -1,0 +1,106 @@
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url('material-icon.woff2') format('woff2');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('Lato-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('Lato-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+}
+
+* {font-family: 'Lato';}
+p.ellipsis {margin: 0; text-overflow: ellipsis; overflow: hidden;}
+
+body button.modal-close-btn {padding: 7px; position: absolute; top: 12px; right: 12px}
+
+.intro .title {text-align: center; font-weight: 900; font-size: 18px;}
+.intro div {font-size: 14px; line-height: 2}
+.intro div span {font-size: 16px; text-decoration: underline}
+.intro .agree-btn {margin-top: 8px}
+.intro .tip {color: #f44336;}
+
+.header button { height: 48px; width: 48px }
+
+.body-wrapper {max-width: 640px; margin: 0 auto;}
+.mnemonic {display: inline-block; padding: 4px 8px; margin: 4px 8px; border: 1px solid #ddd; background: #f8f8f8;}
+.header {padding: 16px 8px 0; display: flex; justify-content: space-between; align-items: center}
+.header .host {display: inline-block; font-size: 13px; transform: translateY(-12px); vertical-align: middle; color: #aaa;}
+.center-wrapper {margin: 16px 0; text-align: center}
+.center-wrapper > * {margin: 0 2px;}
+body .q-input {margin: 8px 0}
+.fade {transition: opacity 0.5s;}
+
+.dapp-list .title {color: #444; margin-bottom: 16px; font-weight: 900; text-align: center; font-size: 18px; line-height: 18px; height: 18px}
+.dapp-list a {font-size: 18px; color: #0097a7; font-weight: 900; text-decoration: none; margin-bottom: 4px;}
+.dapp-list span {display: block; font-size: 14px; color: #aaa}
+.dapp-list .q-item {flex-direction: column; align-items: flex-start;}
+.dapp-list .dim a {color: #aaa}
+
+.footer {display:flex; flex-direction: column; justify-content: center; align-items: flex-end; font-size: 12px; color: #aaa}
+.footer a { color: #aaa; text-decoration: none; }
+.footer > * {margin: 2px 15px; background: #fbfbfb; padding: 2px 4px 2px 32px}
+
+.host-input {width: 100%;}
+
+.rtc-local-info {margin-bottom: 8px; max-width: 480px; height: 120px; border: 1px solid #eee; padding: 4px; overflow: hidden}
+.rtc-ready-wrapper {text-align: center}
+.rtc-ready-wrapper button {margin-top: 16px;}
+.rtc-ready-wrapper small {display: inline-block; margin-bottom: 16px;}
+.rtc-info {text-align: center;}
+.rtc-info > div {text-align: center; margin: 8px 0;}
+
+/* --- override quasar --- */
+body .q-list {border: 0}
+body .q-stepper-dot i {font-size: 18px;}
+body .q-stepper {box-shadow: none}
+body .q-collapsible-inner {transition: background 0.5s, box-shadow 0.5s}
+body .q-collapsible-opened .q-collapsible-inner > div:last-child { max-height: 100% !important; animation-name: fadeIn; animation-duration: 1s }
+@keyframes fadeIn {
+  from {
+    max-height: 0px;
+  }
+
+  to {
+    max-height: 100vh;
+  }
+}
+body .q-collapsible-closed .q-collapsible-inner { border: 1px solid transparent; background: #fbfbfb; }
+body .q-collapsible-opened .q-collapsible-inner { padding: 1px 0; box-shadow: 0 1px 3px #ddd, 0 0 1px 1px #0097a7 inset;}
+body input.q-input-target {height: 21px;}
+/* === override quasar === */
+
+@media
+(-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+.header {padding-left: 16px}
+.header img {width: 32px}
+.header .host {transform: translateY(-6px);}
+}

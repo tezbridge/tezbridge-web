@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/tezbridge/tezbridge-web#readme",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.18",
-    "@fortawesome/free-solid-svg-icons": "^5.8.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/vue-fontawesome": "^0.1.6",
     "jsqr": "^1.2.0",
     "pako": "^1.0.10",
@@ -40,7 +40,7 @@
     "@vue/component-compiler-utils": "^2.6.0",
     "cssnano": "^4.1.10",
     "flow-bin": "^0.89.0",
-    "sass": "^1.20.1",
+    "sass": "^1.21.0",
     "vue-template-compiler": "^2.6.10"
   },
   "babel": {
