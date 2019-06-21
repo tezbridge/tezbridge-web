@@ -117,7 +117,8 @@ export default {
   tools: {
     home: '首页',
     signer: '签名器',
-    playground: '试验场'
+    playground: '试验场',
+    legacy: '旧版'
   },
   manager: {
     use_as_signer: '用此账号签名'

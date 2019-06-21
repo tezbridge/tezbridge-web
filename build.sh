@@ -11,3 +11,4 @@ parcel build \
   --no-source-maps --out-dir docs
 
 cp src/CNAME docs/
+cp -r src/pages/legacy docs/

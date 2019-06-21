@@ -117,7 +117,8 @@ export default {
   tools: {
     home: 'Home',
     signer: 'Signer',
-    playground: 'Playground'
+    playground: 'Playground',
+    legacy: 'Legacy'
   },
   manager: {
     use_as_signer: 'Use as signer'
