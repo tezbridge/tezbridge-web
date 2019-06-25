@@ -5,6 +5,20 @@ declare var RTCSessionDescription
 declare var RTCIceCandidate
 declare var RTCIceCandidate
 
+const tunnel_url = 'https://tezbridge.netlify.com/.netlify/functions/exchange'
+export async function fetchInfo(wid : string) {
+  const conn = await fetch(`${tunnel_url}?wid=${wid}`)
+  return await conn.text()
+}
+
+export async function postInfo(info : string) {
+  const conn = await fetch(`${tunnel_url}`, {
+    method: 'POST', 
+    body: info
+  })
+  return await conn.text()
+}
+
 export class Connection {
   conn : RTCPeerConnection
   channel : any

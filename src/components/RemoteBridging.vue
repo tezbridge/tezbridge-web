@@ -14,11 +14,11 @@
       </div>
 
       <div v-if="conn && !conn.is_connected">
-        <switcher class="switcher" :data="{[lang.remote.as_repeater]: 'bridge', [lang.remote.as_signer]: 'signer'}" v-model="mode">
+        <switcher class="switcher" :data="{[lang.remote.as_tunnel]: 'tunnel', [lang.remote.as_signer]: 'signer'}" v-model="mode">
           <div class="step-desc">
-            <span v-if="mode === 'bridge'">
+            <span v-if="mode === 'tunnel'">
               <span>
-                {{in_step1 ? lang.remote.repeater_step1 : lang.remote.repeater_step2}}
+                {{in_step1 ? lang.remote.tunnel_step1 : lang.remote.tunnel_step2}}
               </span>
               <a href="javascript:;" class="next-step" v-if="in_step1" @click="in_step1 = false">{{lang.remote.go_step2}}</a>
               <a href="javascript:;" class="next-step" v-if="!in_step1" @click="in_step1 = true">{{lang.general.back}}</a>
@@ -28,7 +28,7 @@
             </span>
           </div>
           <div class="conn-wrapper">
-            <div v-if="(mode === 'bridge' && in_step1) || (mode === 'signer' && !in_step1)">
+            <div v-if="(mode === 'tunnel' && in_step1) || (mode === 'signer' && !in_step1)">
               <record nomargin :data="{[lang.remote.conn_info]: conn_info}"></record>
               <div class="op-panel">
                 <img class="qrcode" :src="conn_info_qrcode">
@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       lang,
-      mode: is_mobile ? 'signer' : 'bridge',
+      mode: is_mobile ? 'signer' : 'tunnel',
       conn: null,
       remote_info_text: '',
       conn_info: '',
@@ -147,8 +147,9 @@ export default {
         this.init(remote_conn_info)
     },
     reset() {
+      const access_granted = this.access_granted
       this.resetData()
-      this.access_granted = true
+      this.access_granted = access_granted
       this.init()
     },
     scanBitMap(img : Object) {

@@ -17,8 +17,9 @@
         <select-manager :managers="managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
-      <tree-node :title="lang.menu.remote_bridging" bold>
-        <remote-bridging></remote-bridging>
+      <tree-node :title="lang.menu.remote_bridging" bold hard_close>
+        <!-- <remote-bridging></remote-bridging> -->
+        <simple-bridging></simple-bridging>
       </tree-node>
 
       <tree-node :title="lang.menu.temp_signer" bold>
@@ -67,6 +68,7 @@ import Requests from './Requests'
 import Record from './Record'
 import About from './About'
 import RemoteBridging from './RemoteBridging'
+import SimpleBridging from './SimpleBridging'
 import Errors from './Errors'
 import Settings from './Settings'
 
@@ -80,6 +82,7 @@ export default {
     Errors,
     ImportKey,
     RemoteBridging,
+    SimpleBridging,
     Requests,
     Record,
     Settings,
