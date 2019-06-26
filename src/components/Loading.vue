@@ -1,5 +1,5 @@
 <template>
-  <div class="bar">
+  <div class="loading-block">
     <span></span>
   </div>
 </template>
@@ -10,38 +10,33 @@
 export default {
   data() {
     return {
-      direction: true
     }
   }
 }
 </script>
 
 <style scoped>
-div.bar {display: flex; border-radius: 2px; width: 96px; height: 2px; overflow: hidden; }
-span {display: inline-block; height: 2px; background: black; animation: loading 0.8s infinite}
+div.loading-block {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ddd;
+  border-top: 2px solid black;
+  border-radius: 8px;
+  animation: loading 2.4s infinite;
+}
 
 @keyframes loading {
   0% {
-    margin-left: 0px;
-    width: 2px;
-  }
-
-  25% {
-    width: 16px;
+    transform: rotate(180deg);
   }
 
   50% {
-    margin-left: 88px;
-    width: 2px;
-  }
-
-  75% {
-    width: 16px;
+    transform: rotate(1080deg);
   }
 
   100% {
-    margin-left: 0px;
-    width: 2px;
+    transform: rotate(180deg);
   }
 }
 
