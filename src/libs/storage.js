@@ -44,6 +44,9 @@ class Storage {
     
     if (!this.settings.host)
       this.settings.host = 'https://alphanet-node.tzscan.io'
+
+    if (!this.settings.bridging_mode)
+      this.settings.bridging_mode = 'simple'
   }
 
   setReadyManager(box : TBC.crypto.EncryptedBox, name : string, source : string) {

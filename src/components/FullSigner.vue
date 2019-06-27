@@ -18,8 +18,8 @@
       </tree-node>
 
       <tree-node :title="lang.menu.remote_bridging" bold hard_close>
-        <!-- <remote-bridging></remote-bridging> -->
-        <simple-bridging></simple-bridging>
+        <simple-bridging v-if="settings.bridging_mode === 'simple'"></simple-bridging>
+        <remote-bridging v-else></remote-bridging>
       </tree-node>
 
       <tree-node :title="lang.menu.temp_signer" bold>
@@ -94,6 +94,7 @@ export default {
       errors: window.errors,
       protocol_js_loaded: false,
       managers: storage.managers,
+      settings: storage.settings,
       temp_managers: [],
       curr_signer: {
         [lang.signer.manager]: undefined,

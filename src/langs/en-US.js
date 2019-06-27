@@ -95,6 +95,7 @@ export default {
   settings: {
     loading_protocol: 'Loading protocol script',
     host: 'Host',
+    language: 'Language',
     invalid_host: 'invalid host'
   },
   remote: {

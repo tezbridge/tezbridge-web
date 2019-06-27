@@ -1,8 +1,17 @@
 <template>
   <div>
-    <!-- <switcher :data="lang_lst" v-model="curr_lang"></switcher> -->
-    <sm-input :title="lang.settings.host" v-model="settings.host"></sm-input>
-    <div v-if="host_error" class="error">{{lang.settings.invalid_host}}</div>
+    <div class="field">
+      <label>Language:</label>
+      <switcher :data="lang_lst" v-model="curr_lang"></switcher>
+    </div>
+    <div class="field">
+      <label>Bridging mode:</label>
+      <switcher :data="bridging_lst" v-model="settings.bridging_mode"></switcher>
+    </div>
+    <div class="field">
+      <sm-input :title="lang.settings.host" v-model="settings.host"></sm-input>
+      <div v-if="host_error" class="error">{{lang.settings.invalid_host}}</div>
+    </div>
   </div>
 </template>
 
@@ -29,9 +38,13 @@ export default {
       curr_lang: lang._,
       lang_lst: {
         'English': 'en_US',
-        '日本語': 'ja_JP',
         '中文': 'zh_CN',
-        '한국어': 'ko_KR'
+        '日本語(TODO)': 'ja_JP',
+        '한국어(TODO)': 'ko_KR'
+      },
+      bridging_lst: {
+        'Simple': 'simple',
+        'Manual': 'manual'
       },
       settings: storage.settings,
       host_error: false    
@@ -52,11 +65,15 @@ export default {
       } catch(e) {
         this.host_error = true
       }
+    }),
+    'settings.bridging_mode': debounce(function(mode){
+      storage.saveSettings()
     })
   }
 }
 </script>
 
 <style scoped>
-  
+.field { display: flex; align-items: center; margin: 8px 0; }
+.field label {margin-right: 4px; font-size: 0.9rem;}
 </style>

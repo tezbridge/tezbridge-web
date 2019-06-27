@@ -95,6 +95,7 @@ export default {
   settings: {
     loading_protocol: '正在载入协议脚本',
     host: '远程主机',
+    language: '语言',
     invalid_host: '无效主机'
   },
   remote: {
