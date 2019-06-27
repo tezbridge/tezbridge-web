@@ -131,6 +131,9 @@ export default {
       this.access_granted = true
     },
     reset() {
+      if (signer.conn && signer.conn.channel)
+        signer.conn.channel.close()
+      
       const access_granted = this.access_granted
       this.resetData()
       this.access_granted = access_granted
