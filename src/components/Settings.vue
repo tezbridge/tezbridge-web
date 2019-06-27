@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="field">
-      <label>Language:</label>
+      <label>{{lang.settings.language}}:</label>
       <switcher :data="lang_lst" v-model="curr_lang"></switcher>
     </div>
     <div class="field">
-      <label>Bridging mode:</label>
+      <label>{{lang.settings.briding_mode}}:</label>
       <switcher :data="bridging_lst" v-model="settings.bridging_mode"></switcher>
     </div>
     <div class="field">
@@ -43,8 +43,8 @@ export default {
         '한국어(TODO)': 'ko_KR'
       },
       bridging_lst: {
-        'Simple': 'simple',
-        'Manual': 'manual'
+        [lang.general.simple]: 'simple',
+        [lang.general.manual]: 'manual'
       },
       settings: storage.settings,
       host_error: false    

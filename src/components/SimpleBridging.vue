@@ -14,54 +14,40 @@
       </div>
 
       <div v-if="!conn || !conn.is_connected">
-       <!--  <switcher class="switcher" :data="{[lang.remote.as_tunnel]: 'tunnel', [lang.remote.as_signer]: 'signer'}" v-model="mode">
-          <div class="step-desc">
-          </div>
-          <div class="conn-wrapper">
-            <div v-if="mode === 'tunnel'">
-              <div class="conn-code">Code: {{conn_code}}</div>
-              <sm-input title="input connection code from remote" v-model="remote_conn_code"></sm-input>
-            </div>
-            <div v-else>
-              <sm-input title="input connection code from remote" v-model="remote_conn_code"></sm-input>
-              <div class="conn-code" v-if="remote_conn_code">Code: {{conn_code}}</div>
-            </div>
-          </div>
-        </switcher> -->
         <div class="conn-setup-title" v-if="!mode">
-          Choose my role
+          {{lang.remote.choose_my_role}}
         </div>
         <div class="conn-setup-wrapper" v-if="!mode">
           <div class="diagram-block">
             <icon icon="code" size="sm"></icon>
-            <span>App</span>
+            <span>{{lang.general.app}}</span>
           </div>
           <icon icon="arrows-alt-h"></icon>
           <button @click="mode = 'tunnel'">
             <icon icon="wifi" size="sm"></icon>
-            <span>Tunnel</span>
+            <span>{{lang.remote.tunnel}}</span>
           </button>
           <icon icon="arrows-alt-h"></icon>
           <button @click="mode = 'signer'">
             <icon icon="mobile-alt"  size="sm"></icon>
-            <span>Signer</span>
+            <span>{{lang.tools.signer}}</span>
           </button>
         </div>
         <div class="conn-wrapper">
           <div v-if="mode === 'tunnel'">
             <div class="conn-code">
-              <span>Code: {{conn_code}}</span>
+              <span>{{lang.remote.code}}: {{conn_code}}</span>
               <loading v-if="loading"></loading>
             </div>
-            <sm-input title="input connection code from remote device" v-model="remote_conn_code"></sm-input>
-            <div v-if="fetch_error" class="error">invalid code</div>
+            <sm-input :title="lang.remote.input_conn_code_signer" v-model="remote_conn_code"></sm-input>
+            <div v-if="fetch_error" class="error">{{lang.remote.invalid_code}}</div>
           </div>
 
           <div v-if="mode === 'signer'">
-            <sm-input title="input connection code from tunnel" v-model="remote_conn_code"></sm-input>
-            <div v-if="fetch_error" class="error">invalid code</div>
+            <sm-input :title="lang.remote.input_conn_code_tunnel" v-model="remote_conn_code"></sm-input>
+            <div v-if="fetch_error" class="error">{{lang.remote.invalid_code}}</div>
             <div class="conn-code" v-if="conn || loading">
-              <span>Code: {{conn_code}}</span>
+              <span>{{lang.remote.code}}: {{conn_code}}</span>
               <loading v-if="loading"></loading>
             </div>
           </div>

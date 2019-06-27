@@ -15,6 +15,9 @@ export default {
     version: '版本',
     key: '密钥',
     copied: '已复制',
+    simple: '简易',
+    manual: '手工',
+    app: '应用',
 
     state: '状态',
     reset: '重置',
@@ -96,6 +99,7 @@ export default {
     loading_protocol: '正在载入协议脚本',
     host: '远程主机',
     language: '语言',
+    briding_mode: '桥接模式',
     invalid_host: '无效主机'
   },
   remote: {
@@ -113,7 +117,13 @@ export default {
     paste_txt_image: '黏贴链接的文字信息或二维码',
     qrcode_dropping: '拖拽图片扫二维码',
     drop_qrcode_here: '拖拽二维码到这里',
-    qrcode_loading: '载入图片扫二维码'
+    qrcode_loading: '载入图片扫二维码',
+    choose_my_role: '选择我的角色',
+    tunnel: '桥接器',
+    code: '桥接码',
+    input_conn_code_tunnel: '输入桥接器的桥接码',
+    input_conn_code_signer: '输入签名器的桥接码',
+    invalid_code: '错误的桥接码'
   },
   tools: {
     home: '首页',

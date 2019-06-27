@@ -15,6 +15,9 @@ export default {
     version: 'Version',
     key: 'Key',
     copied: 'copied',
+    simple: 'Simple',
+    manual: 'Manual',
+    app: 'App',
 
     state: 'State',
     reset: 'reset',
@@ -96,6 +99,7 @@ export default {
     loading_protocol: 'Loading protocol script',
     host: 'Host',
     language: 'Language',
+    briding_mode: 'Bridging mode',
     invalid_host: 'invalid host'
   },
   remote: {
@@ -113,7 +117,13 @@ export default {
     paste_txt_image: 'Paste the connection text or QRCode image',
     qrcode_dropping: 'QRCode from image dropping',
     drop_qrcode_here: 'Drop remote connection QRCode here',
-    qrcode_loading: 'QRCode from image loading'
+    qrcode_loading: 'QRCode from image loading',
+    choose_my_role: 'Choose my role',
+    tunnel: 'Tunnel',
+    code: 'Code',
+    input_conn_code_tunnel: 'Input the code from the tunnel',
+    input_conn_code_signer: 'Input the code from the signer',
+    invalid_code: 'invalid code '
   },
   tools: {
     home: 'Home',
