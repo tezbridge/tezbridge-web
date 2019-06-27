@@ -1,13 +1,11 @@
 <template>
   <div>
-    <div class="field">
-      <label>{{lang.settings.language}}:</label>
+    <tree-node :title="lang.settings.language">
       <switcher :data="lang_lst" v-model="curr_lang"></switcher>
-    </div>
-    <div class="field">
-      <label>{{lang.settings.briding_mode}}:</label>
+    </tree-node>
+    <tree-node :title="lang.settings.briding_mode">
       <switcher :data="bridging_lst" v-model="settings.bridging_mode"></switcher>
-    </div>
+    </tree-node>
     <div class="field">
       <sm-input :title="lang.settings.host" v-model="settings.host"></sm-input>
       <div v-if="host_error" class="error">{{lang.settings.invalid_host}}</div>
@@ -17,6 +15,8 @@
 
 <script>
 // @flow
+
+import TreeNode from './TreeNode'
 
 import SmInput from './SmInput'
 import Switcher from './Switcher'
@@ -30,6 +30,7 @@ import { network_client, loadProtocolJS } from '../libs/network'
 export default {
   components: {
     SmInput,
+    TreeNode,
     Switcher
   },
   data() {

@@ -1,7 +1,8 @@
 <template>
   <div :class="{wrapper: true}">
     <div :class="{title: true, bold}" @click="titleClick">
-      <span :class="{mark: true, changed: !!changed}">{{is_open || keep_opening ? '-' : '+'}}</span><span>{{title}}</span>
+      <icon icon="angle-right" size="sm" :class="{mark: true, changed: !!changed, rotated: is_open || keep_opening}"></icon>
+      <span>{{title}}</span>
     </div>
     <div class="content" v-show="is_open || keep_opening" v-if="!hard_close || (hard_close && is_open)">
       <slot></slot>
@@ -63,21 +64,16 @@ export default {
 </script>
 
 <style scoped>
-span.mark {
-  display: inline-flex; 
-  border-radius: 2px; 
-  align-items: center; 
-  justify-content: center; 
-  margin-right: 4px;
-  width: 8px;
-  font-size: 0.9rem;
-  line-height: 1.2rem;
+.mark {
+  margin-left: 2px;
+  opacity: 0.2;
+  vertical-align: middle;
 }
 div.content {margin-left: 12px;}
-div.title {padding: 4px 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden}
+div.title { padding: 4px 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden}
 div.title:active {background: #eee}
 div.bold {font-weight: 700}
-span.changed {animation: change-ani 1s infinite}
+.changed {animation: change-ani 1s infinite}
 
 @keyframes change-ani {
   0% {
@@ -91,5 +87,10 @@ span.changed {animation: change-ani 1s infinite}
   100% {
     opacity: 1
   }
+}
+
+.rotated {
+  transform: rotate(90deg);
+  opacity: 1;
 }
 </style>

@@ -18,7 +18,7 @@
         <select-manager :managers="managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
-      <tree-node :title="lang.menu.remote_bridging" bold hard_close>
+      <tree-node :title="lang.menu.remote_bridging" bold>
         <simple-bridging v-if="settings.bridging_mode === 'simple'"></simple-bridging>
         <remote-bridging v-else></remote-bridging>
       </tree-node>
