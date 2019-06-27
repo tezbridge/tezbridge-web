@@ -96,7 +96,7 @@ export default {
     faucet: 'Faucet'
   },
   settings: {
-    loading_protocol: 'Loading protocol script',
+    loading_protocol: 'Loading protocol',
     host: 'Host',
     language: 'Language',
     briding_mode: 'Bridging mode',

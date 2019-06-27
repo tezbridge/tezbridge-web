@@ -1,7 +1,8 @@
 <template>
   <div class="container" ontouchstart>
     <div v-if="!protocol_js_loaded" class="protocol-loading">
-      {{lang.settings.loading_protocol}}
+      <span>{{lang.settings.loading_protocol}}</span>
+      <b>{{network.protocol}}</b>
       <loading></loading>
     </div>
     <nav class="link-tree" v-else>
@@ -74,6 +75,7 @@ import Settings from './Settings'
 
 import storage from '../libs/storage'
 import { loadProtocolJS } from '../libs/network'
+import * as network from '../libs/network'
 
 export default {
   components: {
@@ -93,6 +95,7 @@ export default {
       lang,
       errors: window.errors,
       protocol_js_loaded: false,
+      network,
       managers: storage.managers,
       settings: storage.settings,
       temp_managers: [],

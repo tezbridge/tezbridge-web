@@ -96,7 +96,7 @@ export default {
     faucet: 'Faucet'
   },
   settings: {
-    loading_protocol: '正在载入协议脚本',
+    loading_protocol: '正在载入协议',
     host: '远程主机',
     language: '语言',
     briding_mode: '桥接模式',
