@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      {{lang.general.version}}: 2.1.0
+      {{lang.general.version}}: 2.1.1
     </div>
   </div>
 </template>

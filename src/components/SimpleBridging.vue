@@ -129,7 +129,6 @@ export default {
     async grantAccess() {
       await Connection.grantMediaAccess('audio')
       this.access_granted = true
-      this.init()
     },
     reset() {
       const access_granted = this.access_granted
