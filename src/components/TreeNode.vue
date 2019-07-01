@@ -1,8 +1,7 @@
 <template>
   <div :class="{wrapper: true}">
     <div :class="{title: true, bold}" @click="titleClick">
-      <icon icon="angle-right" size="sm" :class="{mark: true, changed: !!changed, rotated: is_open || keep_opening}"></icon>
-      <span>{{title}}</span>
+      <icon icon="angle-right" size="sm" :class="{mark: true, changed: !!changed, rotated: is_open || keep_opening}"></icon><span>{{title}}</span>
     </div>
     <div class="content" v-show="is_open || keep_opening" v-if="!hard_close || (hard_close && is_open)">
       <slot></slot>
@@ -68,6 +67,8 @@ export default {
   margin-left: 2px;
   opacity: 0.2;
   vertical-align: middle;
+  width: 6px;
+  margin-right: 4px;
 }
 div.content {margin-left: 12px;}
 div.title { padding: 4px 0; text-overflow: ellipsis; white-space: nowrap; overflow: hidden}
