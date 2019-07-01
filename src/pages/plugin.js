@@ -1,7 +1,7 @@
 // @flow
 
 (() => {
-  const domain = location.origin
+  const host = 'https://www.tezbridge.com'
 
   class TezBridge {
     signer : window
@@ -38,7 +38,7 @@
         return Promise.resolve()
       }
       else {
-        this.signer = window.open(`${domain}/index.html?signer`)
+        this.signer = window.open(`${host}/index.html?signer`)
         return new Promise(resolve => {
           if (this.signer)
             this.signer.onload = () => {
@@ -63,7 +63,7 @@
 
           this.signer.postMessage(Object.assign({}, param, {
             tezbridge: this.txid
-          }), domain || '*')
+          }), host || '*')
         })
       }
       else
