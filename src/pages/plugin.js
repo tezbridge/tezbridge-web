@@ -40,10 +40,12 @@
       else {
         this.signer = window.open(`${host}/index.html?signer`)
         return new Promise(resolve => {
-          if (this.signer)
-            this.signer.onload = () => {
-              resolve()
-            }
+          const fn = (e) => {
+            if (e.source !== this.signer) return false
+            window.removeEventListener('message', fn)
+            resolve()
+          }
+          window.addEventListener('message', fn)
         })
       }
     }
@@ -63,7 +65,7 @@
 
           this.signer.postMessage(Object.assign({}, param, {
             tezbridge: this.txid
-          }), host || '*')
+          }), host)
         })
       }
       else

@@ -38,6 +38,10 @@ class Signer {
         this.response() 
       }
     })
+
+    if (window.opener) {
+      window.opener.postMessage('ready', '*')
+    }
   }
 
   addListener(methods: string | Array<string>, listener : (Object => Promise<Object>)) {
