@@ -6,7 +6,7 @@
     <tree-node :title="lang.settings.briding_mode">
       <switcher :data="bridging_lst" v-model="settings.bridging_mode"></switcher>
     </tree-node>
-    <div class="field">
+    <div>
       <sm-input :title="lang.settings.host" v-model="settings.host"></sm-input>
       <div v-if="host_error" class="error">{{lang.settings.invalid_host}}</div>
     </div>
@@ -75,6 +75,4 @@ export default {
 </script>
 
 <style scoped>
-.field { display: flex; align-items: center; margin: 8px 0; }
-.field label {margin-right: 4px; font-size: 0.9rem;}
 </style>
