@@ -16,9 +16,15 @@ export async function loadProtocolJS(host? : string) {
   ctrler.abort()
   ctrler = new AbortController()
 
-  const resp = await window.fetch(host + '/chains/main/blocks/head/header', {signal: ctrler.signal})
-  const result = await resp.json()
-  protocol = result.protocol.slice(0, 8)
+  let result = true
+  try {
+    const resp = await window.fetch(host + '/chains/main/blocks/head/header', {signal: ctrler.signal})
+    const result = await resp.json()
+    protocol = result.protocol.slice(0, 8)
+  } catch {
+    protocol = 'Pt24m4xi'
+    result = false
+  }
   
   const js_resp = await window.fetch(`${location.origin}/protocols/${protocol}.js`, {signal: ctrler.signal})
   const js_content = await js_resp.text()
@@ -27,6 +33,8 @@ export async function loadProtocolJS(host? : string) {
   network_client = new window.TBN({
     host
   })
+
+  return result
 }
 
 export default {

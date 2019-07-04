@@ -60,9 +60,9 @@ export default {
     'settings.host': debounce(async function(host){
       storage.saveSettings()
       try {
-        await loadProtocolJS()
+        const result = await loadProtocolJS()
 
-        this.host_error = false
+        this.host_error = !result
       } catch(e) {
         this.host_error = true
       }
