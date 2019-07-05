@@ -24,7 +24,7 @@
           <request-desc :op="x" class="op-item" v-for="x in item.op.operations" v-if="item.op.method === 'inject_operations'"></request-desc>
           <request-desc :op="item.op" class="op-item" v-if="item.op.method !== 'inject_operations'"></request-desc>
           <div class="op-result">
-            <div v-if="item.result === 'approved'" class="approved">{{lang.general.approved}}</div>
+            <div v-if="item.result === 'approved'" class="approved selectable">{{lang.general.approved}}: {{item.result_val}}</div>
             <div v-else-if="item.result === 'rejected'" class="rejected">{{lang.general.rejected}}</div>
             <div v-else class="failed">{{item.result}}</div>
           </div>
@@ -66,8 +66,9 @@ export default {
 
       try {
         const clone = JSON.parse(JSON.stringify(op_item.op))
-        await signer.methodHandler(clone, op_item.resolve)
+        const result_val = await signer.methodHandler(clone, op_item.resolve)
         op_item.result = 'approved'
+        op_item.result_val = result_val
       } catch(e) {
         op_item.reject(e)
         op_item.result = e

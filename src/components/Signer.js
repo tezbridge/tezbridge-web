@@ -174,6 +174,7 @@ class Signer {
           operation_id: inject_result,
           originated_contracts: result.originated_contracts
         })
+        return inject_result
       },
       async set_delegate() {
         const result = await this.autoSign([Object.assign({}, op, {
@@ -183,6 +184,7 @@ class Signer {
         resolve({
           operation_id: inject_result
         })
+        return inject_result
       },
       async inject_operations()  {
         const result = await this.autoSign(op.operations)
@@ -191,14 +193,18 @@ class Signer {
           operation_id: inject_result,
           originated_contracts: result.originated_contracts
         })
+        return inject_result
       },
       async raw_sign() {
         const sk = await this.box.reveal()
-        resolve(TBC.crypto.signOperation(op.bytes, sk))
+        const result = TBC.crypto.signOperation(op.bytes, sk)
+        resolve(result)
+        return result
       },
       async raw_inject() {
         const inject_result = await signer.inject(op.bytes)
         resolve(inject_result)
+        return inject_result
       },
       async set_host() {
         await loadProtocolJS(op.host)
@@ -209,7 +215,7 @@ class Signer {
     if (!handler_mapping[method])
       throw `Invalid method: ${method}`
 
-    await handler_mapping[method].call(this)
+    return await handler_mapping[method].call(this)
   }
 }
 
