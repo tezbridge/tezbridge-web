@@ -18,6 +18,10 @@
         <select-manager :managers="managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
+      <tree-node title="Hardware signer" bold>
+        <hardware-signer></hardware-signer>
+      </tree-node>
+
       <tree-node :title="lang.menu.remote_bridging" bold>
         <simple-bridging v-if="settings.bridging_mode === 'simple'"></simple-bridging>
         <remote-bridging v-else></remote-bridging>
@@ -68,6 +72,8 @@ import ImportKey from './ImportKey'
 import Requests from './Requests'
 import Record from './Record'
 import About from './About'
+import HardwareSigner from './HardwareSigner'
+
 import RemoteBridging from './RemoteBridging'
 import SimpleBridging from './SimpleBridging'
 import Errors from './Errors'
@@ -83,6 +89,7 @@ export default {
     SelectManager,
     Errors,
     ImportKey,
+    HardwareSigner,
     RemoteBridging,
     SimpleBridging,
     Requests,
