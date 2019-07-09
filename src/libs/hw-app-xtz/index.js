@@ -85,13 +85,6 @@ export default class Tezos {
         curve ? curve : 0x00, // Defaults to Ed25519
         buffer
       )
-      .then(response => {
-        let result = {};
-        let publicKeyLength = response[0];
-        result.publicKey = response
-          .slice(1, 1 + publicKeyLength)
-        return result;
-      });
   }
 
   signOperation(
