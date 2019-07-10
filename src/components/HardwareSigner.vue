@@ -58,11 +58,11 @@ export default {
         },
         secp256k1(response) {
           const arr = Array.from(response.slice(2, 34))
-          return new Uint8Array([3].concat(arr))
+          return new Uint8Array([response[65] % 2 ? 3 : 2].concat(arr))
         },
         p256(response) {
           const arr = Array.from(response.slice(2, 34))
-          return new Uint8Array([2].concat(arr))
+          return new Uint8Array([response[65] % 2 ? 3 : 2].concat(arr))
         }
       }
 
