@@ -9,6 +9,10 @@ import { Connection } from '../libs/rtc'
 class Signer {
   box : TBC.crypto.EncryptedBox
   source : string
+  ledger : {
+    pub_key : string,
+    sign : (string => Promise<string>)
+  }
   op_queue : Array<{method: string, tezbridge: string, param: Object}>
   ask_methods : Array<string>
   is_waiting : boolean
@@ -16,6 +20,10 @@ class Signer {
 
   caller_origin : string
   conn : Connection
+
+  state : {
+    step: number
+  }
 
   constructor() {
     this.is_waiting = false
@@ -25,6 +33,8 @@ class Signer {
       'raw_sign', 'raw_inject', 'inject_operations',
       'create_account', 'set_delegate', 'set_host'
     ]
+    this.ledger = { pub_key: '', sign : async x => x }
+    this.state = { step: 0 }
 
     window.addEventListener('message', async (e) => {
       if (e.source !== window.opener || !e.data.tezbridge) return false
@@ -57,6 +67,13 @@ class Signer {
   }
   removeListener(method: string, listener : (Object => Promise<Object>)) {
     this.method_listener[method].delete(listener)
+  }
+
+  initLedger(source : string, pub_key: string, sign : string => Promise<string>) {
+    this.source = source
+    this.ledger = {pub_key, sign}
+
+    this.response()
   }
 
   initLocal(box : TBC.crypto.EncryptedBox, source: string) {
@@ -145,9 +162,23 @@ class Signer {
   }
 
   async autoSign(op_params : Object) {
-    const sk = await this.box.reveal()
-    if (network_client)
-      return await network_client.mixed.makeMinFeeOperation(TBC, this.source, sk, op_params)
+    if (network_client) {
+      if (this.ledger.pub_key) {
+        return await network_client.mixed.makeMinFeeOperationBase(
+          TBC,
+          this.source,
+          this.ledger.pub_key,
+          this.ledger.sign,
+          op_params,
+          false,
+          this.state
+        )
+      } else {
+        const sk = await this.box.reveal()
+        return await network_client.mixed.makeMinFeeOperation(
+          TBC, this.source, sk, op_params, false, this.state) 
+      }
+    }
     else
       throw `Network client hasn't been set to specific protocol`
   }
@@ -196,8 +227,10 @@ class Signer {
         return inject_result
       },
       async raw_sign() {
-        const sk = await this.box.reveal()
-        const result = TBC.crypto.signOperation(op.bytes, sk)
+        const result = this.ledger.pub_key 
+          ? await this.ledger.sign(op.bytes) 
+          : TBC.crypto.signOperation(op.bytes, await this.box.reveal())
+
         resolve(result)
         return result
       },

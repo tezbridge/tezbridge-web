@@ -19,7 +19,7 @@
       </tree-node>
 
       <tree-node title="Hardware signer" bold>
-        <hardware-signer></hardware-signer>
+        <hardware-signer @ledger_set="ledgerInit"></hardware-signer>
       </tree-node>
 
       <tree-node :title="lang.menu.remote_bridging" bold>
@@ -128,6 +128,16 @@ export default {
       const key = await manager.revealKey()
       this.curr_signer = {
         [lang.signer.manager]: key.address,
+        [lang.signer.source]: source
+      } 
+    },
+    async ledgerInit(
+        {source, pub_key, manager, sign} : 
+        {source: string, pub_key: string, manager: string, sign: string => Promise<string>}) {
+
+      signer.initLedger(source, pub_key, sign)
+      this.curr_signer = {
+        [lang.signer.manager]: manager,
         [lang.signer.source]: source
       } 
     }

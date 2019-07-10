@@ -44,13 +44,15 @@ export default {
   },
   methods: {
     async connectLedger() {
-      const transport = await LedgerTransport.create()
-      const xtz = new LedgerTezos(transport)
-      const result = await xtz.getAddress(this.derive_path, true, {
+      const curve = {
         ed25519: 0,
         secp256k1: 1,
         p256: 2
-      }[this.curve])
+      }[this.curve]
+
+      const transport = await LedgerTransport.create()
+      const xtz = new LedgerTezos(transport)
+      const result = await xtz.getAddress(this.derive_path, true, curve)
 
       const pub_key_mapping = {
         ed25519(response) {
@@ -68,6 +70,21 @@ export default {
 
       const key = new TBC.crypto.Key(this.curve, new Uint8Array([]), pub_key_mapping[this.curve](result))
       console.log(key.address)
+
+      const watermark = TBC.codec.toHex(TBC.codec.watermark.operation())
+      this.$emit('ledger_set', {
+        source: key.address, 
+        pub_key: key.getPublicKey(), 
+        manager: key.address,
+        sign: async bytes => {
+          const sig_raw = await xtz.signOperation(this.derive_path, watermark + bytes, curve)
+          return TBC.codec.bs58checkEncode(sig_raw, {
+            ed25519: TBC.codec.prefix.ed25519_signature,
+            secp256k1: TBC.codec.prefix.secp256k1_signature,
+            p256: TBC.codec.prefix.p256_signature
+          }[this.curve])
+        }
+      })
     }
   }
 }
