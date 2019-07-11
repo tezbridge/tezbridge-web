@@ -154,6 +154,9 @@ class Signer {
         message: data.stack
       })
 
+    if (data instanceof ProgressEvent)
+      data = 'network failed'
+
     const reply_msg = Object.assign({}, is_error ? {error: data.toString()} : {result: data}, {tezbridge: id})
     if (this.conn && this.conn.is_connected)
       this.conn.channel.send(JSON.stringify(reply_msg))
