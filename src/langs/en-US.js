@@ -127,7 +127,8 @@ export default {
   },
   hardware: {
     hardware_signer: 'Hardware signer',
-    connect_ledger: 'Connect Ledger'
+    connect_ledger: 'Connect Ledger',
+    check_your_ledger: 'Check your ledger'
   },
   tools: {
     home: 'Home',

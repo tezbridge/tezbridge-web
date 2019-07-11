@@ -159,29 +159,27 @@ class Signer {
       window.opener.postMessage(reply_msg, this.caller_origin)
   }
 
-  async autoSign(op_params : Object) {
-    op_params.step = 0
-
+  async autoSign(op_params : Object, state : Object) {
     if (network_client) {
+
+      let result
       if (this.ledger.pub_key) {
-        const result = await network_client.mixed.makeMinFeeOperationBase(
+        result = await network_client.mixed.makeMinFeeOperationBase(
           TBC,
           this.source,
           this.ledger.pub_key,
           this.ledger.sign,
           op_params,
           false,
-          op_params
+          state
         )
-        delete op_params.step
-        return result
       } else {
         const sk = await this.box.reveal()
-        const result = await network_client.mixed.makeMinFeeOperation(
-          TBC, this.source, sk, op_params, false, op_params) 
-        delete op_params.step
-        return result
+        result = await network_client.mixed.makeMinFeeOperation(
+          TBC, this.source, sk, op_params, false, state) 
       }
+
+      return result
     }
     else
       throw `Network client hasn't been set to specific protocol`
@@ -194,7 +192,7 @@ class Signer {
       throw `Network client hasn't been set to specific protocol`
   }
 
-  async methodHandler(op : Object, resolve : Object => void) {
+  async methodHandler(op : Object, resolve : Object => void, state : Object) {
     const method = op.method
     delete op.method
     delete op.tezbridge
@@ -203,7 +201,7 @@ class Signer {
       async create_account() {
         const result = await this.autoSign([Object.assign({}, op, {
           kind: 'origination'
-        })])
+        })], state)
         const inject_result = await this.inject(result)
         resolve({
           operation_id: inject_result,
@@ -214,7 +212,7 @@ class Signer {
       async set_delegate() {
         const result = await this.autoSign([Object.assign({}, op, {
           kind: 'delegation'
-        })])
+        })], state)
         const inject_result = await this.inject(result)
         resolve({
           operation_id: inject_result
@@ -222,7 +220,7 @@ class Signer {
         return inject_result
       },
       async inject_operations()  {
-        const result = await this.autoSign(op.operations)
+        const result = await this.autoSign(op.operations, state)
         const inject_result = await this.inject(result)
         resolve({
           operation_id: inject_result,

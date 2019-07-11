@@ -9,10 +9,16 @@
           <request-desc :op="x" class="op-item" v-for="x in item.op.operations" v-if="item.op.method === 'inject_operations'"></request-desc>
           <request-desc :op="item.op" class="op-item" v-if="item.op.method !== 'inject_operations'"></request-desc>
         </div>
-        <loading v-if="item.processing"></loading>{{item.step}}
+        <div v-if="item.state.step">
+          <loading></loading> 
+          <span>{{item.state.step}}/10</span>
+          <span v-if="signer.ledger.pub_key && new Set([3,7]).has(item.state.step)">
+            {{lang.hardware.check_your_ledger}}
+          </span>
+        </div>
         <div class="element">
-          <button :disabled="item.processing" @click="approveOp(item, index)">{{lang.general.approve}}</button> 
-          <button :disabled="item.processing" @click="rejectOp(item, index)">{{lang.general.reject}}</button>
+          <button :disabled="!!item.state.step" @click="approveOp(item, index)">{{lang.general.approve}}</button> 
+          <button :disabled="!!item.state.step" @click="rejectOp(item, index)">{{lang.general.reject}}</button>
         </div>
       </div>
     </div>
@@ -55,6 +61,7 @@ export default {
   data() {
     return {
       lang,
+      signer,
       network,
       responses: [],
       settings: storage.settings
@@ -62,11 +69,9 @@ export default {
   },
   methods: {
     async approveOp(op_item : Object, index : number) {
-      op_item.processing = true
-
       try {
         const clone = JSON.parse(JSON.stringify(op_item.op))
-        const result_val = await signer.methodHandler(clone, op_item.resolve)
+        const result_val = await signer.methodHandler(clone, op_item.resolve, op_item.state)
         op_item.result = 'approved'
         op_item.result_val = result_val instanceof ProgressEvent ? 'network failed' : result_val
       } catch(e) {
@@ -74,7 +79,7 @@ export default {
         op_item.result = e
       }
 
-      op_item.processing = false
+      op_item.state.step = 0
       this.responses.unshift(this.operations.splice(index, 1)[0])
     },
     rejectOp(op_item : Object, index : number) {

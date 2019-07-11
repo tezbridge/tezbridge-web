@@ -127,7 +127,8 @@ export default {
   },
   hardware: {
     hardware_signer: '硬件签名器',
-    connect_ledger: '连接Ledger'
+    connect_ledger: '连接Ledger',
+    check_your_ledger: '查看你的Ledger'
   },
   tools: {
     home: '首页',

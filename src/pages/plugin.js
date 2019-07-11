@@ -1,7 +1,7 @@
 // @flow
 
 (() => {
-  const host = 'https://192.168.29.155:1234'
+  const host = 'https://dev-vm:1234'
 
   class TezBridge {
     signer : window

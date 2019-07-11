@@ -149,7 +149,9 @@ export default {
     signer.addListener(signer.ask_methods, op => 
       new Promise((resolve, reject) => {
         this.operations.push({
-          processing: false,
+          state: {
+            step: 0
+          },
           op,
           resolve,
           reject
