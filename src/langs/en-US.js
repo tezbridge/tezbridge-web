@@ -125,6 +125,10 @@ export default {
     input_conn_code_signer: 'Input the code from the signer',
     invalid_code: 'invalid code '
   },
+  hardware: {
+    hardware_signer: 'Hardware signer',
+    connect_ledger: 'Connect Ledger'
+  },
   tools: {
     home: 'Home',
     signer: 'Signer',

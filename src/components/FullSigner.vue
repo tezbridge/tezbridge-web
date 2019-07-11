@@ -18,7 +18,7 @@
         <select-manager :managers="managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
-      <tree-node title="Hardware signer" bold>
+      <tree-node :title="lang.hardware.hardware_signer" bold>
         <hardware-signer @ledger_set="ledgerInit"></hardware-signer>
       </tree-node>
 

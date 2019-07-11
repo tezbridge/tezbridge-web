@@ -1,9 +1,9 @@
 <template>
   <div>
     <tree-node title="Ledger" bold>
-      <sm-input class="element" :title="lang.key.derive_path" v-model="derive_path"></sm-input>
       <switcher :data="curve_map" v-model="curve"></switcher>
-      <button @click="connectLedger">Connect Ledger</button>
+      <sm-input class="element" :title="lang.key.derive_path" v-model="derive_path"></sm-input>
+      <button class="element" @click="connectLedger">{{lang.hardware.connect_ledger}}</button>
 
       <div v-if="key">
         <tree-node :title="key.address">

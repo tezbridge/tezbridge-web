@@ -21,10 +21,6 @@ class Signer {
   caller_origin : string
   conn : Connection
 
-  state : {
-    step: number
-  }
-
   constructor() {
     this.is_waiting = false
     this.method_listener = {}
@@ -34,7 +30,6 @@ class Signer {
       'create_account', 'set_delegate', 'set_host'
     ]
     this.ledger = { pub_key: '', sign : async x => x }
-    this.state = { step: 0 }
 
     window.addEventListener('message', async (e) => {
       if (e.source !== window.opener || !e.data.tezbridge) return false
@@ -165,21 +160,27 @@ class Signer {
   }
 
   async autoSign(op_params : Object) {
+    op_params.step = 0
+
     if (network_client) {
       if (this.ledger.pub_key) {
-        return await network_client.mixed.makeMinFeeOperationBase(
+        const result = await network_client.mixed.makeMinFeeOperationBase(
           TBC,
           this.source,
           this.ledger.pub_key,
           this.ledger.sign,
           op_params,
           false,
-          this.state
+          op_params
         )
+        delete op_params.step
+        return result
       } else {
         const sk = await this.box.reveal()
-        return await network_client.mixed.makeMinFeeOperation(
-          TBC, this.source, sk, op_params, false, this.state) 
+        const result = await network_client.mixed.makeMinFeeOperation(
+          TBC, this.source, sk, op_params, false, op_params) 
+        delete op_params.step
+        return result
       }
     }
     else

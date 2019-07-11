@@ -125,6 +125,10 @@ export default {
     input_conn_code_signer: '输入签名器的桥接码',
     invalid_code: '错误的桥接码'
   },
+  hardware: {
+    hardware_signer: '硬件签名器',
+    connect_ledger: '连接Ledger'
+  },
   tools: {
     home: '首页',
     signer: '签名器',
