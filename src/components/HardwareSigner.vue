@@ -78,7 +78,20 @@ export default {
         manager: key.address,
         sign: async bytes => {
           const sig_raw = await xtz.signOperation(this.derive_path, watermark + bytes, curve)
-          return TBC.codec.bs58checkEncode(sig_raw, {
+          const sig_convert = (sig : any) => {
+            const b2 = sig[3]
+            const r_start = b2 === 32 ? 4 : 5
+            const r = sig.slice(r_start, r_start + 32)
+            const b3 = sig[4 + b2 + 1]
+            const s_start = b3 === 32 ? 6 + b2 : 7 + b2
+            const s = sig.slice(s_start, s_start + 32)
+
+            return TBC.codec.bytesConcat(r, s)
+          }
+
+          const result_sig = this.curve === 'ed25519' ? sig_raw : sig_convert(sig_raw)
+
+          return TBC.codec.bs58checkEncode(result_sig, {
             ed25519: TBC.codec.prefix.ed25519_signature,
             secp256k1: TBC.codec.prefix.secp256k1_signature,
             p256: TBC.codec.prefix.p256_signature
