@@ -11,7 +11,7 @@ class Signer {
   source : string
   ledger : {
     pub_key : string,
-    sign : (string => Promise<string>)
+    sign : ((string, Object) => Promise<string>)
   }
   op_queue : Array<{method: string, tezbridge: string, param: Object}>
   ask_methods : Array<string>
@@ -73,7 +73,7 @@ class Signer {
 
   initLocal(box : TBC.crypto.EncryptedBox, source: string) {
     this.ledger = { pub_key: '', sign : async x => x }
-    
+
     this.box = box
     this.source = source
 
@@ -170,7 +170,7 @@ class Signer {
           TBC,
           this.source,
           this.ledger.pub_key,
-          this.ledger.sign,
+          async bytes => await this.ledger.sign(bytes, state),
           op_params,
           false,
           state
@@ -232,7 +232,7 @@ class Signer {
       },
       async raw_sign() {
         const result = this.ledger.pub_key 
-          ? await this.ledger.sign(op.bytes) 
+          ? await this.ledger.sign(op.bytes, state) 
           : TBC.crypto.signOperation(op.bytes, await this.box.reveal())
 
         resolve(result)

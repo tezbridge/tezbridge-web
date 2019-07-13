@@ -51,6 +51,9 @@ import storage from '../libs/storage'
 import { debounce, tz2r } from '../libs/util'
 import { network_client } from '../libs/network'
 
+import { bs58Encode } from '../libs/util'
+
+
 const curve_mapping = {
   ed25519: 0,
   secp256k1: 1,
@@ -134,8 +137,11 @@ export default {
         source: address || this.key.address, 
         pub_key: this.key.getPublicKey(), 
         manager: this.key.address,
-        sign: ((derive_path : string, curve : string) => async bytes => {
-          const sig_raw = await this.ledger_app.signOperation(derive_path, watermark + bytes, curve_mapping[curve])
+        sign: ((derive_path : string, curve : string) => async (bytes : string, state : Object) => {
+          const op_bytes = watermark + bytes
+          state.op_hash = bs58Encode(TBC.crypto.blake2bHash(TBC.codec.fromHex(op_bytes)))
+
+          const sig_raw = await this.ledger_app.signOperation(derive_path, op_bytes, curve_mapping[curve])
           const sig_convert = (sig : any) => {
             const b2 = sig[3]
             const r_start = b2 === 32 ? 4 : 5

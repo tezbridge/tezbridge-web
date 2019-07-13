@@ -28,7 +28,7 @@
     "pako": "^1.0.10",
     "prismjs": "^1.16.0",
     "qrcode": "^1.4.0",
-    "tezbridge-crypto": "^1.0.43",
+    "tezbridge-crypto": "^1.0.44",
     "tezbridge-network": "^1.0.34",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3",

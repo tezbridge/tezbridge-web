@@ -150,6 +150,7 @@ export default {
       new Promise((resolve, reject) => {
         this.operations.push({
           state: {
+            op_hash: '',
             step: 0
           },
           op,

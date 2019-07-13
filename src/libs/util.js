@@ -4,6 +4,12 @@ import basex from 'base-x'
 
 const BASE10 = `0123456789`
 const BASE45 = `0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:`
+const BASE58 = `123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz`
+
+export function bs58Encode(input : Uint8Array) {
+  const bs = basex(BASE58)
+  return bs.encode(Buffer.from(input))
+}
 
 export function bsQREncode(input : Uint8Array) {
   const bs = basex(BASE45)

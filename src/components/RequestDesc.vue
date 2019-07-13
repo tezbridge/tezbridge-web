@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div v-if="op.op_hash !== undefined">
+      <label>{{lang.requests.op_desc.op_hash}}:</label>
+      <div>{{op.op_hash}}</div>
+    </div>
     <div v-if="op.kind !== undefined">
       <label>{{lang.requests.op_desc.kind}}:</label>
       <div>{{op.kind}}</div>

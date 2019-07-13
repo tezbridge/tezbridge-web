@@ -68,6 +68,7 @@ export default {
       inject_operations: '使用最小手续费签名并发送操作到链上'
     },
     op_desc: {
+      op_hash: '操作哈希',
       kind: '类型',
       amount: '金额',
       balance: '余额',

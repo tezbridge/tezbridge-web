@@ -68,6 +68,7 @@ export default {
       inject_operations: 'Sign & inject operations with minimal fee'
     },
     op_desc: {
+      op_hash: 'Operation hash',
       kind: 'Kind',
       amount: 'Amount',
       balance: 'Balance',

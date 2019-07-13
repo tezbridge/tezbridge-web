@@ -12,13 +12,14 @@
         <div v-if="item.state.step">
           <loading></loading> 
           <span>{{item.state.step}}/9</span>
-          <span v-if="signer.ledger.pub_key && item.state.step === 6">
-            {{lang.hardware.check_your_ledger}}
-          </span>
+        </div>
+        <div v-if="item.state.op_hash">
+          <span class="check-your-ledger">{{lang.hardware.check_your_ledger}}</span> 
+          <request-desc :op="item.state" class="op-item"></request-desc>
         </div>
         <div class="element">
-          <button :disabled="!!item.state.step" @click="approveOp(item, index)">{{lang.general.approve}}</button> 
-          <button :disabled="!!item.state.step" @click="rejectOp(item, index)">{{lang.general.reject}}</button>
+          <button :disabled="!!(item.state.step || item.state.op_hash)" @click="approveOp(item, index)">{{lang.general.approve}}</button> 
+          <button :disabled="!!(item.state.step || item.state.op_hash)" @click="rejectOp(item, index)">{{lang.general.reject}}</button>
         </div>
       </div>
     </div>
@@ -108,4 +109,5 @@ div.op-content { margin-bottom: 8px;  font-size: 0.85rem; padding: 4px; padding-
 .rejected { background: #bd1d1d }
 .op-result .failed { background: #bd1d1d }
 .host { display: inline-block; font-size: 0.8rem;  padding: 2px 6px; border-radius: 4px; margin: 4px 0; background: #fffa08 }
+.check-your-ledger {display: inline-block; margin-top: 4px; transform: translateY(1px); padding: 2px 4px; color: white; background: black;}
 </style>
