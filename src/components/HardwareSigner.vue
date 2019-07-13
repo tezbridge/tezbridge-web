@@ -134,8 +134,8 @@ export default {
         source: address || this.key.address, 
         pub_key: this.key.getPublicKey(), 
         manager: this.key.address,
-        sign: async bytes => {
-          const sig_raw = await this.ledger_app.signOperation(this.derive_path, watermark + bytes, curve_mapping[this.curve])
+        sign: ((derive_path : string, curve : string) => async bytes => {
+          const sig_raw = await this.ledger_app.signOperation(derive_path, watermark + bytes, curve_mapping[curve])
           const sig_convert = (sig : any) => {
             const b2 = sig[3]
             const r_start = b2 === 32 ? 4 : 5
@@ -147,14 +147,14 @@ export default {
             return TBC.codec.bytesConcat(r, s)
           }
 
-          const result_sig = this.curve === 'ed25519' ? sig_raw : sig_convert(sig_raw)
+          const result_sig = curve === 'ed25519' ? sig_raw : sig_convert(sig_raw)
 
           return TBC.codec.bs58checkEncode(result_sig, {
             ed25519: TBC.codec.prefix.ed25519_signature,
             secp256k1: TBC.codec.prefix.secp256k1_signature,
             p256: TBC.codec.prefix.p256_signature
-          }[this.curve])
-        }
+          }[curve])
+        })(this.derive_path, this.curve)
       })
     },
     async connectLedger() {

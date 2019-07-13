@@ -11,8 +11,8 @@
         </div>
         <div v-if="item.state.step">
           <loading></loading> 
-          <span>{{item.state.step}}/10</span>
-          <span v-if="signer.ledger.pub_key && new Set([3,7]).has(item.state.step)">
+          <span>{{item.state.step}}/9</span>
+          <span v-if="signer.ledger.pub_key && item.state.step === 6">
             {{lang.hardware.check_your_ledger}}
           </span>
         </div>

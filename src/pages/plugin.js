@@ -2,6 +2,7 @@
 
 (() => {
   const host = 'https://www.tezbridge.com'
+  // const host = 'https://dev-vm:1234'
 
   class TezBridge {
     signer : window

@@ -72,6 +72,8 @@ class Signer {
   }
 
   initLocal(box : TBC.crypto.EncryptedBox, source: string) {
+    this.ledger = { pub_key: '', sign : async x => x }
+    
     this.box = box
     this.source = source
 
