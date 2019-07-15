@@ -61,10 +61,10 @@ export default {
     methods: {
       get_source: 'Get source address',
       set_host: 'Set RPC host',
-      create_account: 'Create KT1 account',
       set_delegate: 'Set delegate for KT1 account',
       raw_sign: 'Sign operation bytes',
       raw_inject: 'Inject signed operation bytes',
+      create_account: 'Create KT1 account',
       inject_operations: 'Sign & inject operations with minimal fee'
     },
     op_desc: {

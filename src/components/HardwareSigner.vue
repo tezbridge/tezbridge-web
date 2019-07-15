@@ -164,6 +164,10 @@ export default {
       })
     },
     async connectLedger() {
+      this.key = null
+      this.manager_info = {}
+      this.contracts = {}
+
       const transport = await LedgerTransport.create()
       this.ledger_app = new LedgerTezos(transport)
       const result = await this.ledger_app.getAddress(this.derive_path, true, curve_mapping[this.curve])

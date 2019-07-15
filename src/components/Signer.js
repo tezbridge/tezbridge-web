@@ -27,7 +27,7 @@ class Signer {
     this.op_queue = []
     this.ask_methods = [
       'raw_sign', 'raw_inject', 'inject_operations',
-      'create_account', 'set_delegate', 'set_host'
+      'set_delegate', 'set_host'
     ]
     this.ledger = { pub_key: '', sign : async x => x }
 
@@ -200,17 +200,6 @@ class Signer {
     delete op.tezbridge
     
     const handler_mapping = {
-      async create_account() {
-        const result = await this.autoSign([Object.assign({}, op, {
-          kind: 'origination'
-        })], state)
-        const inject_result = await this.inject(result)
-        resolve({
-          operation_id: inject_result,
-          originated_contracts: result.originated_contracts
-        })
-        return inject_result
-      },
       async set_delegate() {
         const result = await this.autoSign([Object.assign({}, op, {
           kind: 'delegation'

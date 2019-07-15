@@ -61,10 +61,10 @@ export default {
     methods: {
       get_source: '获取当前账号',
       set_host: '设置RPC远程主机',
-      create_account: '创建从属账号',
       set_delegate: '为从属账号设置委托',
       raw_sign: '给操作字节信息签名',
       raw_inject: '发送已签名的操作字节信息到链上',
+      create_account: '创建从属账号',
       inject_operations: '使用最小手续费签名并发送操作到链上'
     },
     op_desc: {

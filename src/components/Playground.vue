@@ -43,13 +43,6 @@ export default {
 .then(address => output(address))
 .catch(err => output(err))
 `,
-        create_account: 
-`tezbridge.request({
-  method: 'create_account'
-})
-.then(result => output(result))
-.catch(err => output(err))
-`,
         set_delegate:
 `tezbridge.request({
   method: 'set_delegate',
@@ -74,6 +67,21 @@ export default {
 .then(result => output(result))
 .catch(err => output(err))
 `, 
+        create_account: 
+`tezbridge.request({
+  method: 'inject_operations',
+  operations: [
+    {
+      kind: 'origination',
+      balance: '5',
+      spendable: true,
+      delegatable: true
+    }
+  ]
+})
+.then(result => output(result))
+.catch(err => output(err))
+`,
         inject_operations:
 `tezbridge.request({
   method: 'inject_operations',
