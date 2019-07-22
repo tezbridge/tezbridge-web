@@ -5,7 +5,7 @@
     <sm-input v-if="pwd_required" class="element" :title="lang.general.password" kind="password" v-model="password"></sm-input>
     <div v-if="pwd_required && !result_key" class="error">{{lang.general.pwd_incorrect}}</div>
 
-    <sm-input v-if="derive_possible" placeholder="m/44'/1729'/0'/0'|tz2" class="element" :title="lang.key.derive_path" v-model="derive_path"></sm-input>
+    <!-- <sm-input v-if="derive_possible" placeholder="m/44'/1729'/0'/0'|tz2" class="element" :title="lang.key.derive_path" v-model="derive_path"></sm-input> -->
         
     <record v-if="result_key" :data="{[lang.key.pkh]: result_key.address}"></record>
     
@@ -148,18 +148,19 @@ export default {
         tz3: 'p256'
       }
 
-      let key
-      try {
-        const [path, prefix] = path_prefix.split('|')
-        this.result_key = TBC.crypto.deriveKeyFromWords(
-          this.user_key,
-          this.password,
-          path,
-          scheme_mapping[prefix]
-        )
-      } catch (e) {
-        this.result_key = TBC.crypto.getKeyFromWords(this.user_key, this.password)
-      }
+      this.result_key = TBC.crypto.getKeyFromWords(this.user_key, this.password)
+      // Warning: No need to use this until the SLIP-0010 is finished
+      // try {
+      //   const [path, prefix] = path_prefix.split('|')
+      //   this.result_key = TBC.crypto.deriveKeyFromWords(
+      //     this.user_key,
+      //     this.password,
+      //     path,
+      //     scheme_mapping[prefix]
+      //   )
+      // } catch (e) {
+      //   this.result_key = TBC.crypto.getKeyFromWords(this.user_key, this.password)
+      // }
     },
     async activateAccount() {
       if (this.key_type !== 'faucet')          
