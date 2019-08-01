@@ -1,4 +1,4 @@
-NODE_ENV=browser \
+BROWSER_OPT=true \
 parcel \
   src/pages/index.html \
   src/pages/playground.html \
