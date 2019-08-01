@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      {{lang.general.version}}: 2.2.4
+      {{lang.general.version}}: {{ version }}
     </div>
   </div>
 </template>
@@ -11,9 +11,12 @@
 
 import lang from '../langs'
 
+import { version } from '../../package.json'
+
 export default {
   data() {
     return {
+      version,
       lang
     }
   }
