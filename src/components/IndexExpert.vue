@@ -31,13 +31,9 @@
       <tree-node :title="lang.menu.error_logs" bold :change="errors">
         <errors></errors>
       </tree-node>
-
-      <tree-node :title="lang.menu.about" bold>
-        <about></about>
-      </tree-node>
       
       <div class="copyright">
-        <span>© 2018-2019</span> <span class="logo">TezBridge</span> 
+        <span>© 2018-2019</span> <span class="logo">TezBridge</span> <span>v{{version}}</span>
       </div>
     </nav>
 
@@ -61,6 +57,8 @@ import storage from '../libs/storage'
 import { loadProtocolJS } from '../libs/network'
 import * as network from '../libs/network'
 
+import { version } from '../../package.json'
+
 export default {
   components: {
     TreeNode,
@@ -74,6 +72,7 @@ export default {
   data() {
     return {
       lang,
+      version,
       protocol_js_loaded: false,
       errors: window.errors,
       network,

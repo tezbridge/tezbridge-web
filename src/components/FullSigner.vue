@@ -44,7 +44,7 @@
       </tree-node>
       
       <div class="copyright">
-        <span>© 2018-2019</span> <span class="logo">TezBridge</span> 
+        <span>© 2018-2019</span> <span class="logo">TezBridge</span> <span>v{{version}}</span>
       </div>
     </nav>
   </div>
@@ -76,6 +76,8 @@ import storage from '../libs/storage'
 import { loadProtocolJS } from '../libs/network'
 import * as network from '../libs/network'
 
+import { version } from '../../package.json'
+
 export default {
   components: {
     TreeNode,
@@ -93,6 +95,7 @@ export default {
   data() {
     return {
       lang,
+      version,
       errors: window.errors,
       protocol_js_loaded: false,
       network,
