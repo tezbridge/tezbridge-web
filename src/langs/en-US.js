@@ -46,6 +46,7 @@ export default {
     remote_bridging: 'Remote bridging',
     temp_signer: 'Temporary signer',
 
+    choose_signer: 'Choose signer'
   },
   import_key: {
     manager_name: 'Manager name',

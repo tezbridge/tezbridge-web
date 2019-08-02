@@ -46,6 +46,7 @@ export default {
     remote_bridging: '远程桥接',
     temp_signer: '临时签名账户',
 
+    choose_signer: '选择签名器'
   },
   import_key: {
     manager_name: '账户名字',

@@ -6,50 +6,43 @@
       <loading></loading>
     </div>
     <nav class="link-tree" v-else>
-      <tree-node :title="lang.menu.dapp_requests" :change="operations" :change1="curr_signer" bold>
-        <record :data="curr_signer"></record>
-        <requests :operations="operations"></requests>
-      </tree-node>
-
-      <tree-node :title="lang.menu.local_managers" bold>
-        <tree-node :title="lang.menu.import_key" bold>
-          <import-key></import-key>
+      <transition name="fade">
+        <tree-node v-show="step === 'ready'" :title="lang.menu.dapp_requests" :change="operations" :change1="curr_signer" bold>
+          <record :data="curr_signer"></record>
+          <requests :operations="operations"></requests>
+          <button @click="step = 'selecting'">{{lang.general.back}}</button>
         </tree-node>
-        <select-manager :managers="managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
-      </tree-node>
+      </transition>
 
-      <tree-node :title="lang.hardware.hardware_signer" bold>
-        <hardware-signer @ledger_set="ledgerInit"></hardware-signer>
-      </tree-node>
+      <transition name="fade">
+        <tree-node v-show="step === 'selecting'" :title="lang.menu.choose_signer" bold>
+          <tree-node :title="lang.menu.local_managers" bold>
+            <tree-node :title="lang.menu.import_key" bold>
+              <import-key></import-key>
+            </tree-node>
+            <select-manager :managers="managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
+          </tree-node>
 
-      <tree-node :title="lang.menu.remote_bridging" bold>
+          <tree-node :title="lang.hardware.hardware_signer" bold>
+            <hardware-signer @ledger_set="ledgerInit"></hardware-signer>
+          </tree-node>
+
+          <tree-node :title="lang.menu.temp_signer" bold>
+            <import-key :is_temp="true" @temp_manager_confirmed="addTempManager"></import-key>
+            <select-manager :managers="temp_managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
+          </tree-node>
+        </tree-node>
+      </transition>
+      
+      <tree-node v-show="step === 'selecting'" :title="lang.menu.remote_bridging" bold>
         <simple-bridging v-if="settings.bridging_mode === 'simple'"></simple-bridging>
         <remote-bridging v-else></remote-bridging>
-      </tree-node>
-
-      <tree-node :title="lang.menu.temp_signer" bold>
-        <import-key :is_temp="true" @temp_manager_confirmed="addTempManager"></import-key>
-        <select-manager :managers="temp_managers" @signer_set="localSignerInit" :is_signer="true"></select-manager>
       </tree-node>
 
       <tree-node :title="lang.menu.settings" bold>
         <settings></settings>
       </tree-node>
       
-      <tree-node :title="lang.menu.tools" bold>
-        <a class="link" :href="'/index.html'">{{lang.tools.home}}</a>
-        <a class="link" :href="'/playground.html'">{{lang.tools.playground}}</a>
-        <a class="link" :href="'/legacy/index.html'">{{lang.tools.legacy}}</a>
-      </tree-node>
-
-      <tree-node :title="lang.menu.error_logs" bold :change="errors">
-        <errors></errors>
-      </tree-node>
-
-      <tree-node :title="lang.menu.about" bold>
-        <about></about>
-      </tree-node>
-
       <div class="copyright">
         <span>© 2018-2019</span> <span class="logo">TezBridge</span> 
       </div>
@@ -110,7 +103,8 @@ export default {
         [lang.signer.manager]: undefined,
         [lang.signer.source]: undefined
       },
-      operations: []
+      operations: [],
+      step: 'selecting'    // selecting || ready
     }
   },
   methods: {
@@ -130,6 +124,7 @@ export default {
         [lang.signer.manager]: key.address,
         [lang.signer.source]: source
       } 
+      this.step = 'ready'
     },
     async ledgerInit(
         {source, pub_key, manager, sign} : 
@@ -139,7 +134,8 @@ export default {
       this.curr_signer = {
         [lang.signer.manager]: manager,
         [lang.signer.source]: source
-      } 
+      }
+      this.step = 'ready'
     }
   },
   async mounted() {
@@ -171,4 +167,20 @@ export default {
 a.link { margin: 4px 0; display: block; color: #555;}
 a.link:visited {color: #555;}
 a.link:active {color: #555;}
+
+.link-tree {position: relative;}
+
+.fade-enter {
+  transform: translate(16px, 0);
+  opacity: 0;
+}
+.fade-leave-to {
+  transform: translate(16px, 0);
+  opacity: 0;
+}
+.fade-leave, .fade-leave-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 </style>
