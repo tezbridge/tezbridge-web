@@ -28,14 +28,17 @@ export async function loadProtocolJS(host? : string) {
   }
   
   const eval_protocol = async () => {
-    const js_resp = await window.fetch(`${location.origin}/protocols/${protocol || ''}.js`, {signal: ctrler.signal})
-    const js_content = await js_resp.text()
-    if (!js_content) {
+    try {
+      const js_resp = await window.fetch(`${location.origin}/protocols/${protocol || ''}.js`, {signal: ctrler.signal})
+      const js_content = await js_resp.text()
+      if (!js_content)
+        throw 'fail to fetch protocol'
+
+      window.eval(js_content)
+    } catch (e) {
       protocol = default_protocol
       fallback = true
       await eval_protocol()
-    } else {
-      window.eval(js_content)
     }
   }
   await eval_protocol()
