@@ -7,6 +7,7 @@ export let protocol = null
 
 let ctrler = new AbortController()
 
+const default_protocol = 'Pt24m4xi'
 export async function loadProtocolJS(host? : string) {
   host = host || storage.settings.host
 
@@ -16,25 +17,34 @@ export async function loadProtocolJS(host? : string) {
   ctrler.abort()
   ctrler = new AbortController()
 
-  let result = true
+  let fallback = false
   try {
     const resp = await window.fetch(host + '/chains/main/blocks/head/header', {signal: ctrler.signal})
     const result = await resp.json()
     protocol = result.protocol.slice(0, 8)
-  } catch {
-    protocol = 'Pt24m4xi'
-    result = false
+  } catch (e) {
+    protocol = default_protocol
+    fallback = true
   }
   
-  const js_resp = await window.fetch(`${location.origin}/protocols/${protocol}.js`, {signal: ctrler.signal})
-  const js_content = await js_resp.text()
-  window.eval(js_content)
+  const eval_protocol = async () => {
+    const js_resp = await window.fetch(`${location.origin}/protocols/${protocol || ''}.js`, {signal: ctrler.signal})
+    const js_content = await js_resp.text()
+    if (!js_content) {
+      protocol = default_protocol
+      fallback = true
+      await eval_protocol()
+    } else {
+      window.eval(js_content)
+    }
+  }
+  await eval_protocol()
 
   network_client = new window.TBN({
     host
   })
 
-  return result
+  return !fallback
 }
 
 export default {
