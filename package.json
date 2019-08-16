@@ -6,7 +6,7 @@
   "scripts": {
     "flow": "flow",
     "dev": "./dev.sh",
-    "test": "flow && parcel build test/index.js --target node -o test.js && node dist/test.js",
+    "test": "./test.sh",
     "build": "./build.sh"
   },
   "repository": {
