@@ -26,7 +26,7 @@
     <tree-node :title="lang.general.responses" :change="responses">
       <div v-for="item in responses">
         <div class="result-title">{{lang.requests.operation}}: {{item.op.tezbridge}}</div>
-        <div class="op-content">
+        <div class="op-content selectable">
           {{lang.requests.methods[item.op.method]}}
           <request-desc :op="x" class="op-item" v-for="x in item.op.operations" v-if="item.op.method === 'inject_operations'"></request-desc>
           <request-desc :op="item.op" class="op-item" v-if="item.op.method !== 'inject_operations'"></request-desc>
