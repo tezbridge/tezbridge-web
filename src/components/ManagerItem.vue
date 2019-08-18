@@ -106,7 +106,10 @@ export default {
       }
       this.loading.manager = false
 
-      const net_type = storage.settings.host.indexOf('alphanet') > -1 ? 'alphanet' : 'mainnet'
+      const net_type = storage.settings.host.indexOf('alphanet') > -1 ? 
+        'alphanet' : 
+        storage.settings.host.indexOf('zeronet') > -1 ? 'zeronet' : 'mainnet'
+        
       const contract_lst = await network_client.external.originated_contracts(this.address, false, net_type)
       const contracts = {}
       const loading_contract_item = {}

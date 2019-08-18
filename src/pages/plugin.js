@@ -4,11 +4,18 @@
   const host = 'https://www.tezbridge.com'
   // const host = 'https://dev-vm:1234'
 
+  const arg_templates = {
+    transfer2tz(address : string, amount : string) {
+      return [{"prim":"NIL","args":[{"prim":"operation"}]},{"prim":"PUSH","args":[{"prim":"key_hash"},{"string":address}]},{"prim":"IMPLICIT_ACCOUNT"},{"prim":"PUSH","args":[{"prim":"mutez"},{"int":amount + ''}]},{"prim":"UNIT"},{"prim":"TRANSFER_TOKENS"},{"prim":"CONS"},{"prim":"DIP","args":[[{"prim":"DROP"}]]}]
+    }
+  }
+
   class TezBridge {
     signer : window
     rejects : {[number] : ( ..._ : any) => any}
     resolves : {[number] : ( ..._ : any) => any}
     txid: number
+    templates : Object
 
     mode : string
     constructor() {
@@ -16,7 +23,8 @@
       this.resolves = {}
       this.txid = 0
       this.mode = 'local'
-
+      this.templates = arg_templates
+      
       window.addEventListener('message', e => {
         if (e.source !== this.signer ||
             !e.data.tezbridge) return false

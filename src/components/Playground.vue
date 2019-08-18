@@ -73,9 +73,7 @@ export default {
   operations: [
     {
       kind: 'origination',
-      balance: '5',
-      spendable: true,
-      delegatable: true
+      balance: '5'
     }
   ]
 })
@@ -94,8 +92,6 @@ export default {
     {
       kind: 'origination',
       balance: '5',
-      spendable: false,
-      delegatable: false,
       script: {
         code: [{"prim":"parameter","args":[{"prim":"contract","args":[{"prim":"unit"}],"annots":[":X"]}]},{"prim":"storage","args":[{"prim":"unit"}]},{"prim":"code","args":[[{"prim":"CDR","annots":["@storage_slash_1"]},{"prim":"NIL","args":[{"prim":"operation"}]},{"prim":"PAIR"}]]}],
         storage: {"prim":"Unit"}
