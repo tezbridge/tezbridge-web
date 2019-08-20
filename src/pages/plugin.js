@@ -5,11 +5,8 @@
   // const host = 'https://dev-vm:1234'
 
   const arg_templates = {
-    KT1_to_tz(address : string, amount : string) {
-      return [{"prim":"NIL","args":[{"prim":"operation"}]},{"prim":"PUSH","args":[{"prim":"key_hash"},{"string":address}]},{"prim":"IMPLICIT_ACCOUNT"},{"prim":"PUSH","args":[{"prim":"mutez"},{"int":amount + ''}]},{"prim":"UNIT"},{"prim":"TRANSFER_TOKENS"},{"prim":"CONS"},{"prim":"DIP","args":[[{"prim":"DROP"}]]}]
-    },
-    KT1_to_KT1(address : string, amount : string) {
-      return [{"prim":"NIL","args":[{"prim":"operation"}]},{"prim":"PUSH","args":[{"prim":"contract","args":[{"prim":"or","args":[{"prim":"lambda","args":[{"prim":"unit"},{"prim":"list","args":[{"prim":"operation"}]}],"annots":["%do"]},{"prim":"unit","annots":["%default"]}]}]},{"string":address}]},{"prim":"PUSH","args":[{"prim":"mutez"},{"int":amount+''}]},{"prim":"UNIT"},{"prim":"RIGHT","args":[{"prim":"lambda","args":[{"prim":"unit"},{"prim":"list","args":[{"prim":"operation"}]}]}]},{"prim":"TRANSFER_TOKENS"},{"prim":"CONS"},{"prim":"DIP","args":[[{"prim":"DROP"}]]}]
+    KT1_to_default(address : string, amount : string) {
+      return [{"prim":"PUSH","args":[{"prim":"address"},{"string":address}]},{"prim":"CONTRACT","args":[{"prim":"unit"}]},{"prim":"IF_NONE","args":[[{"prim":"PUSH","args":[{"prim":"string"},{"string":"no %default entrypoint"}]},{"prim":"FAILWITH"}],[{"prim":"NIL","args":[{"prim":"operation"}]},[{"prim":"DIP","args":[[{"prim":"DUP"}]]},{"prim":"SWAP"}],{"prim":"PUSH","args":[{"prim":"mutez"},{"int":amount+''}]},{"prim":"UNIT"},{"prim":"TRANSFER_TOKENS"},{"prim":"CONS"},{"prim":"DIP","args":[[{"prim":"DROP"}]]}]]},{"prim":"DIP","args":[[{"prim":"DROP"}]]}]
     }
   }
 
