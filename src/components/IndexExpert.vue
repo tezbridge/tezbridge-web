@@ -24,7 +24,7 @@
 
       <tree-node :title="lang.menu.tools" bold>
         <a class="link" :href="'/index.html?signer'">{{lang.tools.signer}}</a>
-        <a class="link" :href="'/playground.html'">{{lang.tools.playground}}</a>
+        <a class="link" href="https://docs.tezbridge.com/playground.html">{{lang.tools.playground}}</a>
         <a class="link" :href="'/legacy/index.html'">{{lang.tools.legacy}}</a>
       </tree-node>
       
