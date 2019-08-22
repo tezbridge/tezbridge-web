@@ -11,4 +11,5 @@ parcel build \
   --no-source-maps --out-dir docs
 
 cp src/CNAME docs/
+cp src/.nojekyll docs/
 cp -r src/pages/legacy docs/
