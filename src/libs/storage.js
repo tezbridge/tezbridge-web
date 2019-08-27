@@ -47,6 +47,15 @@ class Storage {
 
     if (!this.settings.bridging_mode)
       this.settings.bridging_mode = 'simple'
+
+    if (!this.settings.verif_mark) 
+      this.settings.verif_mark = Array.from(
+        window.crypto.getRandomValues(new Uint8Array(32))
+      )
+      .map(x => x.toString(16).padStart(2, '0'))
+      .join('')
+      
+    this.saveSettings()
   }
 
   setReadyManager(box : TBC.crypto.EncryptedBox, name : string, source : string) {

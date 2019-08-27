@@ -6,6 +6,7 @@
       <loading></loading>
     </div>
     <nav class="link-tree" v-else>
+
       <transition name="fade">
         <tree-node v-show="step === 'ready'" :title="lang.menu.dapp_requests" :change="operations" :change1="curr_signer" bold>
           <record :data="curr_signer"></record>
@@ -44,7 +45,10 @@
       </tree-node>
       
       <div class="copyright">
-        <span>© 2018-2019</span> <span class="logo">TezBridge</span> <span>v{{version}}</span>
+        <span>© 2018-2019</span> 
+        <span class="logo">TezBridge</span> 
+        <verif-mark></verif-mark>
+        <span>v{{version}}</span>
       </div>
     </nav>
   </div>
@@ -66,6 +70,7 @@ import Requests from './Requests'
 import Record from './Record'
 import About from './About'
 import HardwareSigner from './HardwareSigner'
+import VerifMark from './VerifMark'
 
 import RemoteBridging from './RemoteBridging'
 import SimpleBridging from './SimpleBridging'
@@ -90,7 +95,8 @@ export default {
     Requests,
     Record,
     Settings,
-    About
+    About,
+    VerifMark
   },
   data() {
     return {

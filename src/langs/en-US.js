@@ -10,6 +10,7 @@ export default {
     pwd_incorrect: 'password incorrect',
     optional: 'optional',
     refresh: 'Refresh',
+    change: 'Change',
     important: 'important',
     address: 'address',
     version: 'Version',
@@ -102,6 +103,7 @@ export default {
     host: 'Host',
     language: 'Language',
     briding_mode: 'Bridging mode',
+    verif_mark: 'Verification mark',
     invalid_host: 'invalid host'
   },
   remote: {

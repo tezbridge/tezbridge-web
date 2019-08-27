@@ -10,6 +10,7 @@ export default {
     pwd_incorrect: '密码不正确',
     optional: '可选',
     refresh: '刷新',
+    change: '更改',
     important: '重要',
     address: '地址',
     version: '版本',
@@ -102,6 +103,7 @@ export default {
     host: '远程主机',
     language: '语言',
     briding_mode: '桥接模式',
+    verif_mark: '验证记号',
     invalid_host: '无效主机'
   },
   remote: {

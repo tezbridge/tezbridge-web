@@ -18,10 +18,6 @@
         <select-manager :managers="managers"></select-manager>
       </tree-node>
 
-      <tree-node :title="lang.menu.settings" bold>
-        <settings></settings>
-      </tree-node>
-
       <tree-node :title="lang.menu.tools" bold>
         <a class="link" :href="'/index.html?signer'">{{lang.tools.signer}}</a>
         <a class="link" href="https://docs.tezbridge.com/playground.html">{{lang.tools.playground}}</a>
@@ -32,8 +28,15 @@
         <errors></errors>
       </tree-node>
       
+      <tree-node :title="lang.menu.settings" bold>
+        <settings></settings>
+      </tree-node>
+      
       <div class="copyright">
-        <span>© 2018-2019</span> <span class="logo">TezBridge</span> <span>v{{version}}</span>
+        <span>© 2018-2019</span> 
+        <span class="logo">TezBridge</span> 
+        <verif-mark></verif-mark>
+        <span>v{{version}}</span>
       </div>
     </nav>
 
@@ -52,6 +55,7 @@ import SelectManager from './SelectManager'
 import Settings from './Settings'
 import Errors from './Errors'
 import About from './About'
+import VerifMark from './VerifMark'
 
 import storage from '../libs/storage'
 import { loadProtocolJS } from '../libs/network'
@@ -67,7 +71,8 @@ export default {
     SelectManager,
     Settings,
     Errors,
-    About
+    About,
+    VerifMark
   },
   data() {
     return {
