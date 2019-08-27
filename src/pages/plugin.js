@@ -26,8 +26,8 @@
       this.templates = arg_templates
 
       window.addEventListener('message', e => {
-        if (e.source !== this.signer ||
-            !e.data.tezbridge) return false
+        if (e.source !== this.signer || !e.data.tezbridge) 
+          return false
 
         if (e.data.mode) {
           this.mode = e.data.mode
