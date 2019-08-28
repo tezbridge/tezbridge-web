@@ -103,7 +103,7 @@ export default {
     host: 'Host',
     language: 'Language',
     briding_mode: 'Bridging mode',
-    verif_mark: 'Verification mark',
+    ident_mark: 'Identification mark',
     invalid_host: 'invalid host'
   },
   remote: {

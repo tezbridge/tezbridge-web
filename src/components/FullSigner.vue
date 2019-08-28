@@ -47,7 +47,7 @@
       <div class="copyright">
         <span>© 2018-2019</span> 
         <a href="/index.html" class="logo">TezBridge</a> 
-        <verif-mark></verif-mark>
+        <ident-mark></ident-mark>
         <span>v{{version}}</span>
       </div>
     </nav>
@@ -70,7 +70,7 @@ import Requests from './Requests'
 import Record from './Record'
 import About from './About'
 import HardwareSigner from './HardwareSigner'
-import VerifMark from './VerifMark'
+import IdentMark from './IdentMark'
 
 import RemoteBridging from './RemoteBridging'
 import SimpleBridging from './SimpleBridging'
@@ -96,7 +96,7 @@ export default {
     Record,
     Settings,
     About,
-    VerifMark
+    IdentMark
   },
   data() {
     return {

@@ -35,7 +35,7 @@
       <div class="copyright">
         <span>© 2018-2019</span> 
         <a href="/index.html" class="logo">TezBridge</a> 
-        <verif-mark></verif-mark>
+        <ident-mark></ident-mark>
         <span>v{{version}}</span>
       </div>
     </nav>
@@ -55,7 +55,7 @@ import SelectManager from './SelectManager'
 import Settings from './Settings'
 import Errors from './Errors'
 import About from './About'
-import VerifMark from './VerifMark'
+import IdentMark from './IdentMark'
 
 import storage from '../libs/storage'
 import { loadProtocolJS } from '../libs/network'
@@ -72,7 +72,7 @@ export default {
     Settings,
     Errors,
     About,
-    VerifMark
+    IdentMark
   },
   data() {
     return {

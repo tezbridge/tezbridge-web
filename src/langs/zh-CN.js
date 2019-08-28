@@ -103,7 +103,7 @@ export default {
     host: '远程主机',
     language: '语言',
     briding_mode: '桥接模式',
-    verif_mark: '验证记号',
+    ident_mark: '识别记号',
     invalid_host: '无效主机'
   },
   remote: {

@@ -10,8 +10,8 @@
       <sm-input :title="lang.settings.host" v-model="settings.host"></sm-input>
       <div v-if="host_error" class="error">{{lang.settings.invalid_host}}</div>
     </div>
-    <tree-node :title="lang.settings.verif_mark">
-      <button @click="changeVerifMark">{{lang.general.change}}</button>
+    <tree-node :title="lang.settings.ident_mark">
+      <button @click="changeIdentMark">{{lang.general.change}}</button>
     </tree-node>
   </div>
 </template>
@@ -77,8 +77,8 @@ export default {
     })
   },
   methods: {
-    changeVerifMark() {
-      this.settings.verif_mark = TBC.codec.toHex(TBC.crypto.genRandomBytes(32))
+    changeIdentMark() {
+      this.settings.ident_mark = TBC.codec.toHex(TBC.crypto.genRandomBytes(32))
       storage.saveSettings()
     }
   }

@@ -24,13 +24,13 @@ export default {
     this.bar = this.genColor()
   },
   watch: {
-    'settings.verif_mark'() {
+    'settings.ident_mark'() {
       this.bar = this.genColor()
     }
   },
   methods: {
     genColor() : Array<Object> {
-      const raw = TBC.codec.fromHex(storage.settings.verif_mark)
+      const raw = TBC.codec.fromHex(storage.settings.ident_mark)
 
       const value = blake.blake2b(raw, null, 18)
       const h1 = parseInt(value[0] * 1.4)
