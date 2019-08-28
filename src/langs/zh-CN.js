@@ -1,5 +1,9 @@
 export default {
   _: 'zh_CN',
+  help: {
+    ident_mark: `显示在LOGO旁边的识别记号是用来防止假的TezBridge进行钓鱼攻击的。
+                |当一个DApp打开TezBridge的时候，你应该注意到一个之前生成的熟悉的识别记号。否则，它可能就是一个假网站。`
+  },
   general: {
     confirm: '确认',
     remove: '删除',

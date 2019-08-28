@@ -1,5 +1,11 @@
 export default {
   _: 'en_US',
+  help: {
+    ident_mark: `The identification mark displayed beside the logo 
+                 is used to prevent phishing attack though a fake TezBridge site.
+                 |When a DApp opens the TezBridge website, you should notice a familar
+                 identification mark generated before. Otherwise, it might be a fraud TezBridge.`
+  },
   general: {
     confirm: 'Confirm',
     remove: 'Remove',

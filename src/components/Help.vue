@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     showContent() {
-      alert(this.content)
+      window.alert(this.content.replace(/\s+/g, ' ').replace(/\|/g, '\n'))
     }
   }
 }

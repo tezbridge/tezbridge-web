@@ -10,7 +10,7 @@
       <sm-input :title="lang.settings.host" v-model="settings.host"></sm-input>
       <div v-if="host_error" class="error">{{lang.settings.invalid_host}}</div>
     </div>
-    <tree-node :title="lang.settings.ident_mark">
+    <tree-node :title="lang.settings.ident_mark" :help="lang.help.ident_mark">
       <button @click="changeIdentMark">{{lang.general.change}}</button>
     </tree-node>
   </div>
