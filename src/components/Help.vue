@@ -1,0 +1,28 @@
+<template>
+  <div class="help-wrapper" @click.stop="showContent">
+    <div class="icon">?</div>
+  </div>
+</template>
+
+<script>
+// @flow
+
+export default {
+  props: ['content'],
+  data() {
+    return {
+    }
+  },
+  methods: {
+    showContent() {
+      alert(this.content)
+    }
+  }
+}
+</script>
+
+<style scoped>
+.help-wrapper {position: relative; text-align: center; background: #eee;  display: inline-block; font-weight: 400; font-size: 0.6rem;  padding: 1px 4px; border-radius: 4px;}
+.help-wrapper:hover {background: #bbb}
+.icon {color: white; line-height: 0.6rem;}
+</style>

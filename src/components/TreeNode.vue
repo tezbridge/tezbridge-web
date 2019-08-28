@@ -2,6 +2,7 @@
   <div :class="{wrapper: true}">
     <div :class="{title: true, bold}" @click="titleClick">
       <icon icon="angle-right" size="sm" :class="{mark: true, changed: !!changed, rotated: is_open || keep_opening}"></icon><span>{{title}}</span>
+      <help v-if="help" :content="help"></help>
     </div>
     <div class="content" v-show="is_open || keep_opening" v-if="!hard_close || (hard_close && is_open)">
       <slot></slot>
@@ -12,7 +13,12 @@
 <script>
 // @flow
 
+import Help from './Help'
+
 export default {
+  components: {
+    Help
+  },
   props: {
     title: String,
     keep_opening: {
@@ -28,6 +34,10 @@ export default {
     hard_close: {
       type: Boolean,
       default: false
+    },
+    help: {
+      type: String,
+      default: ''
     }
   },
   data() {
