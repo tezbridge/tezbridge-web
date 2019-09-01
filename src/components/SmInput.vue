@@ -4,6 +4,7 @@
       <span>{{title}}</span>
       <span v-if="optional && !value">({{lang.general.optional}})</span>
       <span v-if="important && value" class="important">({{lang.general.important}})</span>
+      <help v-if="help" :content="help"></help>
     </div>
     <input class="selectable" :disabled="disabled" :placeholder="placeholder" :type="kind || 'text'" @paste="e => $emit('paste', e)" @input="e => $emit('input', e.target.value)" :value="value"/>
   </div>
@@ -12,9 +13,13 @@
 <script>
 // @flow
 
+import Help from './Help'
 import lang from '../langs'
 
 export default {
+  components: {
+    Help
+  },
   props: {
     placeholder: String,
     title: String,
@@ -22,7 +27,8 @@ export default {
     value: String,
     kind: String,
     disabled: Boolean,
-    optional: Boolean
+    optional: Boolean,
+    help: String
   },
   data() {
     return {

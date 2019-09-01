@@ -3,7 +3,7 @@
     <tree-node :title="lang.settings.language">
       <switcher :data="lang_lst" v-model="curr_lang"></switcher>
     </tree-node>
-    <tree-node :title="lang.settings.briding_mode">
+    <tree-node :title="lang.settings.briding_mode" :help="lang.help.bridging_mode">
       <switcher :data="bridging_lst" v-model="settings.bridging_mode"></switcher>
     </tree-node>
     <div>

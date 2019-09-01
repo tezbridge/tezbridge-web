@@ -1,18 +1,18 @@
 <template>
   <div>
-    <tree-node :title="lang.menu.mnemonic" hard_close>
+    <tree-node :title="lang.menu.mnemonic" hard_close :help="lang.help.mnemonic">
       <mnemonic></mnemonic>
     </tree-node>
 
-    <tree-node title="Ed25519" hard_close>
+    <tree-node title="Ed25519" hard_close :help="lang.help.ed25519">
       <ed25519></ed25519>
     </tree-node>
 
-    <tree-node title="Secp256k1" hard_close>
+    <tree-node title="Secp256k1" hard_close :help="lang.help.secp256k1">
       <secp256k1></secp256k1>
     </tree-node>
 
-    <tree-node title="P256" hard_close>
+    <tree-node title="P256" hard_close :help="lang.help.p256">
       <p256></p256>
     </tree-node>
 

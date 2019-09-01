@@ -1,8 +1,8 @@
 <template>
   <div>
-    <sm-input class="element" :title="lang.key.bits_of_entropy" v-model="bits"></sm-input>
+    <sm-input class="element" :title="lang.key.bits_of_entropy" v-model="bits" :help="lang.help.bits_of_entropy"></sm-input>
     <sm-input class="element" :title="lang.general.password" :optional="true" important kind="password" v-model="password"></sm-input>
-    <sm-input class="element" :title="lang.key.derive_path" placeholder="m/44'/1729'/0'/0'|tz2" :optional="true" important v-model="derive_path"></sm-input>
+    <sm-input class="element" :title="lang.key.derive_path" placeholder="m/44'/1729'/0'/0'|tz2" :optional="true" important v-model="derive_path" :help="lang.help.derive_path"></sm-input>
     <div class="op-panel element">
       <button @click="newWords">
         <icon icon="sync" spin size="sm"></icon>
@@ -48,7 +48,7 @@ export default {
       },
       words_lang: 'english',
       derive_path: '',
-      bits: '128',
+      bits: '256',
       words: '',
       password: ''
     }

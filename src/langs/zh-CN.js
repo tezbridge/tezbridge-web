@@ -2,7 +2,9 @@ export default {
   _: 'zh_CN',
   help: {
     ident_mark: `显示在LOGO旁边的识别记号是用来防止假的TezBridge进行钓鱼攻击的。
-                |当一个DApp打开TezBridge的时候，你应该注意到一个之前生成的熟悉的识别记号。否则，它可能就是一个假网站。`
+                |当一个DApp打开TezBridge的时候，你应该注意到一个之前生成的熟悉的识别记号。否则，它可能就是一个假网站。`,
+    mnemonic: `使用>=12个助记词来生成种子密钥。生成的助记词也可以被其他Tezos钱包导入。
+              |并且你也可以通过设定衍生路径来建立一个与Ledger兼容的助记词。`
   },
   general: {
     confirm: '确认',
