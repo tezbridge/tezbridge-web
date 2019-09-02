@@ -19,9 +19,18 @@
       </tree-node>
 
       <tree-node :title="lang.menu.tools" bold>
-        <a class="link" :href="'/index.html?signer'">{{lang.tools.signer}}</a>
-        <a class="link" href="https://docs.tezbridge.com/playground.html">{{lang.tools.playground}}</a>
-        <a class="link" :href="'/legacy/index.html'">{{lang.tools.legacy}}</a>
+        <div>
+          <a class="link" :href="'/index.html?signer'">{{lang.tools.signer}}</a>
+          <help :content="lang.help.signer"></help>        
+        </div>
+        <div>
+          <a class="link" href="https://docs.tezbridge.com/playground.html">{{lang.tools.playground}}</a>
+          <help :content="lang.help.playground"></help>        
+        </div>
+        <div>
+          <a class="link" :href="'/legacy/index.html'">{{lang.tools.legacy}}</a>
+          <help :content="lang.help.legacy"></help>        
+        </div>
       </tree-node>
       
       <tree-node :title="lang.menu.error_logs" bold :change="errors">
@@ -56,7 +65,7 @@ import Settings from './Settings'
 import Errors from './Errors'
 import About from './About'
 import IdentMark from './IdentMark'
-
+import Help from './Help'
 import storage from '../libs/storage'
 import { loadProtocolJS } from '../libs/network'
 import * as network from '../libs/network'
@@ -72,7 +81,8 @@ export default {
     Settings,
     Errors,
     About,
-    IdentMark
+    IdentMark,
+    Help
   },
   data() {
     return {
@@ -98,7 +108,7 @@ export default {
 .copyright {margin: 8px 0 0 0px; font-size: 0.8rem; color: #ccc;}
 .copyright * {vertical-align: baseline;}
 .logo {font-family: 'Dancing Script'; text-decoration: none; font-weight: 700; font-size: 1rem; color: #777;}
-a.link { margin: 4px 0; display: block; color: #555;}
+a.link { margin: 4px 0;  color: #555;}
 a.link:visited {color: #555;}
 a.link:active {color: #555;}
 </style>

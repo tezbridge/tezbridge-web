@@ -4,7 +4,23 @@ export default {
     ident_mark: `显示在LOGO旁边的识别记号是用来防止假的TezBridge进行钓鱼攻击的。
                 |当一个DApp打开TezBridge的时候，你应该注意到一个之前生成的熟悉的识别记号。否则，它可能就是一个假网站。`,
     mnemonic: `使用>=12个助记词来生成种子密钥。生成的助记词也可以被其他Tezos钱包导入。
-              |并且你也可以通过设定衍生路径来建立一个与Ledger兼容的助记词。`
+              |并且你也可以通过设定衍生路径来建立一个与Ledger兼容的助记词。`,
+    bits_of_entropy: `熵的比特位越大越安全，助记词也会越多。
+                      |熵的比特位可以设定为128到256。但它必须能被8整除。`,
+    derive_path: `这个设定与分层确定性(HD)密钥相关。 
+                  它通常用来兼容支持多链的钱包，比如Ledger`,
+    ed25519: `Ed25519 是推荐的加密算法。它也是tezos-client默认的加密算法。
+              |Ed25519生成的公钥哈希值在Tezos系统里，以tz1开头。`,
+    secp256k1: `Tezos支持在比特币中使用的secp256k1加密算法，并且secp256k1生成的公钥哈希值在Tezos系统里，以tz2开头。`,
+    p256: `Tezos支持NIST P-256加密算法，并且P256生成的公钥哈希值在Tezos系统里，以tz3开头。`,
+    bridging_mode: `这个选项是用来改变交换远程签名器信息的方法的。
+            远程签名器是通过浏览器原生的WebRTC通道来发送数据到。
+            因此，这个选项决定了用户能在界面上看到哪种交换方式。
+                    |简单: 使用Netlify lambda function来交换连接信息。
+                    |手动: 让用户可以通过二维码或文字发送来交换连接信息。`,
+    signer: `它会打开TezBridge的签名器页面。TezBridge签名器通常是由第三方的DApp站点来直接打开的。`,
+    playground: `这里是给开发者提供的，关于TezBridge插件整合的各种可编辑的例子。`,
+    legacy: `会跳转到老版本TezBridge。通常用来导出先前的账户密钥。`
   },
   general: {
     confirm: '确认',
