@@ -33,27 +33,71 @@ body {
 
 button, .button {
   cursor: pointer;
+  position: relative;
   font-size: 0.9rem;
+  background: transparent;
+  border: 1px solid transparent;
   padding: 4px 8px;
-  border: 0;
-  border-radius: 2px;
-  background: #fff;
-  border: 1px solid #bbb;
-  box-shadow: 2px 2px 0 0 #bbb;
   display: inline-flex;
   align-items: center;
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: default;
+  }
+  & svg {
+    margin-right: 8px;
+    transition: color 0.2s;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    border: 1px solid #666;
+    width: 100%;
+    height: 100%;
+    top: -1px;
+    left: -1px;
+    transition: all 0.2s;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    background: rgba(0,0,0,0.8);
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    transition: all 0.2s;
+    transform: scale(1.3);
+    opacity: 0;
+    z-index: -1;
+    border-radius: 4px;
+  }
+
+  &:hover {
+    color: white;
+    svg {
+      color: white;
+    }
+    &::before {
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    &::after {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    &::after {
+      transform: scale(1.2);
+    }
+  }
 }
-button[disabled] {
-  opacity: 0.5;
-  cursor: default;
-}
-button svg {
-  margin-right: 8px;
-}
-button:active, .button:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0 0 #bbb;
-}
+
 
 .element {margin-top: 8px;}
 .op-panel {text-align: center}
