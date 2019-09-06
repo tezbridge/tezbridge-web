@@ -92,7 +92,7 @@ export default {
       set_host: 'Set RPC host',
       set_delegate: 'Set delegate for KT1 account',
       raw_sign: 'Sign operation bytes',
-      raw_inject: 'Inject signed operation bytes',
+      raw_inject: 'Inject operation bytes',
       create_account: 'Create KT1 account',
       inject_operations: 'Sign & inject operations with minimal fee'
     },
@@ -112,7 +112,8 @@ export default {
       parameters: 'Parameters',
       bytes: 'Bytes',
       host: 'RPC Host',
-      signature: 'Signature'
+      signature: 'Signature',
+      sign_bytes: 'Need to sign the bytes'
     }
   },
   key: {

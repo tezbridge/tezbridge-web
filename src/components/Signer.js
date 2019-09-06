@@ -229,8 +229,16 @@ class Signer {
       },
       async raw_inject() {
         let bytes = op.bytes
+
         if (op.signature) {
           const sig_hex = TBC.codec.toHex(TBC.codec.bs58checkDecode(op.signature))
+          bytes = op.bytes + sig_hex
+        } else if (op.sign_bytes) {
+          const sig_str = this.ledger.pub_key
+            ? await this.ledger.sign(op.bytes, state)
+            : TBC.crypto.signOperation(op.bytes, await this.box.reveal())
+
+          const sig_hex = TBC.codec.toHex(TBC.codec.bs58checkDecode(sig_str))
           bytes = op.bytes + sig_hex
         }
         

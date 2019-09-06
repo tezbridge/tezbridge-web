@@ -64,6 +64,10 @@
       <label>{{lang.requests.op_desc.signature}}:</label>
       <div>{{op.signature}}</div>
     </div>
+    <div v-if="op.sign_bytes !== undefined">
+      <label>{{lang.requests.op_desc.sign_bytes}}:</label>
+      <div>{{!!op.sign_bytes}}</div>
+    </div>
   </div>
 </template>
 
