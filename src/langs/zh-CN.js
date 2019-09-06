@@ -106,7 +106,8 @@ export default {
       script: '脚本',
       parameters: '参数',
       bytes: '字节',
-      host: 'RPC远程主机'
+      host: 'RPC远程主机',
+      signature: '签名'
     }
   },
   key: {

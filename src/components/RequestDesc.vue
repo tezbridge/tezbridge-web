@@ -60,6 +60,10 @@
       <label>{{lang.requests.op_desc.host}}:</label>
       <div>{{op.host}}</div>
     </div>
+    <div v-if="op.signature !== undefined">
+      <label>{{lang.requests.op_desc.signature}}:</label>
+      <div>{{op.signature}}</div>
+    </div>
   </div>
 </template>
 

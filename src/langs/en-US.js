@@ -111,7 +111,8 @@ export default {
       script: 'Script',
       parameters: 'Parameters',
       bytes: 'Bytes',
-      host: 'RPC Host'
+      host: 'RPC Host',
+      signature: 'Signature'
     }
   },
   key: {
