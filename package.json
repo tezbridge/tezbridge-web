@@ -1,6 +1,6 @@
 {
   "name": "tezbridge-web",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "description": "The TezBridge web front-end",
   "main": "docs/index.html",
   "scripts": {
