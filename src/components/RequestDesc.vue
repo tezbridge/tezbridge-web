@@ -60,6 +60,10 @@
       <label>{{lang.requests.op_desc.host}}:</label>
       <div>{{op.host}}</div>
     </div>
+    <div v-if="parsed_ops">
+      <label>{{lang.requests.op_desc.parsed_ops}}:</label>
+      <pre>{{parsed_ops}}</pre>
+    </div>
     <div v-if="op.signature !== undefined">
       <label>{{lang.requests.op_desc.signature}}:</label>
       <div>{{op.signature}}</div>
@@ -74,6 +78,8 @@
 <script>
 // @flow
 
+declare var TBC : any
+
 import { tz2r } from '../libs/util'
 import lang from '../langs'
 
@@ -81,13 +87,26 @@ export default {
   props: ['op'],
   data() {
     return {
-      lang
+      lang,
+      parsed_ops: null
     }
   },
   methods: {
     tz2r
   },
   mounted() {
+    if (this.op.method !== 'raw_inject')
+      return false
+
+    const op_bytes = this.op.signature || this.op.sign_bytes ?
+      this.op.bytes :
+      this.op.bytes.slice(0, -128)
+
+    try {
+      this.parsed_ops = JSON.stringify(TBC.localop.parseOperationBytes(op_bytes), null, 2)
+    } catch (e){
+      this.parsed_ops = e
+    }
   }
 }
 </script>
@@ -95,4 +114,5 @@ export default {
 <style scoped>
 * { word-break: break-word; line-height: 1rem; font-family: consolas, Menlo, monospace, TZ;}
 label { margin-top: 4px; display: block; font-weight: 700 }
+pre { margin-top: 0; word-break: break-word; white-space: pre-wrap;}
 </style>

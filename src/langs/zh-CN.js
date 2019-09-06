@@ -108,7 +108,8 @@ export default {
       bytes: '字节',
       host: 'RPC远程主机',
       signature: '签名',
-      sign_bytes: '需要给字节签名'
+      sign_bytes: '需要给字节签名',
+      parsed_ops: '解析后的操作'
     }
   },
   key: {

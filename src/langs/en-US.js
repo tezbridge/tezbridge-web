@@ -113,7 +113,8 @@ export default {
       bytes: 'Bytes',
       host: 'RPC Host',
       signature: 'Signature',
-      sign_bytes: 'Need to sign the bytes'
+      sign_bytes: 'Need to sign the bytes',
+      parsed_ops: 'Parsed operations'
     }
   },
   key: {

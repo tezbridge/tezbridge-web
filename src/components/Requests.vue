@@ -70,6 +70,8 @@ export default {
   },
   methods: {
     async approveOp(op_item : Object, index : number) {
+      op_item.state.step = 9
+
       try {
         const clone = JSON.parse(JSON.stringify(op_item.op))
         const result_val = await signer.methodHandler(clone, op_item.resolve, op_item.state)
