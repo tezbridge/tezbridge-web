@@ -228,7 +228,13 @@ class Signer {
         return result
       },
       async raw_inject() {
-        const inject_result = await this.inject(op.bytes)
+        let bytes = op.bytes
+        if (op.signature) {
+          const sig_hex = TBC.codec.toHex(TBC.codec.bs58checkDecode(op.signature))
+          bytes = op.bytes + sig_hex
+        }
+        
+        const inject_result = await this.inject(bytes)
         resolve(inject_result)
         return inject_result
       },
