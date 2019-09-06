@@ -187,9 +187,9 @@ class Signer {
       throw `Network client hasn't been set to specific protocol`
   }
 
-  async inject(sign_result : Object) {
+  async inject(operation_with_sig : string) {
     if (network_client)
-      return await network_client.submit.inject_operation(sign_result.operation_with_sig)
+      return await network_client.submit.inject_operation(operation_with_sig)
     else
       throw `Network client hasn't been set to specific protocol`
   }
@@ -204,7 +204,7 @@ class Signer {
         const result = await this.autoSign([Object.assign({}, op, {
           kind: 'delegation'
         })], state)
-        const inject_result = await this.inject(result)
+        const inject_result = await this.inject(result.operation_with_sig)
         resolve({
           operation_id: inject_result
         })
@@ -212,7 +212,7 @@ class Signer {
       },
       async inject_operations()  {
         const result = await this.autoSign(op.operations, state)
-        const inject_result = await this.inject(result)
+        const inject_result = await this.inject(result.operation_with_sig)
         resolve({
           operation_id: inject_result,
           originated_contracts: result.originated_contracts
@@ -228,7 +228,7 @@ class Signer {
         return result
       },
       async raw_inject() {
-        const inject_result = await signer.inject(op.bytes)
+        const inject_result = await this.inject(op.bytes)
         resolve(inject_result)
         return inject_result
       },
