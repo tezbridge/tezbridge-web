@@ -1,6 +1,8 @@
+html {font-size: 16px;}
+
 * { 
   outline: none;
-  font-family: TZ, Lato, sans-serif; 
+  font-family: TZ, Cabin, sans-serif; 
   vertical-align: middle; 
   -webkit-appearance: none; 
   transition: all 0.2s; 
@@ -114,15 +116,15 @@ button, .button {
 }
 
 @font-face {
-  font-family: 'Lato';
-  src: url('../fonts/Lato-Regular.woff2') format('woff2');
+  font-family: 'Cabin';
+  src: url('../fonts/Cabin-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Lato';
-  src: url('../fonts/Lato-Bold.woff2') format('woff2');
+  font-family: 'Cabin';
+  src: url('../fonts/Cabin-SemiBold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
 }

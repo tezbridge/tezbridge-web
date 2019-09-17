@@ -19,15 +19,15 @@
       </tree-node>
 
       <tree-node :title="lang.menu.tools" bold>
-        <div>
+        <div class="tool-item">
           <a class="link" :href="'/index.html?signer'">{{lang.tools.signer}}</a>
           <help :content="lang.help.signer"></help>        
         </div>
-        <div>
+        <div class="tool-item">
           <a class="link" href="https://docs.tezbridge.com/playground.html">{{lang.tools.playground}}</a>
           <help :content="lang.help.playground"></help>        
         </div>
-        <div>
+        <div class="tool-item">
           <a class="link" :href="'/legacy/index.html'">{{lang.tools.legacy}}</a>
           <help :content="lang.help.legacy"></help>        
         </div>
@@ -111,4 +111,6 @@ export default {
 a.link { margin: 4px 0;  color: #555;}
 a.link:visited {color: #555;}
 a.link:active {color: #555;}
+
+.tool-item {margin: 4px 0;}
 </style>
