@@ -171,6 +171,7 @@ export default {
     legacy: 'Legacy'
   },
   manager: {
+    sk_reveal: 'Reveal secret key',
     use_as_signer: 'Use as signer'
   }
 }

@@ -166,6 +166,7 @@ export default {
     legacy: '旧版'
   },
   manager: {
+    sk_reveal: '显示私钥',
     use_as_signer: '用此账号签名'
   }
 }

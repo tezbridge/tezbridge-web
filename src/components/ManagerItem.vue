@@ -13,6 +13,7 @@
         <div v-if="is_signer" class="element">
           <button @click="useAsSigner(address)">{{lang.manager.use_as_signer}}</button>
         </div>
+        <secret-revealer :manager="manager" v-else></secret-revealer>
       </tree-node>
       <tree-node :title="lang.menu.originated_accounts">
         <loading v-if="loading.contracts"></loading>
@@ -39,6 +40,7 @@ declare var TBC : any
 import TreeNode from './TreeNode'
 import SmInput from './SmInput'
 import Record from './Record'
+import SecretRevealer from './SecretRevealer'
 
 import lang from '../langs'
 import storage from '../libs/storage'
@@ -50,7 +52,8 @@ export default {
   components: {
     SmInput,
     TreeNode,
-    Record
+    Record,
+    SecretRevealer
   },
   props: {
     manager: Object,
