@@ -1,15 +1,18 @@
 <template>
   <div>
+    <div>
+      <sm-input :title="lang.settings.host" v-model="settings.host"></sm-input>
+      <div class="error">
+        <loading v-if="checking_host"></loading>
+        <span v-if="host_error">{{lang.settings.invalid_host}}</span>
+      </div>
+    </div>
     <tree-node :title="lang.settings.language">
       <switcher :data="lang_lst" v-model="curr_lang"></switcher>
     </tree-node>
     <tree-node :title="lang.settings.briding_mode" :help="lang.help.bridging_mode">
       <switcher :data="bridging_lst" v-model="settings.bridging_mode"></switcher>
     </tree-node>
-    <div>
-      <sm-input :title="lang.settings.host" v-model="settings.host"></sm-input>
-      <div v-if="host_error" class="error">{{lang.settings.invalid_host}}</div>
-    </div>
     <tree-node :title="lang.settings.ident_mark" :help="lang.help.ident_mark">
       <button @click="changeIdentMark">{{lang.general.change}}</button>
     </tree-node>
@@ -53,6 +56,7 @@ export default {
         [lang.general.manual]: 'manual'
       },
       settings: storage.settings,
+      checking_host: false,
       host_error: false    
     }
   },
@@ -65,12 +69,15 @@ export default {
     'settings.host': debounce(async function(host){
       storage.saveSettings()
       try {
+        this.checking_host = true
         const result = await loadProtocolJS()
 
         this.host_error = !result
       } catch(e) {
         this.host_error = true
-      }
+      } 
+
+      this.checking_host = false
     }),
     'settings.bridging_mode': debounce(function(mode){
       storage.saveSettings()

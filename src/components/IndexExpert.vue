@@ -112,5 +112,5 @@ a.link { margin: 4px 0;  color: #555;}
 a.link:visited {color: #555;}
 a.link:active {color: #555;}
 
-.tool-item {margin: 4px 0;}
+.tool-item {margin-bottom: 4px;}
 </style>
