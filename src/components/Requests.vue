@@ -110,6 +110,6 @@ div.op-content { margin-bottom: 8px;  font-size: 0.85rem; padding: 4px; padding-
 .approved { background: #27bd1d }
 .rejected { background: #bd1d1d }
 .op-result .failed { background: #bd1d1d }
-.host { display: block; word-break: break-word; font-size: 0.8rem; padding: 2px 6px; border-radius: 4px; margin: 4px 0; background: #fffa08 }
+.host { display: inline-block; word-break: break-word; font-size: 0.8rem; padding: 2px 6px; border-radius: 4px; margin: 4px 0; background: #fffa08 }
 .check-your-ledger {display: inline-block; margin-top: 4px; transform: translateY(1px); padding: 2px 4px; color: white; background: black;}
 </style>
