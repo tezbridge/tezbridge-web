@@ -46,6 +46,8 @@ export default {
     simple: 'Simple',
     manual: 'Manual',
     app: 'App',
+    dapp: 'DApp',
+    protocol: 'Protocol',
 
     state: 'State',
     reset: 'reset',
@@ -114,7 +116,8 @@ export default {
       host: 'RPC Host',
       signature: 'Signature',
       sign_bytes: 'Need to sign the bytes',
-      parsed_ops: 'Parsed operations'
+      parsed_ops: 'Parsed operations',
+      rpc_node: 'RPC node'
     }
   },
   key: {

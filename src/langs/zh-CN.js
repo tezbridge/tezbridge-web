@@ -41,6 +41,8 @@ export default {
     simple: '简易',
     manual: '手工',
     app: '应用',
+    dapp: 'DApp',
+    protocol: '协议',
 
     state: '状态',
     reset: '重置',
@@ -109,7 +111,8 @@ export default {
       host: 'RPC远程主机',
       signature: '签名',
       sign_bytes: '需要给字节签名',
-      parsed_ops: '解析后的操作'
+      parsed_ops: '解析后的操作',
+      rpc_node: 'RPC节点'
     }
   },
   key: {

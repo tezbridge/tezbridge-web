@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div v-if="op.conn_info !== undefined">
+      <label>{{lang.general.dapp}}:</label>
+      <div>{{op.conn_info.origin}}</div>
+      <label>{{lang.requests.op_desc.rpc_node}}:</label>
+      <div>{{op.conn_info.host}}</div>
+      <label>{{lang.general.protocol}}:</label>
+      <div>{{op.conn_info.protocol}}</div>
+    </div>
+
     <div v-if="op.op_hash !== undefined">
       <label>{{lang.requests.op_desc.op_hash}}:</label>
       <div>{{op.op_hash}}</div>

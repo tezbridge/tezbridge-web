@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div class="host">{{network.protocol}} # {{host}}</div>
     <div v-for="(item, index) in operations">
       <div class="title">{{lang.requests.operation}}: {{item.op.tezbridge}}</div>
       <div class="op-content">
         {{lang.requests.methods[item.op.method]}}
+        <request-desc :op="{conn_info: {protocol: network.protocol, host: host, origin: item.op.origin}}" class="op-item conn-info"></request-desc>
+
         <div class="content-body">
           <request-desc :op="x" class="op-item" v-for="x in item.op.operations" v-if="item.op.method === 'inject_operations'"></request-desc>
           <request-desc :op="item.op" class="op-item" v-if="item.op.method !== 'inject_operations'"></request-desc>
@@ -28,6 +29,8 @@
         <div class="result-title">{{lang.requests.operation}}: {{item.op.tezbridge}}</div>
         <div class="op-content selectable">
           {{lang.requests.methods[item.op.method]}}
+          <request-desc :op="{conn_info: {protocol: item.protocol, host: item.host, origin: item.op.origin}}" class="op-item conn-info"></request-desc>
+
           <request-desc :op="x" class="op-item" v-for="x in item.op.operations" v-if="item.op.method === 'inject_operations'"></request-desc>
           <request-desc :op="item.op" class="op-item" v-if="item.op.method !== 'inject_operations'"></request-desc>
           <div class="op-result">
@@ -70,6 +73,11 @@ export default {
   },
   methods: {
     async approveOp(op_item : Object, index : number) {
+      const conn_info = {
+        protocol: this.network.protocol,
+        host: this.host
+      }
+
       op_item.state.step = 9
 
       try {
@@ -83,12 +91,23 @@ export default {
       }
 
       op_item.state.step = 0
-      this.responses.unshift(this.operations.splice(index, 1)[0])
+
+      const handled = this.operations.splice(index, 1)[0]
+      Object.assign(handled, conn_info)
+      this.responses.unshift(handled)
     },
     rejectOp(op_item : Object, index : number) {
+      const conn_info = {
+        protocol: this.network.protocol,
+        host: this.host
+      }
+
       op_item.reject('rejected')
       op_item.result = 'rejected'
-      this.responses.unshift(this.operations.splice(index, 1)[0])
+
+      const handled = this.operations.splice(index, 1)[0]
+      Object.assign(handled, conn_info)
+      this.responses.unshift(handled)
     }
   },
   computed: {
@@ -110,6 +129,6 @@ div.op-content { margin-bottom: 8px;  font-size: 0.85rem; padding: 4px; padding-
 .approved { background: #27bd1d }
 .rejected { background: #bd1d1d }
 .op-result .failed { background: #bd1d1d }
-.host { display: inline-block; word-break: break-word; font-size: 0.8rem; padding: 2px 6px; border-radius: 4px; margin: 4px 0; background: #fffa08 }
 .check-your-ledger {display: inline-block; margin-top: 4px; transform: translateY(1px); padding: 2px 4px; color: white; background: black;}
+.conn-info {opacity: 0.4}
 </style>

@@ -36,6 +36,8 @@ class Signer {
 
       this.caller_origin = e.origin
 
+      e.data.origin = e.origin
+
       if (this.conn && this.conn.is_connected) {
         this.conn.channel.send(JSON.stringify(e.data))
       } else {
