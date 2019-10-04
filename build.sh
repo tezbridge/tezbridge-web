@@ -7,6 +7,7 @@ parcel build \
   src/pages/plugin.js \
   src/pages/protocols/Pt24m4xi.js \
   src/pages/protocols/PsBABY5H.js \
+  src/pages/protocols/PsBabyM1.js \
   --no-source-maps --out-dir docs
 
 cp src/CNAME docs/

@@ -28,8 +28,8 @@
     "pako": "^1.0.10",
     "prismjs": "^1.17.1",
     "qrcode": "^1.4.1",
-    "tezbridge-crypto": "^1.0.51",
-    "tezbridge-network": "^1.0.39",
+    "tezbridge-crypto": "^1.0.52",
+    "tezbridge-network": "^1.0.40",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3",
     "vue-prism-editor": "^0.2.1"
