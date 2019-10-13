@@ -44,7 +44,7 @@ export const is_mobile = !!navigator.userAgent.match(/Mobile/)
 
 export async function list_camera() {
   if (navigator.mediaDevices){
-    const devices = await navigator.mediaDevices.enumerateDevices()
+    const devices : Object = await navigator.mediaDevices.enumerateDevices()
     return devices.filter(x => x.kind === 'videoinput')
   } else
     throw 'no camera'
