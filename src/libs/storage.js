@@ -43,7 +43,7 @@ class Storage {
       this.settings.language = 'en_US'
     
     if (!this.settings.host)
-      this.settings.host = 'https://alphanet-node.tzscan.io'
+      this.settings.host = 'https://mainnet-node.tzscan.io'
 
     if (!this.settings.bridging_mode)
       this.settings.bridging_mode = 'simple'
