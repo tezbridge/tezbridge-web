@@ -40,7 +40,7 @@ const Pt24m4xi = async () => {
 
   log('Testing Pt24m4xi')
 
-  const network_client = new TBN({host: 'https://alphanet-node.tzscan.io'})
+  const network_client = new TBN({host: 'https://mainnet.tezrpc.me'})
 
   const key = await getFaucetKey(faucets[2], TBC, network_client)
 
