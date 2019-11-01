@@ -1,6 +1,6 @@
 {
   "name": "tezbridge-web",
-  "version": "2.3.12",
+  "version": "2.3.13",
   "description": "The TezBridge web front-end",
   "main": "docs/index.html",
   "scripts": {
@@ -29,7 +29,7 @@
     "prismjs": "^1.17.1",
     "qrcode": "^1.4.1",
     "tezbridge-crypto": "^1.0.52",
-    "tezbridge-network": "^1.0.41",
+    "tezbridge-network": "^1.0.43",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3",
     "vue-prism-editor": "^0.2.1"
