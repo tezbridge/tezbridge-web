@@ -109,7 +109,6 @@ export default {
       settings: storage.settings,
       temp_managers: [],
       curr_signer: {
-        [lang.signer.manager]: undefined,
         [lang.signer.source]: undefined
       },
       operations: [],
@@ -130,7 +129,6 @@ export default {
       signer.initLocal(manager, source)
       const key = await manager.revealKey()
       this.curr_signer = {
-        [lang.signer.manager]: key.address,
         [lang.signer.source]: source
       } 
       this.step = 'ready'
@@ -141,7 +139,6 @@ export default {
 
       signer.initLedger(source, pub_key, sign)
       this.curr_signer = {
-        [lang.signer.manager]: manager,
         [lang.signer.source]: source
       }
       this.step = 'ready'

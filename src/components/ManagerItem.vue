@@ -10,22 +10,17 @@
       <tree-node :title="address">
         <loading v-if="loading.manager"></loading>
         <record :data="manager_info"></record>
-        <div v-if="is_signer" class="element">
-          <button @click="useAsSigner(address)">{{lang.manager.use_as_signer}}</button>
-        </div>
-        <secret-revealer :manager="manager" v-else></secret-revealer>
+        <secret-revealer :manager="manager" v-if="!is_signer"></secret-revealer>
       </tree-node>
       <tree-node :title="lang.menu.originated_accounts">
         <loading v-if="loading.contracts"></loading>
         <tree-node :title="contract" @first_open="contractOpen(contract)" v-for="(item, contract) in contracts">
           <loading v-if="loading.contract_item[contract]"></loading>
           <record :data="item"></record>
-          <div v-if="is_signer" class="element">
-            <button :disabled="!item[lang.requests.op_desc.spendable]" @click="useAsSigner(contract)">{{lang.manager.use_as_signer}}</button>
-          </div>
         </tree-node>
       </tree-node>
       <div class="element">
+        <button v-if="is_signer" @click="useAsSigner(address)">{{lang.manager.use_as_signer}}</button>
         <button @click="lock">{{lang.general.lock}}</button>
       </div>
     </div>
