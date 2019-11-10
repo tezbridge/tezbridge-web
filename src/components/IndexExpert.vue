@@ -117,11 +117,13 @@ export default {
 .copyright {margin: 0 0 0 0px; font-size: 0.8rem; color: #ccc;}
 .copyright * {vertical-align: baseline;}
 .logo {font-family: 'Dancing Script'; text-decoration: none; font-weight: 700; font-size: 1rem; color: #777;}
+.logo:hover {color: #000;}
+.logo:active {color: #000;}
 
-.links { margin: 2px 0 4px 12px;}
-a.link { font-size: 0.8rem; color: #aaa; text-decoration: none}
-a.link:hover { color: #555;}
-a.link:active {color: #aaa;}
+.links { margin: 6px 0 0px 2px;}
+a.link { font-size: 0.8rem; color: #777; text-decoration: none}
+a.link:hover { color: #000;}
+a.link:active {color: #777;}
 a.link svg {margin-right: 2px}
 a.link > * {vertical-align: baseline}
 
