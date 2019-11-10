@@ -171,6 +171,7 @@ export default {
     home: 'Home',
     signer: 'Signer',
     playground: 'Playground',
+    doc: 'Documentation',
     legacy: 'Legacy'
   },
   manager: {

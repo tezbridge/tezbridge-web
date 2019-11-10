@@ -44,6 +44,10 @@
         <settings></settings>
       </tree-node>
       
+      <tree-node v-if="errors.length" :title="lang.menu.error_logs" bold :change="errors">
+        <errors></errors>
+      </tree-node>
+
       <div class="copyright">
         <span>© 2018-2019</span> 
         <a href="/index.html" class="logo">TezBridge</a> 

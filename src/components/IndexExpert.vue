@@ -18,7 +18,7 @@
         <select-manager :managers="managers"></select-manager>
       </tree-node>
 
-      <tree-node :title="lang.menu.tools" bold>
+      <!-- <tree-node :title="lang.menu.tools" bold>
         <div class="tool-item">
           <a class="link" :href="'/index.html?signer'">{{lang.tools.signer}}</a>
           <help :content="lang.help.signer"></help>        
@@ -31,16 +31,25 @@
           <a class="link" :href="'/legacy/index.html'">{{lang.tools.legacy}}</a>
           <help :content="lang.help.legacy"></help>        
         </div>
-      </tree-node>
-      
-      <tree-node :title="lang.menu.error_logs" bold :change="errors">
-        <errors></errors>
-      </tree-node>
+      </tree-node> -->
       
       <tree-node :title="lang.menu.settings" bold>
         <settings></settings>
       </tree-node>
       
+      <tree-node v-if="errors.length" :title="lang.menu.error_logs" bold :change="errors">
+        <errors></errors>
+      </tree-node>
+
+      <div class="links">
+        <a class="link" :href="'/index.html?signer'">
+          <icon icon="key" size="sm"></icon><span>{{lang.tools.signer}}</span>
+        </a>
+        <a class="link" target="_blank" :href="'https://docs.tezbridge.com/'">
+          <icon icon="file-alt" size="sm"></icon><span>{{lang.tools.doc}}</span>
+        </a>
+      </div>
+
       <div class="copyright">
         <span>© 2018-2019</span> 
         <a href="/index.html" class="logo">TezBridge</a> 
@@ -105,12 +114,16 @@ export default {
 
 <style scoped>
 .container {margin-right: 4px;}
-.copyright {margin: 8px 0 0 0px; font-size: 0.8rem; color: #ccc;}
+.copyright {margin: 0 0 0 0px; font-size: 0.8rem; color: #ccc;}
 .copyright * {vertical-align: baseline;}
 .logo {font-family: 'Dancing Script'; text-decoration: none; font-weight: 700; font-size: 1rem; color: #777;}
-a.link { margin: 4px 0;  color: #555;}
-a.link:visited {color: #555;}
-a.link:active {color: #555;}
+
+.links { margin: 2px 0 4px 12px;}
+a.link { font-size: 0.8rem; color: #aaa; text-decoration: none}
+a.link:hover { color: #555;}
+a.link:active {color: #aaa;}
+a.link svg {margin-right: 2px}
+a.link > * {vertical-align: baseline}
 
 .tool-item {margin-bottom: 4px;}
 </style>

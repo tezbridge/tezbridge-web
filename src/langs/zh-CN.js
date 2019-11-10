@@ -166,6 +166,7 @@ export default {
     home: '首页',
     signer: '签名器',
     playground: '试验场',
+    doc: '文档',
     legacy: '旧版'
   },
   manager: {

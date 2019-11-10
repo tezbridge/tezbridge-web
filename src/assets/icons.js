@@ -12,6 +12,8 @@ import { faArrowsAltH } from '@fortawesome/free-solid-svg-icons/faArrowsAltH'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons/faAngleRight'
 
 import { faQuestion } from '@fortawesome/free-solid-svg-icons/faQuestion'
+import { faFileAlt } from '@fortawesome/free-solid-svg-icons/faFileAlt'
+import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
 
 library.add(
   faSync,
@@ -21,7 +23,9 @@ library.add(
   faWifi,
   faArrowsAltH,
   faAngleRight,
-  faQuestion
+  faQuestion,
+  faFileAlt,
+  faKey
 )
 
 export default Icons
