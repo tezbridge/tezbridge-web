@@ -12,3 +12,9 @@ The TezBridge web front-end.
 
 ## Documentation
 [https://docs.tezbridge.com/](https://docs.tezbridge.com/)
+
+## Sponsor
+[Tezos Foundation](https://tezos.foundation/)
+
+## License
+MIT
