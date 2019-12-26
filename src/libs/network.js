@@ -7,7 +7,7 @@ export let protocol = null
 
 let ctrler = new AbortController()
 
-const default_protocol = 'Pt24m4xi'
+const default_protocol = 'PsBabyM1'
 export async function loadProtocolJS(host? : string) {
   host = host || storage.settings.host
 
