@@ -38,7 +38,7 @@ export default {
         set_host:
 `tezbridge.request({
   method: 'set_host',
-  host: 'https://mainnet.tezrpc.me'
+  host: 'https://rpc.tzbeta.net'
 })
 .then(address => output(address))
 .catch(err => output(err))
