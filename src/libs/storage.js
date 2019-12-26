@@ -42,7 +42,7 @@ class Storage {
     if (!this.settings.language)
       this.settings.language = 'en_US'
     
-    if (!this.settings.host)
+    if (!this.settings.host || this.settings.host === 'https://mainnet.tezrpc.me')
       this.settings.host = 'https://rpc.tzbeta.net'
 
     if (!this.settings.bridging_mode)
