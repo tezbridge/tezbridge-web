@@ -27,9 +27,12 @@ export default {
     return {
       display_selector: false,
       hosts: [
-        'https://mainnet.tezrpc.me',
+        'https://rpc.tzkt.io/mainnet',
+        'https://rpc.tzkt.io/babylonnet',
         'https://rpc.tzbeta.net',
         'https://rpctest.tzbeta.net',
+        'https://teznode.letzbake.com',
+        'https://mainnet.tezrpc.me'
       ],
       network,
       settings: storage.settings,
