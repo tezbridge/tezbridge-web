@@ -5,7 +5,12 @@
       <b>{{network.protocol}}</b>
       <loading></loading>
     </div>
-    <nav class="link-tree" v-else>
+
+    <div class="host" v-if="protocol_js_loaded">
+      <host></host>
+    </div>
+    
+    <nav class="link-tree" v-if="protocol_js_loaded">
 
       <transition name="fade">
         <tree-node v-show="step === 'ready'" :title="lang.menu.dapp_requests" :change="operations" :change1="curr_signer" bold>
@@ -80,6 +85,7 @@ import RemoteBridging from './RemoteBridging'
 import SimpleBridging from './SimpleBridging'
 import Errors from './Errors'
 import Settings from './Settings'
+import Host from './Host'
 
 import storage from '../libs/storage'
 import { loadProtocolJS } from '../libs/network'
@@ -100,7 +106,8 @@ export default {
     Record,
     Settings,
     About,
-    IdentMark
+    IdentMark,
+    Host
   },
   data() {
     return {

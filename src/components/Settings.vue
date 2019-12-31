@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div>
+    <!-- <div>
       <sm-input :title="lang.settings.host" v-model="settings.host"></sm-input>
       <div class="error">
         <loading v-if="checking_host"></loading>
         <span v-if="host_error">{{lang.settings.invalid_host}}</span>
       </div>
-    </div>
+    </div> -->
     <tree-node :title="lang.settings.language">
       <switcher :data="lang_lst" v-model="curr_lang"></switcher>
     </tree-node>
@@ -66,19 +66,19 @@ export default {
       storage.settings.language = lang
       storage.saveSettings()
     }),
-    'settings.host': debounce(async function(host){
-      storage.saveSettings()
-      try {
-        this.checking_host = true
-        const result = await loadProtocolJS()
+    // 'settings.host': debounce(async function(host){
+    //   storage.saveSettings()
+    //   try {
+    //     this.checking_host = true
+    //     const result = await loadProtocolJS()
 
-        this.host_error = !result
-      } catch(e) {
-        this.host_error = true
-      } 
+    //     this.host_error = !result
+    //   } catch(e) {
+    //     this.host_error = true
+    //   } 
 
-      this.checking_host = false
-    }),
+    //   this.checking_host = false
+    // }),
     'settings.bridging_mode': debounce(function(mode){
       storage.saveSettings()
     })

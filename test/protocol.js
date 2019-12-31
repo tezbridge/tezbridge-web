@@ -34,18 +34,4 @@ async function getFaucetKey(faucet, TBC, network_client) {
   return key
 }
 
-const Pt24m4xi = async () => {
-  const TBC = Pt24m4xi_TBC
-  const TBN = Pt24m4xi_TBN
-
-  log('Testing Pt24m4xi')
-
-  const network_client = new TBN({host: 'https://rpc.tzbeta.net'})
-
-  const key = await getFaucetKey(faucets[2], TBC, network_client)
-
-  
-}
-
-Pt24m4xi()
 

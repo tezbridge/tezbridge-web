@@ -5,7 +5,12 @@
       <b>{{network.protocol}}</b>
       <loading></loading>
     </div>
-    <nav class="link-tree" v-else>
+    
+    <div class="host" v-if="protocol_js_loaded">
+      <host></host>
+    </div>
+
+    <nav class="link-tree" v-if="protocol_js_loaded">
       <tree-node :title="lang.menu.create_key" bold>
         <create-key></create-key>
       </tree-node>
@@ -75,6 +80,8 @@ import Errors from './Errors'
 import About from './About'
 import IdentMark from './IdentMark'
 import Help from './Help'
+import Host from './Host'
+
 import storage from '../libs/storage'
 import { loadProtocolJS } from '../libs/network'
 import * as network from '../libs/network'
@@ -91,7 +98,8 @@ export default {
     Errors,
     About,
     IdentMark,
-    Help
+    Help,
+    Host
   },
   data() {
     return {
