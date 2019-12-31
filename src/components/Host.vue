@@ -28,11 +28,14 @@ export default {
       display_selector: false,
       hosts: [
         'https://rpc.tzkt.io/mainnet',
-        'https://rpc.tzkt.io/babylonnet',
+        'https://mainnet.tezrpc.me',
         'https://rpc.tzbeta.net',
-        'https://rpctest.tzbeta.net',
         'https://teznode.letzbake.com',
-        'https://mainnet.tezrpc.me'
+        'https://api.tezos.org.ua',
+        'https://tezos-prod.cryptonomic-infra.tech',
+        'https://rpc.tzkt.io/babylonnet',
+        'https://rpctest.tzbeta.net',
+        'https://tezos-dev.cryptonomic-infra.tech'
       ],
       network,
       settings: storage.settings,
