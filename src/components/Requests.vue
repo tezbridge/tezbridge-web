@@ -90,7 +90,6 @@ export default {
       try {
         const clone = JSON.parse(JSON.stringify(op_item.op))
         op_item.test_contents = await signer.testOperation(clone, op_item.state)
-        console.log(op_item.test_contents)
       } catch(e) {
         op_item.test_contents = e.toString()
       }
