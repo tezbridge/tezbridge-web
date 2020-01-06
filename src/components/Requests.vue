@@ -20,7 +20,7 @@
           <request-desc :op="item.state" class="op-item"></request-desc>
         </div>
         <div class="element">
-          <button :disabled="!!(item.state.step || item.state.op_hash)" @click="testOp(item, index)">{{lang.general.test}}</button> 
+          <button :disabled="!!(item.state.step || item.state.op_hash)" @click="testOp(item, index)" v-if="item.op.method === 'inject_operations'">{{lang.general.test}}</button> 
           <button :disabled="!!(item.state.step || item.state.op_hash)" @click="approveOp(item, index)">{{lang.general.approve}}</button> 
           <button :disabled="!!(item.state.step || item.state.op_hash)" @click="rejectOp(item, index)">{{lang.general.reject}}</button>
         </div>

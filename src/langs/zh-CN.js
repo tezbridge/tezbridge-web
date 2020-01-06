@@ -94,6 +94,14 @@ export default {
       create_account: '创建从属账号',
       inject_operations: '使用最小手续费签名并发送操作到链上'
     },
+    test_desc: {
+      total_fee: '总费用',
+      status: '状态',
+      storage: '存储结果',
+      big_map_diff: 'BigMap变更',
+      changes: '金额变更',
+      warning: `非最终结果，仅供参考。`
+    },
     op_desc: {
       op_hash: '操作哈希',
       kind: '类型',

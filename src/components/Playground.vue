@@ -90,6 +90,15 @@ export default {
       destination: 'tz2L2HuhaaSnf6ShEDdhTEAr5jGPWPNwpvcB'
     },
     {
+      kind: 'transaction',
+      amount: '0',
+      destination: 'KT1DQstuXVVHsA4nVEa5C2EKf5sjrgSHCcSN',
+      parameters: {
+        entrypoint: 'second',
+        value: {int: '1'}
+      }
+    },
+    {
       kind: 'origination',
       balance: '0',
       script: {

@@ -99,6 +99,14 @@ export default {
       create_account: 'Create KT1 account',
       inject_operations: 'Sign & inject operations with minimal fee'
     },
+    test_desc: {
+      total_fee: 'Total fee',
+      status: 'Status',
+      storage: 'Storage',
+      big_map_diff: 'BigMap diff',
+      changes: 'Changes',
+      warning: `It's not an end result, for reference only.`
+    },
     op_desc: {
       op_hash: 'Operation hash',
       kind: 'Kind',

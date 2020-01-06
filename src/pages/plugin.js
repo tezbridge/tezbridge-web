@@ -2,7 +2,7 @@
 
 (() => {
   const host = 'https://www.tezbridge.com'
-  // const host = 'https://dev-vm:1234'
+  // const host = 'https://minivm:1234'
 
   const arg_templates = {
     KT1_to_default(address : string, amount : string) {
