@@ -1,3 +1,6 @@
+rm -rf .cache
+rm -rf dist
+
 BROWSER_OPT=true \
 parcel \
   src/pages/index.html \
