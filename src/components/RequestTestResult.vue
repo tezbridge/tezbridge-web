@@ -12,7 +12,7 @@
               {{lang.requests.op_desc.kind}}: {{metadata.kind}}
             </div>
             <div>
-              {{lang.requests.test_desc.status}}: 
+              <span>{{lang.requests.test_desc.status}}:</span> 
               <span :class="{status: true, applied: metadata.result.status === 'applied'}">
                 {{metadata.result.status}}
               </span>
@@ -97,7 +97,7 @@ export default {
   color: #555;
   padding: 0 4px 4px;
 }
-* { word-break: break-word; line-height: 1rem; font-family: consolas, Menlo, monospace, TZ;}
+* { vertical-align: middle; word-break: break-word; line-height: 1rem; font-family: consolas, Menlo, monospace, TZ;}
 .metadata {display: block; margin: 8px 0}
 .status {color: #bd1d1d}
 .applied {color: #27bd1d}
