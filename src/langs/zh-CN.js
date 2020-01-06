@@ -49,6 +49,7 @@ export default {
     responses: '回应结果',
     account: '账号',
 
+    test: '测试',
     allow: '允许',
     approve: '允许',
     reject: '拒绝',

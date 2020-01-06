@@ -167,6 +167,7 @@ export default {
             step: 0
           },
           op,
+          test_contents: null,
           resolve,
           reject
         })

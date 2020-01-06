@@ -196,6 +196,27 @@ class Signer {
       throw `Network client hasn't been set to specific protocol`
   }
 
+  async testOperation(op : Object, state : Object) {
+    const method = op.method
+
+    if (method != 'inject_operations')
+      throw `Only 'inject_operations' method is testable: ${method}`
+    
+    if (network_client) {
+      let pub_key = this.ledger.pub_key
+      if (!pub_key) {
+        const sk = await this.box.reveal()
+        pub_key = TBC.crypto.getKeyFromSecretKey(sk).getPublicKey()
+      }
+      
+      return await network_client.mixed.testMinFeeOperation(
+        TBC, this.source, pub_key, op.operations, false, state
+      )
+    }
+    else
+      throw `Network client hasn't been set to specific protocol`
+    
+  }
   async methodHandler(op : Object, resolve : Object => void, state : Object) {
     const method = op.method
     delete op.method

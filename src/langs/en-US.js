@@ -54,6 +54,7 @@ export default {
     responses: 'responses',
     account: 'account',
 
+    test: 'Test',
     allow: 'Allow',
     approve: 'Approve',
     reject: 'Reject',

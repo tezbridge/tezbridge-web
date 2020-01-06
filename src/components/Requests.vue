@@ -9,16 +9,18 @@
         <div class="content-body">
           <request-desc :op="x" class="op-item" v-for="x in item.op.operations" v-if="item.op.method === 'inject_operations'"></request-desc>
           <request-desc :op="item.op" class="op-item" v-if="item.op.method !== 'inject_operations'"></request-desc>
+          <request-test-result :contents="item.test_contents"></request-test-result>
         </div>
         <div v-if="item.state.step">
           <loading></loading> 
-          <span>{{item.state.step}}/9</span>
+          <span>{{item.state.step}}/{{complete_steps}}</span>
         </div>
         <div v-if="item.state.op_hash">
           <span class="check-your-ledger">{{lang.hardware.check_your_ledger}}</span> 
           <request-desc :op="item.state" class="op-item"></request-desc>
         </div>
         <div class="element">
+          <button :disabled="!!(item.state.step || item.state.op_hash)" @click="testOp(item, index)">{{lang.general.test}}</button> 
           <button :disabled="!!(item.state.step || item.state.op_hash)" @click="approveOp(item, index)">{{lang.general.approve}}</button> 
           <button :disabled="!!(item.state.step || item.state.op_hash)" @click="rejectOp(item, index)">{{lang.general.reject}}</button>
         </div>
@@ -50,6 +52,7 @@
 import signer from './Signer.js'
 import lang from '../langs'
 import RequestDesc from './RequestDesc'
+import RequestTestResult from './RequestTestResult'
 import TreeNode from './TreeNode'
 
 import storage from '../libs/storage'
@@ -59,7 +62,8 @@ import * as network from '../libs/network'
 export default {
   components: {
     RequestDesc,
-    TreeNode
+    TreeNode,
+    RequestTestResult
   },
   props: ['operations'],
   data() {
@@ -68,11 +72,34 @@ export default {
       signer,
       network,
       responses: [],
+      complete_steps: 9,
       settings: storage.settings
     }
   },
   methods: {
+    async testOp(op_item : Object, index : number) {
+      this.complete_steps = 6
+
+      const conn_info = {
+        protocol: this.network.protocol,
+        host: this.host
+      }
+
+      op_item.state.step = 6
+
+      try {
+        const clone = JSON.parse(JSON.stringify(op_item.op))
+        op_item.test_contents = await signer.testOperation(clone, op_item.state)
+        console.log(op_item.test_contents)
+      } catch(e) {
+        op_item.test_contents = e.toString()
+      }
+
+      op_item.state.step = 0
+    },
     async approveOp(op_item : Object, index : number) {
+      this.complete_steps = 9
+
       const conn_info = {
         protocol: this.network.protocol,
         host: this.host
