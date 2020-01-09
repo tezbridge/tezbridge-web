@@ -28,8 +28,8 @@
     "pako": "^1.0.10",
     "prismjs": "^1.18.0",
     "qrcode": "^1.4.4",
-    "tezbridge-crypto": "^1.0.54",
-    "tezbridge-network": "^1.0.45",
+    "tezbridge-crypto": "^1.0.55",
+    "tezbridge-network": "^1.0.46",
     "vue": "^2.6.11",
     "vue-hot-reload-api": "^2.3.4",
     "vue-prism-editor": "^0.2.1"
@@ -41,7 +41,7 @@
     "@vue/component-compiler-utils": "^2.6.0",
     "cssnano": "^4.1.10",
     "flow-bin": "^0.89.0",
-    "sass": "^1.24.2",
+    "sass": "^1.24.3",
     "vue-template-compiler": "^2.6.11"
   },
   "babel": {
