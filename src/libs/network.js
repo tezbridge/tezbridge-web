@@ -5,6 +5,7 @@ import storage from './storage'
 export let network_client = null
 export let protocol = null
 export let connected = false
+export let fail2load = ''
 
 let ctrler = new AbortController()
 
@@ -30,6 +31,7 @@ export async function loadProtocolJS(host? : string) {
     connected = false
   }
   
+  fail2load = ''
   const eval_protocol = async () => {
     try {
       const js_resp = await window.fetch(`${location.origin}/protocols/${protocol || ''}.js`, {signal: ctrler.signal})
@@ -39,8 +41,10 @@ export async function loadProtocolJS(host? : string) {
 
       window.eval(js_content)
     } catch (e) {
+      fail2load = protocol
       protocol = default_protocol
       fallback = true
+      await eval_protocol()
     }
   }
   await eval_protocol()

@@ -1,7 +1,7 @@
 <template>
   <div class="host-wrapper">
-    <div class="protocol">{{network.protocol}}</div>
-    <div :class="{state: true, connected: network.connected}"></div>
+    <div :class="{protocol: true, fail2load: !!network.fail2load}">{{network.fail2load || network.protocol}}</div>
+    <div class="splitter"></div>
     <div :class="{host: true, connected: network.connected}" @click="display_selector = !display_selector">{{settings.host}}</div>
     <loading v-if="checking_host"></loading>
 
@@ -65,9 +65,9 @@ export default {
 
 <style scoped>
 .host-wrapper > div {display: inline-block; font-size: 0.8rem;}
-.state {width: 4px; height: 4px; background: rgba(255, 0, 0, 0.7) }
-.state.connected { background: green; }
-.protocol {margin-left: 2px;}
+.splitter {width: 4px; height: 4px; background: #000 }
+.protocol {margin-left: 2px; text-decoration: none; color: black; }
+.protocol.fail2load {text-decoration: line-through;  color:rgba(255, 0, 0, 0.7)}
 .host {cursor: pointer; word-break: break-all; text-decoration: line-through; color:rgba(255, 0, 0, 0.7) }
 .host.connected { text-decoration: none; color: black; }
 
