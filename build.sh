@@ -11,4 +11,4 @@ parcel build \
 
 cp src/CNAME docs/
 cp src/.nojekyll docs/
-cp -r src/pages/legacy docs/
+# cp -r src/pages/legacy docs/
