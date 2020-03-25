@@ -54,7 +54,7 @@
       </tree-node>
 
       <div class="copyright">
-        <span>© 2018-2019</span> 
+        <span>© 2018-2020</span> 
         <a href="/index.html" class="logo">TezBridge</a> 
         <ident-mark></ident-mark>
         <span>v{{version}}</span>
