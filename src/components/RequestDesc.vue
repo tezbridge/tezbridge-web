@@ -104,17 +104,22 @@ export default {
     tz2r
   },
   mounted() {
-    if (this.op.method !== 'raw_inject')
-      return false
+    if (this.op.method === 'raw_inject') {
+      const op_bytes = this.op.signature || this.op.sign_bytes ?
+        this.op.bytes :
+        this.op.bytes.slice(0, -128)
 
-    const op_bytes = this.op.signature || this.op.sign_bytes ?
-      this.op.bytes :
-      this.op.bytes.slice(0, -128)
-
-    try {
-      this.parsed_ops = JSON.stringify(TBC.localop.parseOperationBytes(op_bytes), null, 2)
-    } catch (e){
-      this.parsed_ops = e
+      try {
+        this.parsed_ops = JSON.stringify(TBC.localop.parseOperationBytes(op_bytes), null, 2)
+      } catch (e){
+        this.parsed_ops = e
+      }
+    } else if (this.op.method === 'raw_sign') {
+      try {
+        this.parsed_ops = JSON.stringify(TBC.localop.parseOperationBytes(this.op.bytes), null, 2)
+      } catch (e){
+        this.parsed_ops = e
+      }
     }
   }
 }
