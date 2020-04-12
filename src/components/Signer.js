@@ -209,9 +209,18 @@ class Signer {
         pub_key = TBC.crypto.getKeyFromSecretKey(sk).getPublicKey()
       }
       
-      return await network_client.mixed.testMinFeeOperation(
+      const contract_contents = await Promise.all(op.operations.map(x => {
+        if (x.kind === 'transaction') {
+          return network_client.fetch.contract(x.destination)
+        } else {
+          return null
+        }
+      }))
+
+      const result = await network_client.mixed.testMinFeeOperation(
         TBC, this.source, pub_key, op.operations, false, state
       )
+      return Object.assign(result, {contract_contents})
     }
     else
       throw `Network client hasn't been set to specific protocol`

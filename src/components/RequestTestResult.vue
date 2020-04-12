@@ -18,6 +18,7 @@
               </span>
             </div>
             <div v-if="metadata.result.storage">{{lang.requests.test_desc.storage}}: {{metadata.result.storage}}</div>
+            <div ref="storage_diff" class="storage-diff"></div>
             <div v-if="metadata.result.big_map_diff">{{lang.requests.test_desc.big_map_diff}}: {{metadata.result.big_map_diff}}</div>
             <div v-if="metadata.changes.length">{{lang.requests.test_desc.changes}}:</div>
             <div :key="j" v-for="(item, j) in metadata.changes" class="changes">
@@ -33,9 +34,12 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import lang from '../langs'
 
 import { tz2r } from '../libs/util'
+
+const renderer = Misualizer.getGraphRenderer()
 
 export default {
   props: ['contents'],
@@ -55,19 +59,40 @@ export default {
         this.error = x
       } else {
         this.fee = x.fee
-        this.metadata_lst = x.operation_contents.map(op => {
+
+        this.metadata_lst = x.operation_contents.map((op, index) => {
           const op_updates = op.metadata.balance_updates
           const result_updates = op.metadata.operation_result.balance_updates || []
+
+          const contract = x.contract_contents[index]
+          const storage = op.metadata.operation_result.storage
+          let storage_diff_graph = null
+          try {
+            storage_diff_graph = storage && contract 
+              ? renderer.renderDiff(Misualizer.diff(contract.script.code[1].args[0], contract.script.storage, storage))
+              : null
+          } catch (e) {
+            console.log(e)
+          }
 
           const items = {
             kind: op.kind,
             destination: op.destination,
             result: op.metadata.operation_result,
-            storage: op.metadata.operation_result.storage,
+            storage,
+            storage_diff_graph,
             big_map_diff: op.metadata.operation_result.big_map_diff,
             changes: op_updates.concat(result_updates).map(x => this.extractChange(x))
           }
           return items
+        })
+
+        Vue.nextTick(() => {
+          this.metadata_lst.forEach((x, i) => {
+            if (!x.storage_diff_graph) return false
+
+            this.$refs.storage_diff[i].appendChild(x.storage_diff_graph)
+          })
         })
       }
     }
@@ -104,4 +129,5 @@ export default {
 .title { font-weight: 700}
 .changes {margin-left: 8px}
 .warning { color: #999; font-size: 0.7rem;}
+.storage-diff {max-width: 480px; font-family: Consolas, Menlo, monospace; font-size: 0.8rem;}
 </style>
