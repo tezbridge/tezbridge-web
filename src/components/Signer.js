@@ -4,7 +4,7 @@ declare var TBC : any
 
 import { network_client, loadProtocolJS } from '../libs/network'
 import { Connection } from '../libs/rtc'
-
+import storage from '../libs/storage'
 
 class Signer {
   box : TBC.crypto.EncryptedBox
@@ -209,13 +209,15 @@ class Signer {
         pub_key = TBC.crypto.getKeyFromSecretKey(sk).getPublicKey()
       }
       
-      const contract_contents = await Promise.all(op.operations.map(x => {
-        if (x.kind === 'transaction') {
-          return network_client.fetch.contract(x.destination)
-        } else {
-          return null
-        }
-      }))
+      const contract_contents = storage.settings.show_storage_diff === 'on' ? 
+        await Promise.all(op.operations.map(x => {
+          if (x.kind === 'transaction') {
+            return network_client.fetch.contract(x.destination)
+          } else {
+            return null
+          }
+        })) : {}
+
 
       const result = await network_client.mixed.testMinFeeOperation(
         TBC, this.source, pub_key, op.operations, false, state

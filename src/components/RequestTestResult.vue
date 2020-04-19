@@ -64,7 +64,7 @@ export default {
           const op_updates = op.metadata.balance_updates
           const result_updates = op.metadata.operation_result.balance_updates || []
 
-          const contract = x.contract_contents[index]
+          const contract = x.contract_contents && x.contract_contents[index]
           const storage = op.metadata.operation_result.storage
           let storage_diff_graph = null
           try {

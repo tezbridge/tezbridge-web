@@ -55,6 +55,9 @@ class Storage {
       .map(x => x.toString(16).padStart(2, '0'))
       .join('')
       
+    if (!this.settings.show_storage_diff)
+      this.settings.show_storage_diff = 'off'
+
     this.saveSettings()
   }
 

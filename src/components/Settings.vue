@@ -10,6 +10,9 @@
     <tree-node :title="lang.settings.language">
       <switcher :data="lang_lst" v-model="curr_lang"></switcher>
     </tree-node>
+    <tree-node :title="lang.settings.show_storage_diff" :help="lang.help.show_storage_diff">
+      <switcher :data="lang.general.on_off" v-model="settings.show_storage_diff"></switcher>
+    </tree-node>
     <tree-node :title="lang.settings.briding_mode" :help="lang.help.bridging_mode">
       <switcher :data="bridging_lst" v-model="settings.bridging_mode"></switcher>
     </tree-node>
@@ -79,6 +82,9 @@ export default {
 
     //   this.checking_host = false
     // }),
+    'settings.show_storage_diff': debounce(function(mode){
+      storage.saveSettings()
+    }),
     'settings.bridging_mode': debounce(function(mode){
       storage.saveSettings()
     })

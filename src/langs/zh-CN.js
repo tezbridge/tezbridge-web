@@ -20,7 +20,8 @@ export default {
                     |手动: 让用户可以通过二维码或文字发送来交换连接信息。`,
     signer: `它会打开TezBridge的签名器页面。TezBridge签名器通常是由第三方的DApp站点来直接打开的。`,
     playground: `这里是给开发者提供的，关于TezBridge插件整合的各种可编辑的例子。`,
-    legacy: `会跳转到老版本TezBridge。通常用来导出先前的账户密钥。`
+    legacy: `会跳转到老版本TezBridge。通常用来导出先前的账户密钥。`,
+    show_storage_diff: `在测试操作的时候，会绘制出合约存储的操作前后差异图。`
   },
   general: {
     confirm: '确认',
@@ -54,7 +55,12 @@ export default {
     approve: '允许',
     reject: '拒绝',
     approved: '已允许',
-    rejected: '已拒绝'
+    rejected: '已拒绝',
+    
+    on_off: {
+      '开': 'on',
+      '关': 'off'
+    }
   },
   menu: {
     create_key: '创建密钥',
@@ -141,7 +147,9 @@ export default {
     language: '语言',
     briding_mode: '桥接模式',
     ident_mark: '识别记号',
-    invalid_host: '无效主机'
+    invalid_host: '无效主机',
+
+    show_storage_diff: '显示合约存储差异'
   },
   remote: {
     safari_warning: '在Safari上需要允许麦克风权限来开启远程桥接功能(仅需1秒钟)',

@@ -25,7 +25,8 @@ export default {
                     |Manual: Users can exchange the connection info by QRCode or text sending.`,
     signer: `It opens TezBridge Signer page. The TezBridge Signer is usually directly opened by some third party DApp sites.`,
     playground: `A place shows editable examples of TezBridge's plugin integration for developers.`,
-    legacy: `It'll jump to the old version of TezBridge. It's used to export your accounts' keys stored there.`
+    legacy: `It'll jump to the old version of TezBridge. It's used to export your accounts' keys stored there.`,
+    show_storage_diff: `It will draw the storage difference graph when testing operations.`
   },
   general: {
     confirm: 'Confirm',
@@ -59,7 +60,12 @@ export default {
     approve: 'Approve',
     reject: 'Reject',
     approved: 'Approved',
-    rejected: 'Rejected'
+    rejected: 'Rejected',
+
+    on_off: {
+      'On': 'on',
+      'Off': 'off'
+    }
   },
   menu: {
     create_key: 'Create key',
@@ -146,7 +152,8 @@ export default {
     language: 'Language',
     briding_mode: 'Bridging mode',
     ident_mark: 'Identification mark',
-    invalid_host: 'invalid host'
+    invalid_host: 'invalid host',
+    show_storage_diff: 'Show storage diff graph'
   },
   remote: {
     safari_warning: 'The permission of microphone is needed to enable bridging function in Safari (for 1 second)',
