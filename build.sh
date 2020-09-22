@@ -6,7 +6,7 @@ parcel build \
   src/pages/index.html \
   src/pages/plugin.js \
   src/pages/protocols/PsCARTHA.js \
-  src/pages/protocols/PsBabyM1.js \
+  src/pages/protocols/PsDELPH1.js \
   --no-source-maps --out-dir docs
 
 cp src/CNAME docs/

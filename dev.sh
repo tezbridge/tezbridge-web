@@ -7,5 +7,5 @@ parcel \
   src/pages/playground.html \
   src/pages/plugin.js \
   src/pages/protocols/PsCARTHA.js \
-  src/pages/protocols/PsBabyM1.js \
+  src/pages/protocols/PsDELPH1.js \
   --target browser --https

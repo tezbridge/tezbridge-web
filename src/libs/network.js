@@ -9,7 +9,7 @@ export let fail2load = ''
 
 let ctrler = new AbortController()
 
-const default_protocol = 'PsBabyM1'
+const default_protocol = 'PsCARTHA'
 export async function loadProtocolJS(host? : string) {
   host = host || storage.settings.host
 
