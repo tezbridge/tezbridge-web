@@ -30,7 +30,7 @@
     "qrcode": "^1.4.4",
     "tezbridge-crypto": "^1.1.0",
     "tezbridge-network": "^1.1.0",
-    "vue": "^2.6.12",
+    "vue": "^3.0.0",
     "vue-hot-reload-api": "^2.3.4",
     "vue-prism-editor": "^0.2.1"
   },
